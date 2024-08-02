@@ -30,6 +30,7 @@ Jak zgłosić błąd?
 - Opisz problem (kiedy występuje, podaj linki, postaraj sie napisać jak moge odtworzyć ten błąd, jak powinna zachowywać sie aplikacja bez tego błędu)
 - Poczekaj na informacje z mojej strony
 - Dziekuje :)
+
 ![alt text](.gitea/assets/image-1.png)
 
 # Zgłaszanie propozycji
