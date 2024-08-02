@@ -27,7 +27,7 @@ export class ApiModule {
         })
 
         app.get('/search', async (req, res) => {
-            if (!req.query.q) return res.send('invalid');
+            if (!req.query.q) return res.redirect('/');
             const records = await MLog.find({ $text: { $search: req.query.q as string } })
                 .sort({ leftDate: -1 })
                 .limit(30)
@@ -39,7 +39,7 @@ export class ApiModule {
         })
 
         app.get('/details/:id', async (req, res) => {
-            if (!req.params.id) return res.send('invalid');
+            if (!req.params.id) return res.redirect('/');
             const record = await MLog.findOne({ id: req.params.id });
             const player = await PlayerUtil.getPlayer(record?.userSteamId!);
 
