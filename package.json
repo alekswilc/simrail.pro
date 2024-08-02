@@ -1,0 +1,31 @@
+{
+  "name": "play-history",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "copyfiles --error --up 1 src/http/views/*.* dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
+    "copyfiles": "^2.4.1",
+    "typescript": "^5.5.4"
+  },
+  "type": "module",
+  "dependencies": {
+    "dayjs": "^1.11.12",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1",
+    "redis": "^4.6.15",
+    "uuid": "^10.0.0"
+  },
+  "typings": "types/typings.d.ts"
+}
