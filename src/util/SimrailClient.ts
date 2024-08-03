@@ -1,24 +1,24 @@
 import { EventEmitter } from 'node:events';
-import { IStation, IStationPayload } from '../types/station.js';
+
 import { IPlayer } from '../types/player.js';
 import { PlayerUtil } from './PlayerUtil.js';
+import { Station, ApiResponse } from '@simrail/types';
 
 export enum SimrailClientEvents {
     StationJoined = 'stationJoined',
     StationLeft = 'stationLeft',
-
 }
 
 export declare interface SimrailClient {
-    on(event: SimrailClientEvents.StationJoined, listener: (station: IStation, player: IPlayer) => void): this;
-    on(event: SimrailClientEvents.StationLeft, listener: (station: IStation, player: IPlayer, joinedAt: number) => void): this;
+    on(event: SimrailClientEvents.StationJoined, listener: (station: Station, player: IPlayer) => void): this;
+    on(event: SimrailClientEvents.StationLeft, listener: (station: Station, player: IPlayer, joinedAt: number) => void): this;
 
     on(event: string, listener: Function): this;
 }
 
 
 export class SimrailClient extends EventEmitter {
-    public stations: IStation[] = [];
+    public stations: Station[] = [];
     public stationsOccupied: Record<string, { steamId: string; joinedAt: number } | null> = {};
 
     public constructor() {
@@ -41,13 +41,13 @@ export class SimrailClient extends EventEmitter {
         if (!await redis.json.get('stations_occupied'))
             redis.json.set('stations_occupied', '$', {});
 
-        this.stations = (await redis.json.get('stations') as unknown as IStation[]);
+        this.stations = (await redis.json.get('stations') as unknown as Station[]);
         this.stationsOccupied = (await redis.json.get('stations_occupied') as unknown as Record<string, { steamId: string; joinedAt: number } | null>);
     }
 
 
     private async update() {
-        const servers = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=pl2').then(x => x.json())) as IStationPayload;
+        const servers = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=pl2').then(x => x.json())) as ApiResponse<Station>;
         if (!servers.result) return
 
 
@@ -68,11 +68,11 @@ export class SimrailClient extends EventEmitter {
                 if (!data.DispatchedBy[0]?.SteamId) {
                     // join
                     const date = new Date();
-                    const player = await PlayerUtil.getPlayer(x.DispatchedBy[0]?.SteamId.toString());
+                    const player = await PlayerUtil.getPlayer(x.DispatchedBy[0]?.SteamId);
 
                     this.emit(SimrailClientEvents.StationJoined, x, player);
                     this.stationsOccupied[data.Prefix] = {
-                        steamId: x.DispatchedBy[0]?.SteamId.toString(),
+                        steamId: x.DispatchedBy[0]?.SteamId,
                         joinedAt: date.getTime()
                     }
                     redis.json.set('stations_occupied', '$', this.stationsOccupied);
@@ -80,7 +80,7 @@ export class SimrailClient extends EventEmitter {
                     return;
                 }
 
-                const player = await PlayerUtil.getPlayer(data.DispatchedBy[0]?.SteamId.toString())
+                const player = await PlayerUtil.getPlayer(data.DispatchedBy[0]?.SteamId)
 
                 this.emit(SimrailClientEvents.StationLeft, x, player, this.stationsOccupied[data.Prefix]?.joinedAt);
                 delete this.stationsOccupied[data.Prefix];

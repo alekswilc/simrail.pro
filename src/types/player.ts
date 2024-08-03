@@ -1,3 +1,5 @@
+/* steam api */
+
 export type IPlayer = {
     steamid: string,
     communityvisibilitystate: number,
