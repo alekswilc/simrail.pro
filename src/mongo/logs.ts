@@ -42,7 +42,7 @@ const schema = new Schema<ILog>(
         },
     }
 );
-schema.index({ stationName: 'text', userUsername: 'text', stationShort: 'text', userSteamId: 'text' })
+schema.index({ stationName: 'text', userUsername: 'text', stationShort: 'text', userSteamId: 'text', server: 'text' })
 
 export type TMLog = Model<ILog>
 

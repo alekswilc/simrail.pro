@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "postbuild": "copyfiles --error --up 1 src/http/views/*.* dist"
+    "postbuild": "copyfiles --error --up 1 src/http/views/*.* dist",
+    "dev": "npm run build && doppler run node dist"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
   "type": "module",
   "dependencies": {
     "@simrail/types": "^0.0.4",
+    "@types/mongoose": "^5.11.97",
     "dayjs": "^1.11.12",
     "ejs": "^3.1.10",
     "express": "^4.19.2",

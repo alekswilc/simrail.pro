@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 import { StationsModule } from './modules/stations.js';
 import { ApiModule } from './http/api.js';
 import mongoose from 'mongoose';
-import { IStation } from './types/station.js';
 import { IPlayer } from './types/player.js';
+import { Station, Server } from '@simrail/types';
 
 
 ; (async () => {
@@ -22,12 +22,12 @@ import { IPlayer } from './types/player.js';
     console.log('MongoDB connected');
     global.client = new SimrailClient();
 
-    client.on(SimrailClientEvents.StationJoined, (station: IStation, player: IPlayer) => {
-        console.log(`${station.Name} | ${player.personaname} joined`);
+    client.on(SimrailClientEvents.StationJoined, (server: Server, station: Station, player: IPlayer) => {
+        console.log(`${server.ServerCode} |${station.Name} | ${player.personaname} joined`);
     });
 
-    client.on(SimrailClientEvents.StationLeft, (station: IStation, player: IPlayer, joinedAt: number) => {
-        console.log(`${station.Name} | ${player.personaname} left. | ${joinedAt ? dayjs(joinedAt).fromNow() : 'no time data.'}`);
+    client.on(SimrailClientEvents.StationLeft, (server: Server, station: Station, player: IPlayer, joinedAt: number) => {
+        console.log(`${server.ServerCode} | ${station.Name} | ${player.personaname} left. | ${joinedAt ? dayjs(joinedAt).fromNow() : 'no time data.'}`);
     });
 
     StationsModule.load();

@@ -23,16 +23,17 @@
 
 <body>
     <header>
-        <h1><a style="color: white; text-decoration: none;" href="/">SimRail Logs [<span
-                    style="color:hotpink">PL2</span>]</a></h1>
+        <h1><a style="color: white; text-decoration: none;" href="/">SimRail Logs</a></h1>
+        <p><a href="https://git.alekswilc.dev/alekswilc/simrail-logs">Dokumentacja</a></p>
     </header>
 
-    <h2>Wyszukaj posterunek lub osobe</h2>
+    <h2>Wyszukaj posterunek, osobe lub serwer</h2>
 
 
     <div class="container">
         <input type="text" id="search" value="<%=q%>">
         <button onclick="search()">Szukaj</button>
+        <p>Użyj przecinka, aby wyszukać wiele wartości: pl2,Łazy</p>
     </div>
 
     <h2>Wyniki wyszukiwania</h2>
@@ -41,9 +42,8 @@
         <% records.forEach(record=> { %>
             <li>
                 <details>
-
                     <summary>[<span style="color:lightskyblue">
-                            <%= record.stationShort %>
+                            <%= record.server.toUpperCase() %>
                         </span>] <span style="color: lightskyblue">
                             <%= record.stationName %>
                         </span> - <span style="color:hotpink">
@@ -53,8 +53,8 @@
                             <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %>
                         </p>
                     </summary>
-                    <p>Data dołączenia: <%= dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') %> (<%=
-                                dayjs(record.joinedDate).fromNow() %>)</p>
+                    <p>Data dołączenia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--' %> (<%=
+                        record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
                     <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%=
                                 dayjs(record.leftDate).fromNow() %>)</p>
                     <a href="/details/<%= record.id %>">
@@ -70,9 +70,9 @@
             location.href = '/search?q=' + document.getElementById('search').value
         }
         document.getElementById('search').addEventListener("keyup", (event) => {
-            if (event.key === "Enter") 
+            if (event.key === "Enter")
                 search();
-            
+
         });
     </script>
 

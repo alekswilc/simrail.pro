@@ -44,8 +44,8 @@
 
 <body>
     <header>
-        <h1><a style="color: white; text-decoration: none;" href="/">SimRail Logs [<span
-                    style="color:hotpink">PL2</span>]</a></h1>
+        <h1><a style="color: white; text-decoration: none;" href="/">SimRail Logs</a></h1>
+        <p><a href="https://git.alekswilc.dev/alekswilc/simrail-logs">Dokumentacja</a></p>
     </header>
 
     <div class="details">
@@ -55,8 +55,10 @@
             </a></p>
         <p>Stacja: <%= record.stationName %>
         </p>
-        <p>Data wejścia: <%= dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') %> (<%=
-                    dayjs(record.joinedDate).fromNow() %>)</p>
+        <p>Serwer: <%= record.server.toUpperCase() %>
+        </p>
+        <p>Data wejścia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--' %> (<%=
+            record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
         <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%= dayjs(record.leftDate).fromNow()
                     %>)</p>
 
@@ -65,8 +67,9 @@
         <br />
         <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;station: <%= record.stationName %>
             ;steam: <%= record.userSteamId %>
+            ;server: <%= record.server %>
             ;name: <%= record.userUsername %>
-            ;joined: <%=dayjs(record.joinedDate).format()%>
+            ;joined: <%=record.joinedDate ? dayjs(record.joinedDate).format() : 'no-data'%>
             ;left: <%=dayjs(record.leftDate).format()%>
             ;url: https://simrail.alekswilc.dev/details/<%= record.id %>/
         </code>
