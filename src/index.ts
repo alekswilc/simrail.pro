@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis';
-import './util/dayjs.js';
+import './util/time.js';
 import { SimrailClient, SimrailClientEvents } from './util/SimrailClient.js';
 import dayjs from 'dayjs';
 import { StationsModule } from './modules/stations.js';

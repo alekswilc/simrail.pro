@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>simrail.alekswilc.dev</title>
-    <meta name="description" content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>">
+    <meta name="description"
+        content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>">
     <meta property="og:title" content="Simrail Log">
     <meta property="og:url" content="https://simrail.alekswilc.dev/details/<%= record.id %>/">
-    <meta property="og:description" content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>"">
-    <meta property="og:type" content="website">
+    <meta property="og:description"
+        content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>"">
+    <meta property=" og:type" content="website">
     <meta property="og:image" content="<%= record.userAvatar %>" />
     <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
@@ -57,12 +59,12 @@
         </p>
         <p>Serwer: <%= record.server.toUpperCase() %>
         </p>
-        <p>Data wejścia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--' %> (<%=
-            record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
+        <p>Data wejścia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--'
+                %> (<%= record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
         <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%= dayjs(record.leftDate).fromNow()
                     %>)</p>
-
-
+        <p>Spędzony czas: <%= record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
+        </p>
 
         <br />
         <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;station: <%= record.stationName %>

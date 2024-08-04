@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import dayjs from 'dayjs';
 import { PlayerUtil } from '../util/PlayerUtil.js';
+import { msToTime } from '../util/time.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +23,8 @@ export class ApiModule {
                 .limit(30)
             res.render('index.ejs', {
                 records,
-                dayjs
+                dayjs,
+                msToTime
             });
         })
 
@@ -62,7 +64,8 @@ export class ApiModule {
             res.render('search.ejs', {
                 records,
                 dayjs,
-                q: req.query.q
+                q: req.query.q,
+                msToTime
             });
         })
 
@@ -74,7 +77,8 @@ export class ApiModule {
             res.render('details.ejs', {
                 record,
                 dayjs,
-                player
+                player,
+                msToTime
             });
         })
 
