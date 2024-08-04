@@ -5,7 +5,6 @@ Prosty projekt, logujący wyjścia z posterunków.
 - Ułatwienie zgłaszania graczy, którzy robią "Hit and Run" (psuje i wychodze z posterunku)
 
 ## Dalszy rozwój
-- Wybieranie serwerów
 - Obsługa pociagów, a nie tylko posterunków
 
 # Jak korzystać?

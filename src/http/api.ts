@@ -26,9 +26,37 @@ export class ApiModule {
             });
         })
 
+        const generateSearch = (regex: RegExp) => [
+            {
+                stationName: { $regex: regex },
+            },
+            {
+                userUsername: { $regex: regex },
+            },
+            {
+                stationShort: { $regex: regex },
+            },
+            {
+                userSteamId: { $regex: regex },
+            },
+            {
+                server: { $regex: regex },
+            }
+        ]
+
         app.get('/search', async (req, res) => {
             if (!req.query.q) return res.redirect('/');
-            const records = await MLog.find({ $text: { $search: req.query.q as string } })
+            const s = req.query.q.toString().split(',').map(x => new RegExp(x, "i"));
+
+            const records = await MLog.aggregate([
+                {
+                    $match: {
+                        $and: [
+                            ...s.map(x => ({ $or: generateSearch(x) }))
+                        ]
+                    }
+                }
+            ])
                 .sort({ leftDate: -1 })
                 .limit(30)
             res.render('search.ejs', {
