@@ -53,10 +53,14 @@
                             <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %>
                         </p>
                     </summary>
-                    <p>Data dołączenia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--' %> (<%=
-                        record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
+                    <p>Data dołączenia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY')
+                            : '--:-- --/--/--' %> (<%= record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)
+                    </p>
                     <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%=
                                 dayjs(record.leftDate).fromNow() %>)</p>
+                    <p>Spędzony czas: <%= record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
+                    </p>
+
                     <a href="/details/<%= record.id %>">
                         <button>Więcej</button>
                     </a>
