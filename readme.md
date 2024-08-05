@@ -1,6 +1,8 @@
 # Simrail Logs
 Prosty projekt, logujący wyjścia z posterunków.
 
+### Hej! Podoba Ci się projekt? Polajkuj post na [forum](https://forum.simrail.eu/topic/9142-logowanie-wyj%C5%9B%C4%87-z-posterunk%C3%B3w/), a będzie mi miło! Dla Ciebie to jedno kliknięcie, a dla mnie motywacja do rozwijania projektu
+
 ## Cele
 - Ułatwienie zgłaszania graczy, którzy robią "Hit and Run" (psuje i wychodze z posterunku)
 
