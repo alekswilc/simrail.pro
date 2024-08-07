@@ -3,26 +3,17 @@ Prosty projekt, logujący wyjścia z posterunków.
 
 ### Hej! Podoba Ci się projekt? Polajkuj post na [forum](https://forum.simrail.eu/topic/9142-logowanie-wyj%C5%9B%C4%87-z-posterunk%C3%B3w/), a będzie mi miło! Dla Ciebie to jedno kliknięcie, a dla mnie motywacja do rozwijania projektu
 
+## Aplikacja
+https://simrail.alekswilc.dev/
+
 ## Cele
 - Ułatwienie zgłaszania graczy, którzy robią "Hit and Run" (psuje i wychodze z posterunku)
+- Statystyki
 
 ## Dalszy rozwój
-- Obsługa pociagów, a nie tylko posterunków
-
-# Jak korzystać?
-
-- Otwórz https://simrail.alekswilc.dev/
-- Znajdź interesujący Cie rekord.
-- Naciśnij przycisk więcej
-- Naciśnij na okienko z angielskim zapisem informacji (lub przycisk kopiuj link)
-- Wklej na kanał #multiplayer-help-request z opisem sytuacji.
-- Gotowe, kolejny troll jest zgłoszony.
-
-![alt text](.gitea/assets/image.png)
+- Obsługa pociagów, a nie tylko posterunków (#8)
 
 # Zgłaszanie błedów
-Aplikacja jest w wersji testowej, i obsługuje tylko serwer PL2
-
 Jak zgłosić błąd?
 - Otwórz https://git.alekswilc.dev/alekswilc/simrail-logs/issues
 - Załóż konto (to tylko kilka kliknięć, a twoje zgłoszenie bardzo mi pomoże)
