@@ -3,7 +3,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "postbuild": "copyfiles --error --up 1 src/http/views/** dist",
+    "postbuild": "copyfiles --error --up 1 src/http/views/**/* src/http/views/* dist",
     "dev": "npm run build && doppler run node dist"
   },
   "author": "Aleksander <alekswilc> Wilczyński",
