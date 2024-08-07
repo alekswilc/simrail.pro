@@ -3,7 +3,7 @@ import './util/time.js';
 import { SimrailClient, SimrailClientEvents } from './util/SimrailClient.js';
 import dayjs from 'dayjs';
 import { StationsModule } from './modules/stations.js';
-import { ApiModule } from './http/api.js';
+import { ApiModule } from './http/server.js';
 import mongoose from 'mongoose';
 import { IPlayer } from './types/player.js';
 import { Station, Server } from '@simrail/types';

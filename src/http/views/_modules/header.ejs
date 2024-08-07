@@ -1,0 +1,21 @@
+<header>
+    <h1><a style="color: white; text-decoration: none;" href="/">SimRail Logs</a></h1>
+       
+    <% if (section==='stations' ) { %>
+        <nav style="margin-bottom: 0;">
+            <a href="/">Strona Główna</a> /
+            <a href="https://git.alekswilc.dev/alekswilc/simrail-logs/issues/8">Logi pociągów</a>
+        </nav>
+        <nav>
+            <a href="/stations/">Logi posterunków</a> /
+            <a href="/stations/leaderboard">Tablica godzin</a>
+        </nav>
+    <% } else {%>
+        <a href="/stations/">Logi posterunków</a> /
+        <a href="https://git.alekswilc.dev/alekswilc/simrail-logs/issues/8">Logi pociągów</a>
+    <% } %>
+    <br />
+    <p style="color: darkorange; font-size: 14px;">Hej! Podoba Ci się projekt? Polajkuj post na <a
+            href="https://forum.simrail.eu/topic/9142-logowanie-wyj%C5%9B%C4%87-z-posterunk%C3%B3w/">forum</a>, a będzie
+        mi miło! Dla Ciebie to jedno kliknięcie, a dla mnie motywacja do rozwijania projektu.</p>
+</header>

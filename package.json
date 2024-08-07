@@ -1,16 +1,13 @@
 {
-  "name": "play-history",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "simrail-logs",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "postbuild": "copyfiles --error --up 1 src/http/views/*.* dist",
+    "postbuild": "copyfiles --error --up 1 src/http/views/**/* dist",
     "dev": "npm run build && doppler run node dist"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Aleksander <alekswilc> Wilczyński",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.0.0",
