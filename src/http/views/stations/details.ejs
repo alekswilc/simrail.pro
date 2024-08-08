@@ -40,7 +40,7 @@
     }
 
     function copylink() {
-        navigator.clipboard.writeText("https://simrail.alekswilc.dev/details/<%= record.id %>/")
+        navigator.clipboard.writeText("https://simrail.alekswilc.dev/stations/details/<%= record.id %>/")
     }
 </script>
 
@@ -70,7 +70,7 @@
             ;name: <%= record.userUsername %>
             ;joined: <%=record.joinedDate ? dayjs(record.joinedDate).format() : 'no-data'%>
             ;left: <%=dayjs(record.leftDate).format()%>
-            ;url: https://simrail.alekswilc.dev/details/<%= record.id %>/
+            ;url: https://simrail.alekswilc.dev/stations/details/<%= record.id %>/
         </code>
         <br />
         <p><button onclick="copylink()">Kopiuj link</button></p>
