@@ -40,12 +40,12 @@
     }
 
     function copylink() {
-        navigator.clipboard.writeText("https://simrail.alekswilc.dev/stations/details/<%- record.id %>/")
+        navigator.clipboard.writeText("https://simrail.alekswilc.dev/trains/details/<%- record.id %>/")
     }
 </script>
 
 <body>
-    <%- include('../_modules/header.ejs', { section: 'stations' }) %>
+    <%- include('../_modules/header.ejs', { section: 'trains' }) %>
 
     <div class="details">
 
@@ -54,7 +54,7 @@
             </a></p>
         <p>Stacja: <%- record.stationName %>
         </p>
-        <p>Serwer: <%- record.server.toUpperCase() %>
+        <p>Pociąg: <%- record.trainName %> <%- record.trainNumber %>
         </p>
         <p>Data wejścia: <%- record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--'
                 %> (<%- record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
@@ -62,15 +62,23 @@
                     %>)</p>
         <p>Spędzony czas: <%- record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
         </p>
+        <% if (record.distance) { %>
+            <p>Przejechane kilometry: <%- record.distance / 1000 %></p>
+            <p>Zdobyte punkty: <%- record.points %></p>
+            <p>Średnia prędkość: <%- ((record.distance / ((record.leftDate - record.joinedDate) / 1000)) * 3.6).toFixed(2) %> km/h</p>
+        <% } %>
+        </p>
 
         <br />
-        <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;station: <%- record.stationName %>
+        <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;train: <%- record.trainNumber %>
             ;steam: <%- record.userSteamId %>
             ;server: <%- record.server %>
             ;name: <%- record.userUsername %>
             ;joined: <%-record.joinedDate ? dayjs(record.joinedDate).format() : 'no-data'%>
-            ;left: <%-dayjs(record.leftDate).format()%>
-            ;url: https://simrail.alekswilc.dev/stations/details/<%- record.id %>/
+            ;left: <%-dayjs(record.leftDate).format()%><%if (record.distance) {%>
+            ;distance: <%- record.distance / 1000 %>
+            ;points: <%- record.points %><%}%>
+            ;url: https://simrail.alekswilc.dev/trains/details/<%- record.id %>/ 
         </code>
         <br />
         <p><button onclick="copylink()">Kopiuj link</button></p>

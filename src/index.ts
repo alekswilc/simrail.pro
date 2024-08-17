@@ -44,6 +44,12 @@ import { TrainsModule } from './modules/trains.js';
     StationsModule.load();
     TrainsModule.load();
     ApiModule.load();
+
+
+    process.on('unhandledRejection', (reason, promise) => {
+        console.error(reason);
+        console.error(promise);
+    })
 })();
 
 

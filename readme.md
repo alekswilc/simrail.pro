@@ -11,7 +11,7 @@ https://simrail.alekswilc.dev/
 - Statystyki
 
 ## Dalszy rozwój
-- Obsługa pociagów, a nie tylko posterunków ([#8](https://git.alekswilc.dev/alekswilc/simrail-logs/issues/8))
+- Nowy wygląd aplikacji
 
 # Zgłaszanie błedów
 Jak zgłosić błąd?

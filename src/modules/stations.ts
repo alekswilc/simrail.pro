@@ -13,22 +13,26 @@ export class StationsModule {
             const stats = await PlayerUtil.getPlayerStats(player.steamid);
             const date = new Date();
             if (stats) {
-                const time = date.getTime() - joinedAt;
-
-                const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4() });
+                const time = (date.getTime() - joinedAt) ?? 0;
+                
+                const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4(), steamName: player.personaname });
                 if (!userProfile.dispatcherStats) userProfile.dispatcherStats = {};
 
                 if (userProfile.dispatcherStats[station.Name]) {
                     userProfile.dispatcherStats[station.Name].time = userProfile.dispatcherStats[station.Name].time + time;
+
                 } else {
                     userProfile.dispatcherStats[station.Name] = {
                         time
                     }
                 }
+                if (Number.isNaN(userProfile.dispatcherStats[station.Name].time)) userProfile.dispatcherStats[station.Name].time = 0;
 
-                console.log(userProfile.dispatcherStats);
+                if (!userProfile.dispatcherTime) userProfile.dispatcherTime = 0;
 
-                console.log(await MProfile.findOneAndUpdate({ id: userProfile.id }, { dispatcherStats: userProfile.dispatcherStats }))
+                userProfile.dispatcherTime = userProfile.dispatcherTime + time;
+
+                await MProfile.findOneAndUpdate({ id: userProfile.id }, { dispatcherStats: userProfile.dispatcherStats, dispatcherTime: userProfile.dispatcherTime })
             }
 
             MLog.create({

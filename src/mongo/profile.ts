@@ -10,6 +10,11 @@ export const raw_schema = {
         type: String,
         required: true
     },
+    steamName: {
+        type: String,
+        required: true
+    },
+
     trainStats: {
         type: Object,
         required: false,
@@ -19,6 +24,26 @@ export const raw_schema = {
         type: Object,
         required: false,
         default: {}
+    },
+    trainTime: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+    trainPoints: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+    trainDistance: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+    dispatcherTime: {
+        type: Number,
+        required: false,
+        default: 0
     },
 }
 
@@ -36,6 +61,7 @@ export interface IProfile {
         [trainName: string]: {
             score: number,
             distance: number
+            time: number,
         }
     }
     dispatcherStats: {
@@ -43,4 +69,10 @@ export interface IProfile {
             time: number
         }
     }
+
+    dispatcherTime: number;
+    trainTime: number
+    trainPoints: number
+    steamName: string
+    trainDistance: number
 }

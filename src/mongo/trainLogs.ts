@@ -45,6 +45,10 @@ export const raw_schema = {
         type: String,
         required: true
     },
+    trainName: {
+        type: String,
+        default: null
+    }
 }
 
 const schema = new Schema<ITrainLog>(raw_schema);
@@ -61,6 +65,7 @@ export interface ITrainLog {
     joinedDate?: number
     leftDate: number
     trainNumber: string
+    trainName: string
     distance: number
     points: number
     server: string
