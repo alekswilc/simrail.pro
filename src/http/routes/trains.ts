@@ -1,20 +1,14 @@
 import { Router } from 'express';
-import { MLog, raw_schema } from '../../mongo/logs.js';
 import dayjs from 'dayjs';
 import { PlayerUtil } from '../../util/PlayerUtil.js';
 import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
+import { MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
 
 const generateSearch = (regex: RegExp) => [
     {
-        stationName: { $regex: regex },
-    },
-    {
-        userUsername: { $regex: regex },
-    },
-    {
-        stationShort: { $regex: regex },
+        trainNumber: { $regex: regex },
     },
     {
         userSteamId: { $regex: regex },
@@ -24,7 +18,7 @@ const generateSearch = (regex: RegExp) => [
     }
 ]
 
-export class StationsRoute {
+export class TrainsRoute {
     static load() {
         const app = Router();
 
@@ -42,10 +36,10 @@ export class StationsRoute {
                 }
             })
 
-            const records = await MLog.aggregate(filter)
+            const records = await MTrainLog.aggregate(filter)
                 .sort({ leftDate: -1 })
                 .limit(30)
-            res.render('stations/index.ejs', {
+            res.render('trains/index.ejs', {
                 records,
                 dayjs,
                 q: req.query.q,
@@ -54,13 +48,13 @@ export class StationsRoute {
         })
 
         app.get('/details/:id', async (req, res) => {
-            if (!req.params.id) return res.redirect('/stations/');
-            const record = await MLog.findOne({ id: req.params.id });
-            const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
-            if (blacklist && blacklist.status) return res.redirect('/stations/');
+            if (!req.params.id) return res.redirect('/trains/');
+            const record = await MTrainLog.findOne({ id: req.params.id });
             const player = await PlayerUtil.getPlayer(record?.userSteamId!);
+            const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
+            if (blacklist && blacklist.status) return res.redirect('/trains/');
 
-            res.render('stations/details.ejs', {
+            res.render('trains/details.ejs', {
                 record,
                 dayjs,
                 player,
@@ -68,7 +62,45 @@ export class StationsRoute {
             });
         })
 
-    
+        app.get('/leaderboard/', async (req, res) => {
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+
+            const data = Object.keys(raw_schema)
+                .reduce((o, key) => ({ ...o, [key]: `$${key}` }), {});
+
+            const filter: PipelineStage[] = [
+                {
+                    $project: {
+                        // record.leftDate - record.joinedDate
+                        result: { $subtract: ['$leftDate', '$joinedDate'] },
+                        ...data
+                    }
+                },
+            ];
+
+            s && filter.unshift(
+                {
+                    $match: {
+                        $and: [
+                            ...s.map(x => ({ $or: generateSearch(x) }))
+                        ]
+                    }
+                }
+            )
+
+
+            const records = await MTrainLog.aggregate(filter)
+                .sort({ result: -1 })
+                .limit(30)
+            res.render('trains/leaderboard.ejs', {
+                records,
+                dayjs,
+                q: req.query.q,
+                msToTime
+            });
+        })
+
+
         // API ENDPOINTS
         // CREATE AN ISSUE IF YOU NEED API ACCESS: https://git.alekswilc.dev/alekswilc/simrail-logs/issues
         /*
