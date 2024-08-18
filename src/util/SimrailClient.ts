@@ -80,9 +80,10 @@ export class SimrailClient extends EventEmitter {
 
 
     private async update() {
-        const servers = (await fetch('https://panel.simrail.eu:8084/servers-open').then(x => x.json().catch(x => ({data: [], result: false}))) as ApiResponse<Server>)
+        const servers = (await fetch('https://panel.simrail.eu:8084/servers-open').then(x => x.json()).catch(x => ({data: [], result: false})) as ApiResponse<Server>)
             .data?.filter(x => x.ServerName.includes('Polski')) ?? []; // no plans to support other servers
 
+        
             
         // TODO: maybe node:worker_threads?
         // TODO: check performance
