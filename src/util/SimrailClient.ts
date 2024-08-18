@@ -80,15 +80,15 @@ export class SimrailClient extends EventEmitter {
 
 
     private async update() {
-        const servers = (await fetch('https://panel.simrail.eu:8084/servers-open').then(x => x.json()) as ApiResponse<Server>)
+        const servers = (await fetch('https://panel.simrail.eu:8084/servers-open').then(x => x.json().catch(x => ({data: [], result: false}))) as ApiResponse<Server>)
             .data?.filter(x => x.ServerName.includes('Polski')) ?? []; // no plans to support other servers
 
             
         // TODO: maybe node:worker_threads?
         // TODO: check performance
         servers.forEach(async (server) => {
-                const stations = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + server.ServerCode).then(x => x.json())) as ApiResponse<Station>;
-                const trains = (await fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + server.ServerCode).then(x => x.json())) as ApiResponse<Train>;
+                const stations = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Station>;
+                const trains = (await fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Train>;
                 if (stations.result) {
                     if (!this.stations[server.ServerCode]) this.stations[server.ServerCode] = [];
                     if (!this.stationsOccupied[server.ServerCode]) this.stationsOccupied[server.ServerCode] = {};

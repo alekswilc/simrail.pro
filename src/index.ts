@@ -46,10 +46,10 @@ import { TrainsModule } from './modules/trains.js';
     ApiModule.load();
 
 
-    process.on('unhandledRejection', (reason, promise) => {
-        console.error(reason);
-        console.error(promise);
-    })
+    // process.on('unhandledRejection', (reason, promise) => {
+    //     console.error(reason);
+    //     console.error(promise);
+    // })
 })();
 
 
