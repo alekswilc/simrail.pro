@@ -14,7 +14,7 @@ const fetchFuckingSteamApi = (url: string) => {
                     console.log('STEAM request failed! ', url.replace(STEAM_API_KEY!, '[XXX]'), retries)
 
                     retries++;
-                    setTimeout(() => req(), 500);
+                    setTimeout(() => req(), 1000);
                 })
         }
         req();

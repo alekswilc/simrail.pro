@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import dayjs from 'dayjs';
-import { PlayerUtil } from '../../util/PlayerUtil.js';
 import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
 import { MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
+import { SteamUtil } from '../../util/SteamUtil.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -50,7 +50,7 @@ export class TrainsRoute {
         app.get('/details/:id', async (req, res) => {
             if (!req.params.id) return res.redirect('/trains/');
             const record = await MTrainLog.findOne({ id: req.params.id });
-            const player = await PlayerUtil.getPlayer(record?.userSteamId!);
+            const player = await SteamUtil.getPlayer(record?.userSteamId!);
             const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
             if (blacklist && blacklist.status) return res.redirect('/trains/');
 

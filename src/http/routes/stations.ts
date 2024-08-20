@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { MLog, raw_schema } from '../../mongo/logs.js';
+import { MLog } from '../../mongo/logs.js';
 import dayjs from 'dayjs';
-import { PlayerUtil } from '../../util/PlayerUtil.js';
 import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
 import { MBlacklist } from '../../mongo/blacklist.js';
+import { SteamUtil } from '../../util/SteamUtil.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -58,7 +58,7 @@ export class StationsRoute {
             const record = await MLog.findOne({ id: req.params.id });
             const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
             if (blacklist && blacklist.status) return res.redirect('/stations/');
-            const player = await PlayerUtil.getPlayer(record?.userSteamId!);
+            const player = await SteamUtil.getPlayer(record?.userSteamId!);
 
             res.render('stations/details.ejs', {
                 record,
