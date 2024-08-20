@@ -52,8 +52,7 @@
         <p>Użytkownik: <a href="/profiles/<%- record.userSteamId %>">
                 <%- record.userUsername %>
             </a></p>
-        <p>Stacja: <%- record.stationName %>
-        </p>
+
         <p>Pociąg: <%- record.trainName %> <%- record.trainNumber %>
         </p>
         <p>Data wejścia: <%- record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--'
