@@ -3,6 +3,7 @@ import { msToTime } from '../../util/time.js';
 import { MProfile } from '../../mongo/profile.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
+import { GitUtil } from '../../util/git.js';
 
 
 
@@ -22,7 +23,8 @@ export class ProfilesRoute {
 
             res.render('profiles/index.ejs', {
                 player, steam, steamStats: steamStats,
-                msToTime
+                msToTime,
+                ...GitUtil.getData(),
             });
         })
 

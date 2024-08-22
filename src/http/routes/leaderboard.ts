@@ -4,6 +4,7 @@ import { msToTime } from '../../util/time.js';
 
 import { PipelineStage } from 'mongoose';
 import { MProfile, raw_schema } from '../../mongo/profile.js';
+import { GitUtil } from '../../util/git.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -36,13 +37,16 @@ export class LeaderboardRoute {
             const records = await MProfile.aggregate(filter)
                 .sort({ trainPoints: -1 })
                 .limit(10)
+
+
+            
             res.render('leaderboard/index.ejs', {
                 records,
                 dayjs,
                 msToTime,
                 type: 'train',
                 q: req.query.q,
-
+                ...GitUtil.getData(),
             });
         })
 
@@ -71,7 +75,7 @@ export class LeaderboardRoute {
                 msToTime,
                 type: 'station',
                 q: req.query.q,
-
+                ...GitUtil.getData(),
             });
         })
 
