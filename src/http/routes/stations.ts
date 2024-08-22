@@ -5,6 +5,7 @@ import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
+import { GitUtil } from '../../util/git.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -64,7 +65,8 @@ export class StationsRoute {
                 record,
                 dayjs,
                 player,
-                msToTime
+                msToTime,
+                ...GitUtil.getData()
             });
         })
 

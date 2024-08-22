@@ -5,6 +5,7 @@ import { PipelineStage } from 'mongoose';
 import { MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
+import { GitUtil } from '../../util/git.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -58,7 +59,8 @@ export class TrainsRoute {
                 record,
                 dayjs,
                 player,
-                msToTime
+                msToTime,
+                ...GitUtil.getData()
             });
         })
 

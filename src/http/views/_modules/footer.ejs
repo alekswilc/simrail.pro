@@ -2,6 +2,11 @@
     <p>Made with <span style="color: red;">❤️</span> by <a href="https://www.alekswilc.dev/">alekswilc</a> for SimRail
         Community</p>
     <p><a href="https://git.alekswilc.dev/alekswilc/">Open Source</a></p>
+    <p><% if (version) { %>
+        Wersja: <a href="https://git.alekswilc.dev/alekswilc/simrail-logs/releases/tag/<%- version %>"><%- version %></a>
+    <% } %>
+        Commit: <a href="https://git.alekswilc.dev/alekswilc/simrail-logs/commit/<%- commit %>"><%- commit %></a>
+    </p>
     <% if (thanks) { %>
         <p>Podziękowania dla społeczności discorda <a href="https://discord.gg/yDhy3pDrVr">Simrail24</a>, <a
                 href="https://discord.com/users/1079005960653254656">AQUALYTH</a>, osób lajkujących <a
