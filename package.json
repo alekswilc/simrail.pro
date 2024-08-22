@@ -4,7 +4,9 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "copyfiles --error --up 1 src/http/views/**/* src/http/views/* dist",
-    "dev": "npm run build && doppler run node dist"
+    "dev": "npm run build && doppler run node dist",
+    "scripts:clear-redis": "doppler run node scripts/clear-redis.js",
+    "scripts:mongo-migration": "doppler run node scripts/mongo-migration.js"
   },
   "author": "Aleksander <alekswilc> Wilczyński",
   "license": "AGPL-3.0-only",
