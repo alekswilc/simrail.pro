@@ -44,7 +44,8 @@ export class TrainsRoute {
                 records,
                 dayjs,
                 q: req.query.q,
-                msToTime
+                msToTime,
+                ...GitUtil.getData()
             });
         })
 
