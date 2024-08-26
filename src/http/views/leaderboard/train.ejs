@@ -4,7 +4,7 @@
         </span> - <span style="color:lightskyblue">
             <%- record.trainPoints %> pkt.
         </span></summary>
-    <p>Spędzona liczba godzin: <%- msToTime(record.trainTime) %></p>
+    <p>Spędzona liczba godzin: <%- msToTime(record.trainTime, true) %></p>
     <p>Przejechane kilometry: <%- record.trainDistance / 1000 %>km</p>
     <p>Zdobyte punkty: <%- record.trainPoints %></p>
     <button onclick="location.href = '/profiles/<%- record.steam %>'">Więcej</button>

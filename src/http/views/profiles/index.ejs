@@ -51,7 +51,7 @@
                 <summary>Statystyki Steam</summary>
                 <p>Zdobyte punkty: <%- steamStats.stats.find(x => x.name === 'SCORE')?.value ?? "0" %></p>
                 <p>Przejechane kilometry: <%- (steamStats.stats.find(x => x.name === 'DISTANCE_M')?.value / 1000) ?? "0" %></p>
-                <p>Czas spędzony jako dyżurny ruchu: <%- msToTime((steamStats.stats.find(x => x.name === 'DISPATCHER_TIME')?.value ?? 0)*1_000_000) || 'Nigdy nie wszedł w tryb dyżurnego ruchu.' %></p>
+                <p>Czas spędzony jako dyżurny ruchu: <%- msToTime((steamStats.stats.find(x => x.name === 'DISPATCHER_TIME')?.value ?? 0)*1_000_000, true) || 'Nigdy nie wszedł w tryb dyżurnego ruchu.' %></p>
                 <br />
                 <p style="font-size: smaller;">UWAGA: powyższe statystyki udostępnia platforma STEAM, mogą one być z łatwością manipulowane.</p>
                 
@@ -73,7 +73,7 @@
                         <details open>
                             <summary><%- name %></summary>
                             <p>Przejechany dystans: <%- player.trainStats[name].distance / 1000 %>km</p>
-                            <p>Spędzony czas: <%- msToTime(player.trainStats[name].time) %></p>
+                            <p>Spędzony czas: <%- msToTime(player.trainStats[name].time, true) %></p>
                             <p>Zdobyte punkty: <%- player.trainStats[name].score %></p>
                             <p>Średnia prędkość: <%- ((player.trainStats[name].distance / (player.trainStats[name].time / 1000)) * 3.6).toFixed(2) %> km/h</p>
                         </details>
@@ -95,7 +95,7 @@
                     <li>
                         <details open>
                             <summary><%- name %></summary>
-                            <p>Spędzony czas: <%- msToTime(player.dispatcherStats[name].time) %></p>
+                            <p>Spędzony czas: <%- msToTime(player.dispatcherStats[name].time, true) %></p>
                         </details>
                     </li>
 

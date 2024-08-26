@@ -1,18 +1,27 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
+import duration from 'dayjs/plugin/duration.js';
 import pl from 'dayjs/locale/pl.js';
 
+
+
+dayjs.extend(duration)
 dayjs.extend(relativeTime);
 dayjs.locale(pl);
 
 
-export const msToTime = (duration: number) => {
-    const minutes = Math.floor((duration / (1000 * 60)) % 60);
-    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+export const msToTime = (duration: number, long = false) => {
+    const time = dayjs.duration(duration, 'milliseconds');
 
-    if (minutes === 0 && hours === 0 && duration > 0)
-        return "1m"; 
+    if (long) {
+        let t = '';
+        if (time.hours()) t+= `${time.hours()}h `;
+        if (time.minutes()) t+= `${time.minutes()}m `;
+        if (time.seconds()) t+= `${time.seconds()}s`;
+
+        return `${time.humanize} (${t})`;
+    }
 
 
-    return `${hours ? `${hours}h ` : ''}${minutes ? `${minutes}m` : ''}`;
+    return time.humanize();
 }
