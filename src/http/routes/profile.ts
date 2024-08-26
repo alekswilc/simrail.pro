@@ -17,7 +17,7 @@ export class ProfilesRoute {
             const player = await MProfile.findOne({ steam: req.params.id });
             if (!player) return res.render('profiles/private.ejs', GitUtil.getData());
             const blacklist = await MBlacklist.findOne({ steam: req.params.id! });
-            if (blacklist && blacklist.status) return res.render('profiles/private.ejs');
+            if (blacklist && blacklist.status) return res.render('profiles/private.ejs', GitUtil.getData());
             const steam = await SteamUtil.getPlayer(player?.steam!);
             const steamStats = await SteamUtil.getPlayerStats(player?.steam!);
 
