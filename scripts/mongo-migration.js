@@ -80,7 +80,7 @@ import { Model, model, Schema } from 'mongoose';
             Object.values(x.dispatcherStats).reduce((acc, curr) => acc + curr.time, 0)
 
         console.log('updated ' + x.steamName)
-        await MProfile.updateOne({ id: x.id }, { trainPoints: x.trainPoints, trainDistance: x.trainDistance })
+        await MProfile.updateOne({ id: x.id }, { trainPoints: x.trainPoints, trainDistance: x.trainDistance, dispatcherTime: x.dispatcherTime, trainTime: x.trainTime })
     };
 
 
