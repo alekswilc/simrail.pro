@@ -15,9 +15,12 @@ export const msToTime = (duration: number, long = false) => {
 
     if (long) {
         let t = '';
+        if (time.days()) t+= `${time.days()}d `;
         if (time.hours()) t+= `${time.hours()}h `;
         if (time.minutes()) t+= `${time.minutes()}m `;
         if (time.seconds()) t+= `${time.seconds()}s`;
+
+        if (!t) t = '1s';
 
         return `${time.humanize()} (${t})`;
     }
