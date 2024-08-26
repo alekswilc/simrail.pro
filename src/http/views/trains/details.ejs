@@ -59,7 +59,7 @@
                 %> (<%- record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
         <p>Data wyjścia: <%- dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%- dayjs(record.leftDate).fromNow()
                     %>)</p>
-        <p>Spędzony czas: <%- record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
+        <p>Spędzony czas: <%- record.joinedDate ? msToTime(record.leftDate - record.joinedDate, true) : '--' %>
         </p>
         <% if (record.distance) { %>
             <p>Przejechane kilometry: <%- record.distance / 1000 %></p>
