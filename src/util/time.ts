@@ -20,7 +20,7 @@ export const msToTime = (duration: number, long = false) => {
         if (time.minutes()) t+= `${time.minutes()}m `;
         if (time.seconds()) t+= `${time.seconds()}s`;
 
-        return `${time.humanize()} (${t})`;
+        return `${time.humanize()} (${t.trim() || "<1s"})`;
     }
 
 
