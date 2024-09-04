@@ -16,7 +16,10 @@ const generateSearch = (regex: RegExp) => [
     },
     {
         server: { $regex: regex },
-    }
+    },
+    {
+        userUsername: { $regex: regex },
+    },
 ]
 
 export class TrainsRoute {
