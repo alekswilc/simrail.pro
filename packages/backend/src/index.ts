@@ -23,6 +23,9 @@ import { TrainsModule } from './modules/trains.js';
     console.log('MongoDB connected');
     global.client = new SimrailClient();
 
+
+
+    /*
     client.on(SimrailClientEvents.StationJoined, (server: Server, station: Station, player: IPlayer) => {
         console.log(`${server.ServerCode} | ${station.Name} | ${player.personaname} joined`);
     });
@@ -39,17 +42,11 @@ import { TrainsModule } from './modules/trains.js';
     client.on(SimrailClientEvents.TrainJoined, (server: Server, train: Train, player: IPlayer, start: number) => {
         console.log(`${server.ServerCode} | ${train.TrainName} | ${player.personaname} joined | ${start}`);
     });
-
+    */
 
     StationsModule.load();
     TrainsModule.load();
     ApiModule.load();
-
-
-    // process.on('unhandledRejection', (reason, promise) => {
-    //     console.error(reason);
-    //     console.error(promise);
-    // })
 })();
 
 

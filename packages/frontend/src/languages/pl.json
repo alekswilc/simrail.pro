@@ -1,0 +1,25 @@
+{
+
+    "_": {
+        "title": "Simrail Stats"
+    },
+    "home": {
+        "stats": {
+            "trains": "Pociągi",
+            "dispatchers": "Dyżurni ruchu",
+            "profiles": "Profili"
+        },
+        "title": "Simrail Stats",
+        "description": "Najbardziej rozbudowana strona z logami i statystykami gry SimRail!",
+        "buttons": {
+            "project": "Strona projektu",
+            "forum": "Strona na forum"
+        },
+        "footer": {
+            "license": "Licencja:",
+            "powered": "Oparte na:",
+            "version": "Wersja:",
+            "commit": "Commit:"
+        }
+    }
+}
