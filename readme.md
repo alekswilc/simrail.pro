@@ -21,9 +21,9 @@ https://simrail.alekswilc.dev/
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-The website is based on [TailAdmin](https://tailadmin.com/) under the MIT license
+- The website is based on [TailAdmin](https://tailadmin.com/) under the MIT license
 
-    
+
 
 
 Made with ❤️ by [alekswilc](https://www.alekswilc.dev/) for SimRail Community
