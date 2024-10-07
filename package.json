@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "yarn workspace backend build && yarn workspace frontend build",
+    "postbuild": "copyfiles --error --up 1 ./LICENSES/* ./dist/LICENSES/",
     "start": "concurrently --kill-others-on-fail \"yarn workspace backend start\"  \"yarn workspace frontend start\""
   },
   "workspaces": [
