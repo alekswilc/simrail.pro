@@ -12,6 +12,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import "./i18n";
+import { TrainLogs } from './pages/Logs.tsx';
 
 
 function App() {
@@ -41,11 +42,11 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/logs/trains"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Profile />
+              <PageTitle title="simrail.alekswilc.dev | Train Logs" />
+              <TrainLogs />
             </>
           }
         />

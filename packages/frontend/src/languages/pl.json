@@ -21,5 +21,13 @@
             "version": "Wersja:",
             "commit": "Commit:"
         }
+    },
+
+    "pages": {
+        "home": "Strona główna",
+        "logs": "Logi",
+        "stations": "Stacje",
+        "trains": "Pociągi",
+        "leaderboard": "Tablica wyników"
     }
 }

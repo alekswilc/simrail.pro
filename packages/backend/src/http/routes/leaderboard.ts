@@ -3,8 +3,10 @@ import dayjs from 'dayjs';
 import { msToTime } from '../../util/time.js';
 
 import { PipelineStage } from 'mongoose';
-import { MProfile, raw_schema } from '../../mongo/profile.js';
+import { IProfile, MProfile, raw_schema } from '../../mongo/profile.js';
 import { GitUtil } from '../../util/git.js';
+import { SuccessResponseBuilder } from '../responseBuilder.js';
+import { removeProperties } from '../../util/functions.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -39,15 +41,12 @@ export class LeaderboardRoute {
                 .limit(10)
 
 
-            
-            res.render('leaderboard/index.ejs', {
-                records,
-                dayjs,
-                msToTime,
-                type: 'train',
-                q: req.query.q,
-                ...GitUtil.getData(),
-            });
+            res.json(
+                new SuccessResponseBuilder<{ records: Omit<IProfile, '_id' | '__v'>[] }>()
+                    .setCode(200)
+                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, '_id' | '__v'>>(x, ['_id', '__v'])) })
+                    .toJSON()
+            );
         })
 
 
