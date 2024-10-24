@@ -12,7 +12,8 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import "./i18n";
-import { TrainLogs } from './pages/Logs.tsx';
+import { TrainLeaderboard } from './pages/leaderboard/TrainLeaderboard.tsx';
+import { StationLeaderboard } from './pages/leaderboard/StationsLeaderboard.tsx';
 
 
 function App() {
@@ -42,11 +43,20 @@ function App() {
           }
         />
         <Route
-          path="/logs/trains"
+          path="/leaderboard/trains"
           element={
             <>
-              <PageTitle title="simrail.alekswilc.dev | Train Logs" />
-              <TrainLogs />
+              <PageTitle title="simrail.alekswilc.dev | Train Leaderboard" />
+              <TrainLeaderboard />
+            </>
+          }
+        />
+        <Route
+          path="/leaderboard/stations"
+          element={
+            <>
+              <PageTitle title="simrail.alekswilc.dev | Stations Leaderboard" />
+              <StationLeaderboard />
             </>
           }
         />

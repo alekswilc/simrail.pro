@@ -29,5 +29,13 @@
         "stations": "Stacje",
         "trains": "Pociągi",
         "leaderboard": "Tablica wyników"
+    },
+    "leaderboard": {
+        "user": "Użytkownik",
+        "time": "Czas",
+        "distance": "Dystans",
+        "points": "Punkty",
+        "profile": "Otwórz profil",
+        "actions": "Akcje"
     }
 }

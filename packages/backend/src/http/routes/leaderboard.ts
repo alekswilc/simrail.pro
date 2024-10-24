@@ -68,14 +68,14 @@ export class LeaderboardRoute {
             const records = await MProfile.aggregate(filter)
                 .sort({ dispatcherTime: -1 })
                 .limit(10)
-            res.render('leaderboard/index.ejs', {
-                records,
-                dayjs,
-                msToTime,
-                type: 'station',
-                q: req.query.q,
-                ...GitUtil.getData(),
-            });
+
+
+            res.json(
+                new SuccessResponseBuilder<{ records: Omit<IProfile, '_id' | '__v'>[] }>()
+                    .setCode(200)
+                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, '_id' | '__v'>>(x, ['_id', '__v'])) })
+                    .toJSON()
+            );
         })
 
         return app;
