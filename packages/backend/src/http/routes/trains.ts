@@ -2,10 +2,12 @@ import { Router } from 'express';
 import dayjs from 'dayjs';
 import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
-import { MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
+import { ITrainLog, MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
 import { GitUtil } from '../../util/git.js';
+import { SuccessResponseBuilder } from '../responseBuilder.js';
+import { removeProperties } from '../../util/functions.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -43,13 +45,22 @@ export class TrainsRoute {
             const records = await MTrainLog.aggregate(filter)
                 .sort({ leftDate: -1 })
                 .limit(30)
-            res.render('trains/index.ejs', {
-                records,
-                dayjs,
-                q: req.query.q,
-                msToTime,
-                ...GitUtil.getData()
-            });
+
+
+            res.json(
+                new SuccessResponseBuilder<{ records: Omit<ITrainLog, '_id' | '__v'>[] }>()
+                    .setCode(200)
+                    .setData({ records: records.map(x => removeProperties<Omit<ITrainLog, '_id' | '__v'>>(x, ['_id', '__v'])) })
+                    .toJSON()
+            );
+
+            // res.render('trains/index.ejs', {
+            //     records,
+            //     dayjs,
+            //     q: req.query.q,
+            //     msToTime,
+            //     ...GitUtil.getData()
+            // });
         })
 
         app.get('/details/:id', async (req, res) => {

@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
-import { Loader } from './common/Loader';
-import { PageTitle } from './common/PageTitle';
-import Chart from './pages/Chart';
+import { Loader } from './components/loaders/PageLoader.tsx';
+import { PageTitle } from './components/common/PageTitle.tsx';
+import Chart from './old/Chart.tsx';
 import { Home } from './pages/Home';
-import Profile from './pages/Profile';
-import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
+import Settings from './old/Settings.tsx';
+import Tables from './old/Tables.tsx';
+import Alerts from './old/UiElements/Alerts.tsx';
+import Buttons from './old/UiElements/Buttons.tsx';
 import DefaultLayout from './layout/DefaultLayout';
 import "./i18n";
 import { TrainLeaderboard } from './pages/leaderboard/TrainLeaderboard.tsx';
 import { StationLeaderboard } from './pages/leaderboard/StationsLeaderboard.tsx';
+import { TrainLogs } from './pages/logs/TrainLogs.tsx';
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    setTimeout(() => setLoading(false), 400);
   }, []);
 
   return loading ? (
@@ -51,6 +51,17 @@ function App() {
             </>
           }
         />
+
+<Route
+          path="/logs/trains"
+          element={
+            <>
+              <PageTitle title="simrail.alekswilc.dev | Train logs" />
+              <TrainLogs />
+            </>
+          }
+        />
+
         <Route
           path="/leaderboard/stations"
           element={

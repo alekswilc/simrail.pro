@@ -7,7 +7,7 @@ import { ProfilesRoute } from './routes/profile.js';
 import { LeaderboardRoute } from './routes/leaderboard.js';
 import { MProfile } from '../mongo/profile.js';
 import { GitUtil } from '../util/git.js';
-
+import cors from 'cors';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,7 +19,7 @@ export class ApiModule {
         app.set('view engine', 'ejs');
         app.set('views', __dirname + '/views')
         app.get('/', (_, res) => res.render('home', GitUtil.getData()));
-       
+        app.use(cors());
         // backward compatible
         app.get('/details/:id', (req, res) => res.redirect('/stations/details/'+req.params.id));
 

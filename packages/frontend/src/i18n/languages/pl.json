@@ -35,7 +35,24 @@
         "time": "Czas",
         "distance": "Dystans",
         "points": "Punkty",
-        "profile": "Otwórz profil",
+        "profile": "Profil",
         "actions": "Akcje"
+    },
+    "logs": {
+        "user": "Użytkownik",
+        "time": "Czas",
+        "distance": "Dystans",
+        "points": "Punkty",
+        "profile": "Profil",
+        "record": "Więcej",
+        "train": "Pociąg",
+        "actions": "Akcje"
+    },
+    "contentloader": {
+        "error": {
+            "header": "Błąd ładowania strony",
+            "description": "Sprawdź swoje połączenie z internetem i odśwież strone",
+            "report": "Zgłoś błąd"
+        }
     }
 }

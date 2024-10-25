@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ChartOne from '../components/Charts/ChartOne';
-import ChartThree from '../components/Charts/ChartThree';
-import ChartTwo from '../components/Charts/ChartTwo';
+import ChartOne from './Charts/ChartOne';
+import ChartThree from './Charts/ChartThree';
+import ChartTwo from './Charts/ChartTwo';
 
 const Chart: React.FC = () => {
   return (

@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-import LogoIcon from '../../images/logo/logo-icon.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
+import DarkModeSwitcher from './DarkModeSwitcher.tsx';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;

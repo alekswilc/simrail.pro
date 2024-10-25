@@ -1,5 +1,5 @@
 import React from 'react';
-import CardDataStats from '../components/CardDataStats';
+import CardDataStats from '../old/CardDataStats';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
