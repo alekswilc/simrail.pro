@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { MLog } from '../../mongo/logs.js';
+import { ILog, MLog } from '../../mongo/logs.js';
 import dayjs from 'dayjs';
 import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
 import { GitUtil } from '../../util/git.js';
+import { removeProperties } from '../../util/functions.js';
+import { SuccessResponseBuilder } from '../responseBuilder.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -46,13 +48,12 @@ export class StationsRoute {
             const records = await MLog.aggregate(filter)
                 .sort({ leftDate: -1 })
                 .limit(30)
-            res.render('stations/index.ejs', {
-                records,
-                dayjs,
-                q: req.query.q,
-                msToTime,
-                ...GitUtil.getData()
-            });
+            res.json(
+                new SuccessResponseBuilder<{ records: Omit<ILog, '_id' | '__v'>[] }>()
+                    .setCode(200)
+                    .setData({ records: records.map(x => removeProperties<Omit<ILog, '_id' | '__v'>>(x, ['_id', '__v'])) })
+                    .toJSON()
+            );
         })
 
         app.get('/details/:id', async (req, res) => {
@@ -69,28 +70,7 @@ export class StationsRoute {
                 msToTime,
                 ...GitUtil.getData()
             });
-        })
-
-    
-        // API ENDPOINTS
-        // CREATE AN ISSUE IF YOU NEED API ACCESS: https://git.alekswilc.dev/alekswilc/simrail-logs/issues
-        /*
-        app.get('/api/last', async (req, res) => {
-            const records = await MLog.find()
-                .sort({ leftDate: -1 })
-                .limit(30)
-            res.json({ code: 200, records });
-        })
-
-        app.get('/api/search', async (req, res) => {
-            if (!req.query.q) return res.send('invalid');
-            const records = await MLog.find({ $text: { $search: req.query.q as string } })
-                .sort({ leftDate: -1 })
-                .limit(30)
-
-            res.json({ code: 200, records });
-        })*/
-
+        });
 
         return app;
     }

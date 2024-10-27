@@ -49,6 +49,7 @@ const TableThree = () => {
             </tr>
           </thead>
           <tbody>
+            
             {packageData.map((packageItem, key) => (
               <tr key={key}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">

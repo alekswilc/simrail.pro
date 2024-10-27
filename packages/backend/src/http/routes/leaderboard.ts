@@ -1,10 +1,6 @@
 import { Router } from 'express';
-import dayjs from 'dayjs';
-import { msToTime } from '../../util/time.js';
-
 import { PipelineStage } from 'mongoose';
 import { IProfile, MProfile, raw_schema } from '../../mongo/profile.js';
-import { GitUtil } from '../../util/git.js';
 import { SuccessResponseBuilder } from '../responseBuilder.js';
 import { removeProperties } from '../../util/functions.js';
 
@@ -26,7 +22,6 @@ export class LeaderboardRoute {
 
             const filter: PipelineStage[] = [];
 
-
             s && filter.push({
                 $match: {
                     $and: [
@@ -35,11 +30,9 @@ export class LeaderboardRoute {
                 }
             })
 
-
             const records = await MProfile.aggregate(filter)
                 .sort({ trainPoints: -1 })
                 .limit(10)
-
 
             res.json(
                 new SuccessResponseBuilder<{ records: Omit<IProfile, '_id' | '__v'>[] }>()
@@ -54,8 +47,6 @@ export class LeaderboardRoute {
             const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
 
             const filter: PipelineStage[] = [];
-
-
             s && filter.push({
                 $match: {
                     $and: [
@@ -64,11 +55,9 @@ export class LeaderboardRoute {
                 }
             })
 
-
             const records = await MProfile.aggregate(filter)
                 .sort({ dispatcherTime: -1 })
                 .limit(10)
-
 
             res.json(
                 new SuccessResponseBuilder<{ records: Omit<IProfile, '_id' | '__v'>[] }>()

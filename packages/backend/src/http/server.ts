@@ -8,6 +8,7 @@ import { LeaderboardRoute } from './routes/leaderboard.js';
 import { MProfile } from '../mongo/profile.js';
 import { GitUtil } from '../util/git.js';
 import cors from 'cors';
+import { StatsRoute } from './routes/stats.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -21,12 +22,13 @@ export class ApiModule {
         app.get('/', (_, res) => res.render('home', GitUtil.getData()));
         app.use(cors());
         // backward compatible
-        app.get('/details/:id', (req, res) => res.redirect('/stations/details/'+req.params.id));
+        app.get('/details/:id', (req, res) => res.redirect('/stations/details/' + req.params.id));
 
         app.use('/stations/', StationsRoute.load());
         app.use('/trains/', TrainsRoute.load());
         app.use('/profiles/', ProfilesRoute.load());
-        app.use('/leaderboard/', LeaderboardRoute.load())
+        app.use('/leaderboard/', LeaderboardRoute.load());
+        app.use('/stats/', StatsRoute.load());
 
         app.listen(2005);
     }

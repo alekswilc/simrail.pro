@@ -1,14 +1,14 @@
 import { execSync } from 'child_process';
 
 export class GitUtil {
-    private static cache: { lastUpdated: number, version: string | null, commit: string | null } = undefined!;
+    private static cache: { lastUpdated: number, version?: string, commit?: string } = undefined!;
 
     public static getLatestVersion() {
         try {
             const data = execSync('git describe --tags --exact-match').toString();
             return data.replace('\n', '');
         } catch {
-            return null;
+            return undefined;
         }
     }
 
@@ -17,7 +17,7 @@ export class GitUtil {
             const data = execSync('git rev-parse --short HEAD').toString();
             return data.replace('\n', '');
         } catch {
-            return null;
+            return undefined;
         }
     }
 

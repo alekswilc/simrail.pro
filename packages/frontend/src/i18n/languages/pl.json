@@ -18,8 +18,8 @@
         "footer": {
             "license": "Licencja:",
             "powered": "Oparte na:",
-            "version": "Wersja:",
-            "commit": "Commit:"
+            "thanks": "Specjalne podziękowania dla <bahu>serwerowni BAHU.PRO</bahu>, <simrailelite>discorda Simrail ELITE</simrailelite>, społeczności Simrail i mojej dziewczyny",
+            "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
         }
     },
 
@@ -31,7 +31,7 @@
         "leaderboard": "Tablica wyników"
     },
     "leaderboard": {
-        "user": "Użytkownik",
+        "user": "Gracz",
         "time": "Czas",
         "distance": "Dystans",
         "points": "Punkty",
@@ -39,20 +39,55 @@
         "actions": "Akcje"
     },
     "logs": {
-        "user": "Użytkownik",
+        "user": "Gracz",
         "time": "Czas",
         "distance": "Dystans",
         "points": "Punkty",
         "profile": "Profil",
         "record": "Więcej",
         "train": "Pociąg",
-        "actions": "Akcje"
+        "actions": "Akcje",
+        "search": "Wpisz, aby wyszukać",
+        "station": "Stacja"
     },
     "contentloader": {
         "error": {
             "header": "Błąd ładowania strony",
             "description": "Sprawdź swoje połączenie z internetem i odśwież strone",
-            "report": "Zgłoś błąd"
+            "report": "Zgłoś błąd",
+            "refresh": "Odśwież"
+        },
+        "notfound": {
+            "header": "Nie znaleziono danych",
+            "description": "Twoje wyszukiwanie nie zwróciło wyników."
+        }
+    },
+    "profile": {
+        "stats": {
+            "distance": "Przejechanych kilometrów",
+            "time": "Godzin dyżurów"
+        },
+        "trains": {
+            "header": "Statystyki pociągów",
+            "train": "Pociąg",
+            "distance": "Dystans",
+            "points": "Punkty",
+            "time": "Czas"
+        },
+        "stations": {
+            "header": "Statystyki stacji",
+            "station": "Stacja",
+            "time": "Czas"
+        },
+        "errors": {
+            "notfound": {
+                "title": "Nie znaleziono profilu",
+                "description": "Profil gracza nie został znaleziony lub posiada on prywatny profil steam."
+            },
+            "blacklist": {
+                "title": "Nie można wyświetlic profilu",
+                "description": "Profil tego gracza został zablokowany."
+            }
         }
     }
 }

@@ -1,12 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-
-const LoadError = () => {
-
-    const { t } = useTranslation();
-
-    return <div
+export const ErrorAlert = ({ title, description }: { title: string, description: string }) =>
+    <div
         className='flex w-full border-l-6 border-[#F87171] bg-[#F87171] bg-opacity-[15%] dark:bg-[#1B1B24] px-7 py-8 shadow-md dark:bg-opacity-30 md:p-9'>
         <div className='mr-5 flex h-9 w-full max-w-[36px] items-center justify-center rounded-lg bg-[#F87171]'>
             <svg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='<http://www.w3.org/2000/svg>'>
@@ -17,41 +10,12 @@ const LoadError = () => {
         </div>
         <div className='w-full'>
             <h5 className='mb-3 font-semibold text-[#B45454]'>
-                {t("contentloader.error.header")}
+                {title}
             </h5>
             <ul>
                 <li className='leading-relaxed text-[#CD5D5D]'>
-                    {t("contentloader.error.description")}
-                </li>
-                <li className='leading-relaxed text-[#CD5D5D]'>
-                    <div className="pt-4">
-                        {/* TODO: add params */}
-                        <Link className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-70 lg:px-6 xl:px-8" to="https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/issues/new">{t("contentloader.error.report")}</Link>
-                    </div>
-
+                    {description}
                 </li>
             </ul>
         </div>
-    </div>;
-}
-
-export const ContentLoader = () => {
-    const [error, setError] = useState(false);
-    useEffect(() => {
-        new Promise(res => setTimeout(res, 5000)).then(() => {
-            setError(true);
-        });
-
-    }, []);
-
-
-    return (
-        <>
-            {error ? <LoadError /> : <div className="flex h-screen items-center justify-center shadow-default bg-white dark:border-strokedark dark:bg-boxdark">
-                <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
-
-
-            </div>}
-        </>
-    );
-};
+    </div>

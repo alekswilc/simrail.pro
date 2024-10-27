@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../old/CardDataStats';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { TStatsResponse } from '../types/stats.ts';
 
 export const Home: React.FC = () => {
   const { t } = useTranslation();
+
+  const [commit, setCommit] = useState("");
+  const [version, setVersion] = useState("");
+  const [trains, setTrains] = useState(0);
+  const [dispatchers, setDispatchers] = useState(0);
+  const [profiles, setProfiles] = useState(0);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/stats/`).then(x => x.json()).then((data: TStatsResponse) => {
+      data.data.git.commit && setCommit(data.data.git.commit);
+      data.data.git.version && setVersion(data.data.git.version);
+      
+
+      setTrains(data.data.stats.trains);
+      setDispatchers(data.data.stats.dispatchers);
+      setProfiles(data.data.stats.profiles);
+    });
+  }, [])
+
+
+
+
+  useEffect(() => { }, []);
 
   return (
     <>
       <div className="flex flex-col gap-10">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-          <CardDataStats title={t('home.stats.trains')} total="5,000" />
-          <CardDataStats title={t('home.stats.dispatchers')} total="3,000" />
-          <CardDataStats title={t('home.stats.profiles')} total="1,000" />
+          <CardDataStats title={t('home.stats.trains')} total={trains.toString()} />
+          <CardDataStats title={t('home.stats.dispatchers')} total={dispatchers.toString()} />
+          <CardDataStats title={t('home.stats.profiles')} total={profiles.toString()} />
         </div>
 
 
@@ -46,9 +70,19 @@ export const Home: React.FC = () => {
           <div className="px-4 pb-6 text-center">
 
             <div className="mt-6.5">
-              <p>{t('home.footer.commit')} <Link className='color-orchid' to={"https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/commit/COMMIT"}>COMMIT</Link> | {t('home.footer.version')} <Link className='color-orchid' to={"https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/releases/tag/VERSION"}>VERSION</Link></p>
+              <p><Trans
+                i18nKey={t("home.footer.author")}
+                values={{ author: 'alekswilc' }}
+                components={{ anchor: <Link className='color-orchid' to={"https://www.alekswilc.dev"} /> }}
+              /></p>
+              <p><Trans
+                i18nKey={t("home.footer.thanks")}
+                components={{ bahu: <Link className='color-orchid' to={"https://bahu.pro/"} />, simrailelite: <Link className='color-orchid' to={"https://bahu.pro/"} /> }}
+              /></p>
               <p>{t("home.footer.license")} <Link className='color-orchid' to={'https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/src/branch/main/LICENSE'}>GNU AGPL V3</Link></p>
               <p>{t("home.footer.powered")} <Link className='color-orchid' to={"https://tailadmin.com/"}>TailAdmin</Link></p>
+
+              <p>{version && <Link className='color-orchid' to={`https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/releases/tag/${version}`}>{version}</Link>}{version && commit && " | "}{commit && <Link className='color-orchid' to={`https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/commit/${commit}`}>{commit}</Link>}</p>
 
             </div>
 

@@ -1,25 +1,23 @@
-import { TLeaderboardRecord } from '../../types/leaderboard.ts';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { StationTable } from '../../components/pages/leaderboard/StationTable.tsx';
+import { StationTable } from '../../components/pages/logs/StationTable.tsx';
 import { useDebounce } from 'use-debounce';
+import { TStationRecord } from '../../types/station.ts';
 import { Search } from '../../components/mini/util/Search.tsx';
-
-export const StationLeaderboard = () => {
-    const [data, setData] = useState<TLeaderboardRecord[]>([]);
+export const StationLogs = () => {
+    const [data, setData] = useState<TStationRecord[]>([]);
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}leaderboard/station/`).then(x => x.json()).then(x => {
+        fetch(`${import.meta.env.VITE_API_URL}/stations/`).then(x => x.json()).then(x => {
             setData(x.data.records);
         });
     }, []);
-
+    const [error, setError] = useState<0 | 1 | 2>(0);
     const [searchItem, setSearchItem] = useState('');
     const [searchValue] = useDebounce(searchItem, 500);
-    const [error, setError] = useState<0 | 1 | 2>(0);
 
     useEffect(() => {
         setData([]);
         setError(0);
-        fetch(`${import.meta.env.VITE_API_URL}/leaderboard/station/?q=${searchValue}`).then(x => x.json()).then(x => {
+        fetch(`${import.meta.env.VITE_API_URL}/stations/?q=${searchValue}`).then(x => x.json()).then(x => {
             setData(x.data.records);
             setError(x.data.records.length > 0 ? 1 : 2);
         });
