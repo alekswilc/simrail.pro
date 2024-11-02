@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>simrail.alekswilc.dev</title>
     <meta name="description"
-        content="<%- record.stationName %> | <%- record.userUsername %> | <%- dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>">
+        content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>">
     <meta property="og:title" content="Simrail Log">
-    <meta property="og:url" content="https://simrail.alekswilc.dev/details/<%- record.id %>/">
+    <meta property="og:url" content="https://simrail.alekswilc.dev/details/<%= record.id %>/">
     <meta property="og:description"
-        content="<%- record.stationName %> | <%- record.userUsername %> | <%- dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>"">
+        content="<%= record.stationName %> | <%= record.userUsername %> | <%= dayjs(record.leftDate).format('hh:mm DD/MM/YYYY') %>"">
     <meta property=" og:type" content="website">
-    <meta property="og:image" content="<%- record.userAvatar %>" />
+    <meta property="og:image" content="<%= record.userAvatar %>" />
     <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
@@ -40,7 +40,7 @@
     }
 
     function copylink() {
-        navigator.clipboard.writeText("https://simrail.alekswilc.dev/stations/details/<%- record.id %>/")
+        navigator.clipboard.writeText("https://simrail.alekswilc.dev/stations/details/<%= record.id %>/")
     }
 </script>
 
@@ -49,28 +49,28 @@
 
     <div class="details">
 
-        <p>Użytkownik: <a href="/profiles/<%- record.userSteamId %>">
-                <%- record.userUsername %>
+        <p>Użytkownik: <a href="/profiles/<%= record.userSteamId %>">
+                <%= record.userUsername %>
             </a></p>
-        <p>Stacja: <%- record.stationName %>
+        <p>Stacja: <%= record.stationName %>
         </p>
-        <p>Serwer: <%- record.server.toUpperCase() %>
+        <p>Serwer: <%= record.server.toUpperCase() %>
         </p>
-        <p>Data wejścia: <%- record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--'
-                %> (<%- record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
-        <p>Data wyjścia: <%- dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%- dayjs(record.leftDate).fromNow()
+        <p>Data wejścia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY') : '--:-- --/--/--'
+                %> (<%= record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)</p>
+        <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%= dayjs(record.leftDate).fromNow()
                     %>)</p>
-        <p>Spędzony czas: <%- record.joinedDate ? msToTime(record.leftDate - record.joinedDate, true) : '--' %>
+        <p>Spędzony czas: <%= record.joinedDate ? msToTime(record.leftDate - record.joinedDate, true) : '--' %>
         </p>
 
         <br />
-        <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;station: <%- record.stationName %>
-            ;steam: <%- record.userSteamId %>
-            ;server: <%- record.server %>
-            ;name: <%- record.userUsername %>
-            ;joined: <%-record.joinedDate ? dayjs(record.joinedDate).format() : 'no-data'%>
-            ;left: <%-dayjs(record.leftDate).format()%>
-            ;url: https://simrail.alekswilc.dev/stations/details/<%- record.id %>/
+        <code class="clickable" style="white-space: pre-line" onclick="copydata()" id="data">;station: <%= record.stationName %>
+            ;steam: <%= record.userSteamId %>
+            ;server: <%= record.server %>
+            ;name: <%= record.userUsername %>
+            ;joined: <%=record.joinedDate ? dayjs(record.joinedDate).format() : 'no-data'%>
+            ;left: <%=dayjs(record.leftDate).format()%>
+            ;url: https://simrail.alekswilc.dev/stations/details/<%= record.id %>/
         </code>
         <br />
         <p><button onclick="copylink()">Kopiuj link</button></p>
