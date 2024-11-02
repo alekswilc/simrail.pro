@@ -26,7 +26,7 @@
 
     <h2 id="but">Tablica wyników</h2>
     <div class="container">
-        <input type="text" id="search" value="<%-q%>">
+        <input type="text" id="search" value="<=-q%>">
 
         <button onclick="search()">Szukaj</button>
         <button onclick="clearSearch()">Wyczyść</button>
@@ -50,15 +50,15 @@
 
     <script>
         function select() {
-            const isTrain = "<%- type %>" === 'train'
+            const isTrain = "<%= type %>" === 'train'
             location.href = '/leaderboard/' + (isTrain ? 'station' : 'train')
         }
-        document.getElementById('but').textContent = ("<%- type %>" === 'train') ? 'Tablica pociągów' : 'Tablica posterunków'
+        document.getElementById('but').textContent = ("<%= type %>" === 'train') ? 'Tablica pociągów' : 'Tablica posterunków'
         function search() {
-            location.href = '/leaderboard/<%- type %>/?q=' + document.getElementById('search').value
+            location.href = '/leaderboard/<%= type %>/?q=' + document.getElementById('search').value
         }
         function clearSearch() {
-            location.href = '/leaderboard/<%- type %>';
+            location.href = '/leaderboard/<%= type %>';
         }
         document.getElementById('search').addEventListener("keyup", (event) => {
             if (event.key === "Enter")

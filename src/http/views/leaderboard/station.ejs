@@ -1,9 +1,9 @@
 <details>
     <summary><span style="color:hotpink">
-            <%- record.steamName %>
+            <%= record.steamName %>
         </span> <span style="color: lightskyblue">
-            <%- msToTime(record.dispatcherTime) %>
+            <%= msToTime(record.dispatcherTime) %>
         </span> </summary>
-        <p>Spędzona liczba godzin: <%- msToTime(record.dispatcherTime, true) || 'Brak' %></p>
-    <button onclick="location.href = '/profiles/<%- record.steam %>'">Więcej</button>
+        <p>Spędzona liczba godzin: <%= msToTime(record.dispatcherTime, true) || 'Brak' %></p>
+    <button onclick="location.href = '/profiles/<%= record.steam %>'">Więcej</button>
 </details>

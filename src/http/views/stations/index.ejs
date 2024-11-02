@@ -26,7 +26,7 @@
     <h2>Wyszukaj posterunek, osobe lub serwer</h2>
 
     <div class="container">
-        <input type="text" id="search" value="<%-q%>">
+        <input type="text" id="search" value="<%=q%>">
         <button onclick="search()">Szukaj</button>
         <button onclick="clearSearch()">Wyczyść</button>
 
@@ -38,25 +38,25 @@
             <li>
                 <details>
                     <summary>[<span style="color:lightskyblue">
-                            <%- record.server.toUpperCase() %>
+                            <%= record.server.toUpperCase() %>
                         </span>] <span style="color: lightskyblue">
-                            <%- record.stationName %>
+                            <%= record.stationName %>
                         </span> - <span style="color:hotpink">
-                            <%- record.userUsername %>
+                            <%= record.userUsername %>
                         </span>
                         <p style="margin-bottom: 0; opacity: 0.5;">
-                            <%- dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %>
+                            <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %>
                         </p>
                     </summary>
-                    <p>Data dołączenia: <%- record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY')
-                            : '--:-- --/--/--' %> (<%- record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)
+                    <p>Data dołączenia: <%= record.joinedDate ? dayjs(record.joinedDate).format('HH:mm DD/MM/YYYY')
+                            : '--:-- --/--/--' %> (<%= record.joinedDate ? dayjs(record.joinedDate).fromNow() : '--' %>)
                     </p>
-                    <p>Data wyjścia: <%- dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%-
+                    <p>Data wyjścia: <%= dayjs(record.leftDate).format('HH:mm DD/MM/YYYY') %> (<%=
                                 dayjs(record.leftDate).fromNow() %>)</p>
-                    <p>Spędzony czas: <%- record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
+                    <p>Spędzony czas: <%= record.joinedDate ? msToTime(record.leftDate - record.joinedDate) : '--' %>
                     </p>
 
-                    <a href="/stations/details/<%- record.id %>">
+                    <a href="/stations/details/<%= record.id %>">
                         <button>Więcej</button>
                     </a>
                 </details>

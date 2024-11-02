@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>simrail.alekswilc.dev</title>
     <meta name="description"
-        content="<%- steam.personaname %>">
+        content="<%= steam.personaname %>">
     <meta property="og:title" content="Simrail Log">
-    <meta property="og:url" content="https://simrail.alekswilc.dev/profiles/<%- player.steam %>/">
+    <meta property="og:url" content="https://simrail.alekswilc.dev/profiles/<%= player.steam %>/">
     <meta property="og:description"
-        content="<%- steam.personaname %>">
+        content="<%= steam.personaname %>">
     <meta property=" og:type" content="website">
-    <meta property="og:image" content="<%- steam.avatarfull %>" />
+    <meta property="og:image" content="<%= steam.avatarfull %>" />
     <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/open-fonts@1.1.1/fonts/inter.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
@@ -35,7 +35,7 @@
 
 <script>
     function copylink() {
-        navigator.clipboard.writeText("https://simrail.alekswilc.dev/players/details/<%- player.steam %>/")
+        navigator.clipboard.writeText("https://simrail.alekswilc.dev/players/details/<%= player.steam %>/")
     }
 </script>
 
@@ -43,15 +43,15 @@
     <%- include('../_modules/header.ejs', { section: 'profiles' }) %>
 
     <div class="details">
-        <h1><a href="<%- steam.profileurl %>"><%- steam.personaname %></a></h1>
+        <h1><a href="<%= steam.profileurl %>"><%= steam.personaname %></a></h1>
 
 
         <%if (steamStats.stats) {%>
             <details open>
                 <summary>Statystyki Steam</summary>
-                <p>Zdobyte punkty: <%- steamStats.stats.find(x => x.name === 'SCORE')?.value ?? "0" %></p>
-                <p>Przejechane kilometry: <%- (steamStats.stats.find(x => x.name === 'DISTANCE_M')?.value / 1000) ?? "0" %></p>
-                <p>Czas spędzony jako dyżurny ruchu: <%- msToTime((steamStats.stats.find(x => x.name === 'DISPATCHER_TIME')?.value ?? 0)*1_000_000, true) || 'Nigdy nie wszedł w tryb dyżurnego ruchu.' %></p>
+                <p>Zdobyte punkty: <%= steamStats.stats.find(x => x.name === 'SCORE')?.value ?? "0" %></p>
+                <p>Przejechane kilometry: <%= (steamStats.stats.find(x => x.name === 'DISTANCE_M')?.value / 1000) ?? "0" %></p>
+                <p>Czas spędzony jako dyżurny ruchu: <%= msToTime((steamStats.stats.find(x => x.name === 'DISPATCHER_TIME')?.value ?? 0)*1_000_000, true) || 'Nigdy nie wszedł w tryb dyżurnego ruchu.' %></p>
                 <br />
                 <p style="font-size: smaller;">UWAGA: powyższe statystyki udostępnia platforma STEAM, mogą one być z łatwością manipulowane.</p>
                 
@@ -61,21 +61,21 @@
 
         <h1>Statystyki pociągów</h1>
         <% if (player.trainTime) {%>
-            <p>Spędzony czas: <%- msToTime(player.trainTime) %></p>
-            <p>Przejechane kilometry: <%- player.trainDistance / 1000 %>km</p>
-            <p>Zdobyte punkty: <%- player.trainPoints %></p>
-            <p>Średnia prędkość: <%- ((player.trainDistance / (player.trainTime / 1000)) * 3.6).toFixed(2) %> km/h</p>
+            <p>Spędzony czas: <%= msToTime(player.trainTime) %></p>
+            <p>Przejechane kilometry: <%= player.trainDistance / 1000 %>km</p>
+            <p>Zdobyte punkty: <%= player.trainPoints %></p>
+            <p>Średnia prędkość: <%= ((player.trainDistance / (player.trainTime / 1000)) * 3.6).toFixed(2) %> km/h</p>
         <%}%>
         <% if (player.trainStats && Object.keys(player.trainStats).length) {%>
             <ul>
                 <% Object.keys(player.trainStats).forEach(name => {%>
                     <li>
                         <details open>
-                            <summary><%- name %></summary>
-                            <p>Przejechany dystans: <%- player.trainStats[name].distance / 1000 %>km</p>
-                            <p>Spędzony czas: <%- msToTime(player.trainStats[name].time, true) %></p>
-                            <p>Zdobyte punkty: <%- player.trainStats[name].score %></p>
-                            <p>Średnia prędkość: <%- ((player.trainStats[name].distance / (player.trainStats[name].time / 1000)) * 3.6).toFixed(2) %> km/h</p>
+                            <summary><%= name %></summary>
+                            <p>Przejechany dystans: <%= player.trainStats[name].distance / 1000 %>km</p>
+                            <p>Spędzony czas: <%= msToTime(player.trainStats[name].time, true) %></p>
+                            <p>Zdobyte punkty: <%= player.trainStats[name].score %></p>
+                            <p>Średnia prędkość: <%= ((player.trainStats[name].distance / (player.trainStats[name].time / 1000)) * 3.6).toFixed(2) %> km/h</p>
                         </details>
                     </li>
 
@@ -87,15 +87,15 @@
 
         <h1>Statystyki posterunków</h1>
         <% if (player.dispatcherTime) {%>
-            <p>Spędzony czas: <%- msToTime(player.dispatcherTime) %></p>
+            <p>Spędzony czas: <%= msToTime(player.dispatcherTime) %></p>
         <%}%>
         <% if (player.dispatcherStats && Object.keys(player.dispatcherStats).length) {%>
             <ul>
                 <% Object.keys(player.dispatcherStats).forEach(name => {%>
                     <li>
                         <details open>
-                            <summary><%- name %></summary>
-                            <p>Spędzony czas: <%- msToTime(player.dispatcherStats[name].time, true) %></p>
+                            <summary><%= name %></summary>
+                            <p>Spędzony czas: <%= msToTime(player.dispatcherStats[name].time, true) %></p>
                         </details>
                     </li>
 
