@@ -1,93 +1,91 @@
 {
-
-    "_": {
-        "title": "Simrail Stats"
+  "_": {
+    "title": "Simrail Stats"
+  },
+  "home": {
+    "stats": {
+      "trains": "Pociągi",
+      "dispatchers": "Dyżurni ruchu",
+      "profiles": "Profili"
     },
-    "home": {
-        "stats": {
-            "trains": "Pociągi",
-            "dispatchers": "Dyżurni ruchu",
-            "profiles": "Profili"
-        },
-        "title": "Simrail Stats",
-        "description": "Najbardziej rozbudowana strona z logami i statystykami gry SimRail!",
-        "buttons": {
-            "project": "Strona projektu",
-            "forum": "Strona na forum"
-        },
-        "footer": {
-            "license": "Licencja:",
-            "powered": "Oparte na:",
-            "thanks": "Specjalne podziękowania dla <bahu>serwerowni BAHU.PRO</bahu>, <simrailelite>discorda Simrail ELITE</simrailelite>, społeczności Simrail i mojej dziewczyny",
-            "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
-        }
+    "title": "Simrail Stats",
+    "description": "Najbardziej rozbudowana strona z logami i statystykami gry SimRail!",
+    "buttons": {
+      "project": "Strona projektu",
+      "forum": "Strona na forum"
     },
-
-    "pages": {
-        "home": "Strona główna",
-        "logs": "Logi",
-        "stations": "Stacje",
-        "trains": "Pociągi",
-        "leaderboard": "Tablica wyników"
-    },
-    "leaderboard": {
-        "user": "Gracz",
-        "time": "Czas",
-        "distance": "Dystans",
-        "points": "Punkty",
-        "profile": "Profil",
-        "actions": "Akcje"
-    },
-    "logs": {
-        "user": "Gracz",
-        "time": "Czas",
-        "distance": "Dystans",
-        "points": "Punkty",
-        "profile": "Profil",
-        "record": "Więcej",
-        "train": "Pociąg",
-        "actions": "Akcje",
-        "search": "Wpisz, aby wyszukać",
-        "station": "Stacja"
-    },
-    "contentloader": {
-        "error": {
-            "header": "Błąd ładowania strony",
-            "description": "Sprawdź swoje połączenie z internetem i odśwież strone",
-            "report": "Zgłoś błąd",
-            "refresh": "Odśwież"
-        },
-        "notfound": {
-            "header": "Nie znaleziono danych",
-            "description": "Twoje wyszukiwanie nie zwróciło wyników."
-        }
-    },
-    "profile": {
-        "stats": {
-            "distance": "Przejechanych kilometrów",
-            "time": "Godzin dyżurów"
-        },
-        "trains": {
-            "header": "Statystyki pociągów",
-            "train": "Pociąg",
-            "distance": "Dystans",
-            "points": "Punkty",
-            "time": "Czas"
-        },
-        "stations": {
-            "header": "Statystyki stacji",
-            "station": "Stacja",
-            "time": "Czas"
-        },
-        "errors": {
-            "notfound": {
-                "title": "Nie znaleziono profilu",
-                "description": "Profil gracza nie został znaleziony lub posiada on prywatny profil steam."
-            },
-            "blacklist": {
-                "title": "Nie można wyświetlic profilu",
-                "description": "Profil tego gracza został zablokowany."
-            }
-        }
+    "footer": {
+      "license": "Licencja:",
+      "powered": "Oparte na:",
+      "thanks": "Specjalne podziękowania dla <bahu>serwerowni BAHU.PRO</bahu>, <simrailelite>discorda Simrail ELITE</simrailelite>, społeczności Simrail i mojej dziewczyny",
+      "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
     }
+  },
+  "pages": {
+    "home": "Strona główna",
+    "logs": "Logi",
+    "stations": "Stacje",
+    "trains": "Pociągi",
+    "leaderboard": "Tablica wyników"
+  },
+  "leaderboard": {
+    "user": "Gracz",
+    "time": "Czas",
+    "distance": "Dystans",
+    "points": "Punkty",
+    "profile": "Profil",
+    "actions": "Akcje"
+  },
+  "logs": {
+    "user": "Gracz",
+    "time": "Czas",
+    "distance": "Dystans",
+    "points": "Punkty",
+    "profile": "Profil",
+    "record": "Więcej",
+    "train": "Pociąg",
+    "actions": "Akcje",
+    "search": "Wpisz, aby wyszukać",
+    "station": "Stacja"
+  },
+  "contentloader": {
+    "error": {
+      "header": "Błąd ładowania strony",
+      "description": "Sprawdź swoje połączenie z internetem i odśwież strone",
+      "report": "Zgłoś błąd",
+      "refresh": "Odśwież"
+    },
+    "notfound": {
+      "header": "Nie znaleziono danych",
+      "description": "Twoje wyszukiwanie nie zwróciło wyników."
+    }
+  },
+  "profile": {
+    "stats": {
+      "distance": "Przejechanych kilometrów",
+      "time": "Godzin dyżurów"
+    },
+    "trains": {
+      "header": "Statystyki pociągów",
+      "train": "Pociąg",
+      "distance": "Dystans",
+      "points": "Punkty",
+      "time": "Czas"
+    },
+    "stations": {
+      "header": "Statystyki stacji",
+      "station": "Stacja",
+      "time": "Czas"
+    },
+    "errors": {
+      "notfound": {
+        "title": "Nie znaleziono profilu",
+        "description": "Profil gracza nie został znaleziony lub posiada on prywatny profil steam."
+      },
+      "blacklist": {
+        "title": "Nie można wyświetlic profilu",
+        "description": "Profil tego gracza został zablokowany."
+      }
+    }
+  }
 }

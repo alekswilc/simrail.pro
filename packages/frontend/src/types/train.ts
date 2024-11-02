@@ -1,14 +1,17 @@
-export interface TTrainResponse {
+export interface TTrainResponse
+{
     success: boolean;
     data: TTrainData;
     code: number;
 }
 
-export interface TTrainData {
+export interface TTrainData
+{
     records: TTrainRecord[];
 }
 
-export interface TTrainRecord {
+export interface TTrainRecord
+{
     id: string;
     trainNumber: string;
     userSteamId: string;

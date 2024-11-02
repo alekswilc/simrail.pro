@@ -1,14 +1,17 @@
-export interface TLeaderboardResponse {
+export interface TLeaderboardResponse
+{
     success: boolean;
     data: TLeaderboardData;
     code: number;
 }
 
-export interface TLeaderboardData {
+export interface TLeaderboardData
+{
     records: TLeaderboardRecord[];
 }
 
-export interface TLeaderboardRecord {
+export interface TLeaderboardRecord
+{
     id: string;
     steam: string;
     steamName: string;
@@ -16,15 +19,17 @@ export interface TLeaderboardRecord {
     trainPoints: number;
     trainDistance: number;
     dispatcherTime: number;
-    dispatcherStats?: { [key: string]: TLeaderboardDispatcherStat };
-    trainStats?: { [key: string]: TLeaderboardTrainStat };
+    dispatcherStats?: { [ key: string ]: TLeaderboardDispatcherStat };
+    trainStats?: { [ key: string ]: TLeaderboardTrainStat };
 }
 
-export interface TLeaderboardDispatcherStat {
+export interface TLeaderboardDispatcherStat
+{
     time: number;
 }
 
-export interface TLeaderboardTrainStat {
+export interface TLeaderboardTrainStat
+{
     distance: number;
     score: number;
     time: number;

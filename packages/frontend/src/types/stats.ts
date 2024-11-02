@@ -1,21 +1,25 @@
-export interface TStatsResponse {
+export interface TStatsResponse
+{
     success: boolean;
-    data:    TStatsData;
-    code:    number;
+    data: TStatsData;
+    code: number;
 }
 
-export interface TStatsData {
-    git:   TStatsGit;
+export interface TStatsData
+{
+    git: TStatsGit;
     stats: TStatsStats;
 }
 
-export interface TStatsGit {
+export interface TStatsGit
+{
     commit?: string;
     version?: string;
 }
 
-export interface TStatsStats {
-    trains:      number;
+export interface TStatsStats
+{
+    trains: number;
     dispatchers: number;
-    profiles:    number;
+    profiles: number;
 }

@@ -1,19 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import ChartOne from './Charts/ChartOne';
-import ChartThree from './Charts/ChartThree';
-import ChartTwo from './Charts/ChartTwo';
+import ChartOne from "./Charts/ChartOne";
+import ChartThree from "./Charts/ChartThree";
+import ChartTwo from "./Charts/ChartTwo";
 
-const Chart: React.FC = () => {
-  return (
-    <>
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <ChartThree />
-      </div>
-    </>
-  );
+const Chart: React.FC = () =>
+{
+    return (
+        <>
+            <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+                <ChartOne/>
+                <ChartTwo/>
+                <ChartThree/>
+            </div>
+        </>
+    );
 };
 
 export default Chart;

@@ -27,7 +27,4 @@ i18n
         defaultNS: "translation",
     });
 
-
-
-
 export { i18n };

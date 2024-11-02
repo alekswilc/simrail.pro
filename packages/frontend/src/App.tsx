@@ -1,136 +1,139 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
-import { Loader } from './components/mini/loaders/PageLoader.tsx';
-import { PageTitle } from './components/mini/util/PageTitle.tsx';
-import Chart from './old/Chart.tsx';
-import { Home } from './pages/Home';
-import Settings from './old/Settings.tsx';
-import Alerts from './old/UiElements/Alerts.tsx';
-import Buttons from './old/UiElements/Buttons.tsx';
-import DefaultLayout from './layout/DefaultLayout';
+import { Loader } from "./components/mini/loaders/PageLoader.tsx";
+import { PageTitle } from "./components/mini/util/PageTitle.tsx";
+import Chart from "./old/Chart.tsx";
+import { Home } from "./pages/Home";
+import Settings from "./old/Settings.tsx";
+import Alerts from "./old/UiElements/Alerts.tsx";
+import Buttons from "./old/UiElements/Buttons.tsx";
+import DefaultLayout from "./layout/DefaultLayout";
 import "./i18n";
-import { TrainLeaderboard } from './pages/leaderboard/TrainLeaderboard.tsx';
-import { StationLeaderboard } from './pages/leaderboard/StationsLeaderboard.tsx';
-import { TrainLogs } from './pages/logs/TrainLogs.tsx';
-import { StationLogs } from './pages/logs/StationLogs.tsx';
-import { Profile } from './pages/profile/Profile.tsx';
+import { TrainLeaderboard } from "./pages/leaderboard/TrainLeaderboard.tsx";
+import { StationLeaderboard } from "./pages/leaderboard/StationsLeaderboard.tsx";
+import { TrainLogs } from "./pages/logs/TrainLogs.tsx";
+import { StationLogs } from "./pages/logs/StationLogs.tsx";
+import { Profile } from "./pages/profile/Profile.tsx";
 
-function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const { pathname } = useLocation();
+function App()
+{
+    const [ loading, setLoading ] = useState<boolean>(true);
+    const { pathname } = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    useEffect(() =>
+    {
+        window.scrollTo(0, 0);
+    }, [ pathname ]);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 400);
-  }, []);
+    useEffect(() =>
+    {
+        setTimeout(() => setLoading(false), 400);
+    }, []);
 
-  return loading ? (
-    <Loader />
-  ) : (
-    <DefaultLayout>
-      <Routes>
-        <Route
-          index
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Home" />
-              <Home />
-            </>
-          }
-        />
-        <Route
-          path="/leaderboard/trains"
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Train Leaderboard" />
-              <TrainLeaderboard />
-            </>
-          }
-        />
+    return loading ? (
+        <Loader/>
+    ) : (
+        <DefaultLayout>
+            <Routes>
+                <Route
+                    index
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Home"/>
+                            <Home/>
+                        </>
+                    }
+                />
+                <Route
+                    path="/leaderboard/trains"
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Train Leaderboard"/>
+                            <TrainLeaderboard/>
+                        </>
+                    }
+                />
 
-        <Route
-          path="/logs/trains"
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Train logs" />
-              <TrainLogs />
-            </>
-          }
-        />
+                <Route
+                    path="/logs/trains"
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Train logs"/>
+                            <TrainLogs/>
+                        </>
+                    }
+                />
 
-        <Route
-          path="/logs/stations"
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Station logs" />
-              <StationLogs />
-            </>
-          }
-        />
+                <Route
+                    path="/logs/stations"
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Station logs"/>
+                            <StationLogs/>
+                        </>
+                    }
+                />
 
-        <Route
-          path="/leaderboard/stations"
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Stations Leaderboard" />
-              <StationLeaderboard />
-            </>
-          }
-        />
+                <Route
+                    path="/leaderboard/stations"
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Stations Leaderboard"/>
+                            <StationLeaderboard/>
+                        </>
+                    }
+                />
 
-        <Route
-          path="/profile/:id"
-          element={
-            <>
-              <PageTitle title="simrail.alekswilc.dev | Stations Leaderboard" />
-              <Profile />
-            </>
-          }
-        />
+                <Route
+                    path="/profile/:id"
+                    element={
+                        <>
+                            <PageTitle title="simrail.alekswilc.dev | Stations Leaderboard"/>
+                            <Profile/>
+                        </>
+                    }
+                />
 
-        <Route
-          path="/settings"
-          element={
-            <>
-              <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
-            </>
-          }
-        />
-      </Routes>
-    </DefaultLayout>
-  );
+                <Route
+                    path="/settings"
+                    element={
+                        <>
+                            <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template"/>
+                            <Settings/>
+                        </>
+                    }
+                />
+                <Route
+                    path="/chart"
+                    element={
+                        <>
+                            <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template"/>
+                            <Chart/>
+                        </>
+                    }
+                />
+                <Route
+                    path="/ui/alerts"
+                    element={
+                        <>
+                            <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template"/>
+                            <Alerts/>
+                        </>
+                    }
+                />
+                <Route
+                    path="/ui/buttons"
+                    element={
+                        <>
+                            <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template"/>
+                            <Buttons/>
+                        </>
+                    }
+                />
+            </Routes>
+        </DefaultLayout>
+    );
 }
 
 export default App;

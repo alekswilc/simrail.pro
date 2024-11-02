@@ -1,14 +1,17 @@
-export interface TStationResponse {
+export interface TStationResponse
+{
     success: boolean;
     data: TStationData;
     code: number;
 }
 
-export interface TStationData {
+export interface TStationData
+{
     records: TStationRecord[];
 }
 
-export interface TStationRecord {
+export interface TStationRecord
+{
     id: string;
     userSteamId: string;
     userUsername: string;

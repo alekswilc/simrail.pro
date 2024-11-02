@@ -1,24 +1,28 @@
 export type TProfileResponse = TProfileErrorResponse | TProfileSuccessResponse;
 
-export interface TProfileErrorResponse {
+export interface TProfileErrorResponse
+{
     success: false;
     data: string;
     code: 404 | 403;
 }
 
-export interface TProfileSuccessResponse {
+export interface TProfileSuccessResponse
+{
     success: true;
     data: TProfileData;
     code: 200;
 }
 
-export interface TProfileData {
+export interface TProfileData
+{
     player: TProfilePlayer;
     steam: TProfileSteam;
     steamStats: TProfileSteamStats;
 }
 
-export interface TProfilePlayer {
+export interface TProfilePlayer
+{
     id: string;
     steam: string;
     steamName: string;
@@ -30,34 +34,40 @@ export interface TProfilePlayer {
     trainPoints: number;
 }
 
-export interface TProfileDispatcherStatsRecord {
+export interface TProfileDispatcherStatsRecord
+{
     time: number;
 }
 
-export interface TProfileTrainStatsRecord {
+export interface TProfileTrainStatsRecord
+{
     distance: number;
     score: number;
     time: number;
 }
 
-export interface TProfileSteam {
+export interface TProfileSteam
+{
     personname: string;
     avatarfull: string;
 }
 
-export interface TProfileSteamStats {
+export interface TProfileSteamStats
+{
     steamID: string;
     gameName: string;
     stats: TProfileSteamStatsAchievementStat[];
     achievements: TProfileSteamStatsAchievement[];
 }
 
-export interface TProfileSteamStatsAchievement {
+export interface TProfileSteamStatsAchievement
+{
     name: string;
     achieved: number;
 }
 
-export interface TProfileSteamStatsAchievementStat {
+export interface TProfileSteamStatsAchievementStat
+{
     name: string;
     value: number;
 }
