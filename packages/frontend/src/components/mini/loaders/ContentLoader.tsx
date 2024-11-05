@@ -18,11 +18,11 @@ export const LoadError = () =>
         </div>
         <div className="w-full">
             <h5 className="mb-3 font-semibold text-[#B45454]">
-                { t("contentloader.error.header") }
+                { t("content_loader.error.header") }
             </h5>
             <ul>
                 <li className="leading-relaxed text-[#CD5D5D]">
-                    { t("contentloader.error.description") }
+                    { t("content_loader.error.description") }
                 </li>
                 <li className="leading-relaxed text-[#CD5D5D]">
                     <div className="pt-4">
@@ -30,12 +30,12 @@ export const LoadError = () =>
                         <div className="mb-7.5 flex flex-wrap gap-4">
                             <Link
                                 className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-70 lg:px-6 xl:px-8"
-                                to="https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/issues/new">{ t("contentloader.error.report") }</Link>
+                                to="https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/issues/new">{ t("content_loader.error.report") }</Link>
 
                             <Link
                                 className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-70 lg:px-6 xl:px-8"
                                 to="#"
-                                onClick={ () => window.location.reload() }>{ t("contentloader.error.refresh") }</Link>
+                                onClick={ () => window.location.reload() }>{ t("content_loader.error.refresh") }</Link>
                         </div>
 
                     </div>

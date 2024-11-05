@@ -5,6 +5,7 @@ import { ContentLoader } from "../../components/mini/loaders/ContentLoader.tsx";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ProfileCard } from "../../components/pages/profile/Profile.tsx";
 import { useTranslation } from "react-i18next";
+import { PageTitle } from "../../components/mini/util/PageTitle.tsx";
 
 export const Profile = () =>
 {
@@ -29,7 +30,6 @@ export const Profile = () =>
                 case 200:
                     setError(1);
                     setData(data.data);
-                    console.log(data.data.steam);
                     break;
             }
         });
@@ -42,12 +42,15 @@ export const Profile = () =>
             {/* LOADING */ }
             { error === 0 && <ContentLoader/> }
             {/* NOT FOUND */ }
+            { error === 2 && <PageTitle title={ `simrail.alekswilc.dev | Profile not found` }/> }
             { error === 2 && <WarningAlert title={ t("profile.errors.notfound.title") }
                                            description={ t("profile.errors.notfound.description") }/> }
             {/* BLACKLISTED PROFILE */ }
+            { error === 3 && <PageTitle title={ `simrail.alekswilc.dev | Blacklisted profile` }/> }
             { error === 3 && <WarningAlert title={ t("profile.errors.blacklist.title") }
                                            description={ t("profile.errors.blacklist.description") }/> }
             {/* SUCCESS */ }
+            { error === 1 && <PageTitle title={ `simrail.alekswilc.dev | ${ data.steam.personname }'s profile` }/> }
             { error === 1 && <ProfileCard data={ data }/> }
         </>
     );

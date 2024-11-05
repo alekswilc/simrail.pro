@@ -15,8 +15,8 @@ export const TrainTable = ({ trains, error }: {
 
     return (
         <>
-            { error === 2 && <WarningAlert title={ t("contentloader.notfound.header") }
-                                           description={ t("contentloader.notfound.description") }/> }
+            { error === 2 && <WarningAlert title={ t("content_loader.notfound.header") }
+                                           description={ t("content_loader.notfound.description") }/> }
             { error === 0 && <ContentLoader/> }
             { error === 1 && <div
                 className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

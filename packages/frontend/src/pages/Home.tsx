@@ -81,7 +81,8 @@ export const Home: React.FC = () =>
                                 i18nKey={ t("home.footer.thanks") }
                                 components={ {
                                     bahu: <Link className="color-orchid" to={ "https://bahu.pro/" }/>,
-                                    simrailelite: <Link className="color-orchid" to={ "https://bahu.pro/" }/>,
+                                    simrailelite: <Link className="color-orchid"
+                                                        to={ "https://discord.gg/yDhy3pDrVr" }/>,
                                 } }
                             /></p>
                             <p>{ t("home.footer.license") } <Link className="color-orchid"

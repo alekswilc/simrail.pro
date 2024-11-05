@@ -48,10 +48,10 @@
     "search": "Wpisz, aby wyszukać",
     "station": "Stacja"
   },
-  "contentloader": {
+  "content_loader": {
     "error": {
       "header": "Błąd ładowania strony",
-      "description": "Sprawdź swoje połączenie z internetem i odśwież strone",
+      "description": "Sprawdź swoje połączenie z internetem i odśwież stronę",
       "report": "Zgłoś błąd",
       "refresh": "Odśwież"
     },
@@ -83,9 +83,27 @@
         "description": "Profil gracza nie został znaleziony lub posiada on prywatny profil steam."
       },
       "blacklist": {
-        "title": "Nie można wyświetlic profilu",
+        "title": "Nie można wyświetlić profilu",
         "description": "Profil tego gracza został zablokowany."
       }
+    }
+  },
+  "log": {
+    "errors": {
+      "title": "Nie znaleziono rekordu",
+      "description": "Ten rekord nie został znaleziony."
+    },
+    "blacklist": {
+      "title": "Nie można wyświetlić rekordu",
+      "description": "Rekord został zablokowany."
+    },
+    "station": {
+      "header": "Wyjście z posterunku",
+      "server": "Serwer: {{server}}",
+      "station": "Stacja: {{name}} - {{short}}",
+      "joined": "Data wejścia: {{date}}",
+      "left": "Data wyjścia: {{date}}",
+      "spent": "Spędzony czas: {{date}}"
     }
   }
 }

@@ -15,8 +15,8 @@ export const StationTable = ({ stations, error }: {
 
     return (
         <>
-            { error === 2 && <WarningAlert title={ t("contentloader.notfound.header") }
-                                           description={ t("contentloader.notfound.description") }/> }
+            { error === 2 && <WarningAlert title={ t("content_loader.notfound.header") }
+                                           description={ t("content_loader.notfound.description") }/> }
             { error === 0 && <ContentLoader/> }
 
             { error === 1 && <div
