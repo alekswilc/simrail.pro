@@ -22,56 +22,65 @@
 </head>
 
 <body>
-    <%- include('../_modules/header.ejs', { section: 'leaderboard' }) %>
+<%- include('../_modules/header.ejs', { section: 'leaderboard' }) %>
 
-    <h2 id="but">Tablica wyników</h2>
-    <div class="container">
-        <input type="text" id="search" value="<%-q%>">
+<h2 id="but">Tablica wyników</h2>
+<div class="container">
+    <input type="text" id="search" value="<%- q %>">
 
-        <button onclick="search()">Szukaj</button>
-        <button onclick="clearSearch()">Wyczyść</button>
+    <button onclick="search()">Szukaj</button>
+    <button onclick="clearSearch()">Wyczyść</button>
 
-        <p>Użyj przecinka, aby wyszukać wiele wartości: pl2,Łazy</p>
+    <p>Użyj przecinka, aby wyszukać wiele wartości: pl2,Łazy</p>
 
-    </div>
-    <br />
-    <ul>
-        <% records.forEach(record=> { %>
-            <li>
-                <%- type === 'train' ? include('train.ejs', { record, msToTime }) : include('station.ejs', { record, msToTime })  %>
-            </li>
-            <% }) %>
-    </ul>
+</div>
+<br/>
+<ul>
+    <% records.forEach(record=> { %>
+    <li>
+        <%- type === 'train' ? include('train.ejs', { record, msToTime }) : include('station.ejs', { record, msToTime }) %>
+    </li>
+    <% }) %>
+</ul>
 
-    <% if (!records.length) { %>
-        <h4>Nie znaleziono wyników dla twojego zapytania.</h4>
-    <% } %>
+<% if (!records.length) { %>
+<h4>Nie znaleziono wyników dla twojego zapytania.</h4>
+<% } %>
 
+<script>
+    function select()
+    {
+        const isTrain = "<%- type %>" === "train";
+        location.href = "/leaderboard/" + (isTrain ? "station" : "train");
+    }
 
-    <script>
-        function select() {
-            const isTrain = "<%- type %>" === 'train'
-            location.href = '/leaderboard/' + (isTrain ? 'station' : 'train')
+    document.getElementById("but").textContent = ("<%- type %>" === "train") ? "Tablica pociągów" : "Tablica posterunków";
+
+    function search()
+    {
+        location.href = '/leaderboard/<%- type %>/?q=' + document.getElementById("search").value;
+    }
+
+    function clearSearch()
+    {
+        location.href = '/leaderboard/<%- type %>';
+    }
+
+    document.getElementById("search").addEventListener("keyup", (event) =>
+    {
+        if (event.key === "Enter")
+        {
+            search();
         }
-        document.getElementById('but').textContent = ("<%- type %>" === 'train') ? 'Tablica pociągów' : 'Tablica posterunków'
-        function search() {
-            location.href = '/leaderboard/<%- type %>/?q=' + document.getElementById('search').value
-        }
-        function clearSearch() {
-            location.href = '/leaderboard/<%- type %>';
-        }
-        document.getElementById('search').addEventListener("keyup", (event) => {
-            if (event.key === "Enter")
-                search();
 
-        });
+    });
 
-    </script>
-    <hr>
+</script>
+<hr>
 
-    <p style="color: orange;">Dane do rankingu zbierane są od dnia 19.08.2024.</p>
+<p style="color: orange;">Dane do rankingu zbierane są od dnia 19.08.2024.</p>
 
-    <%- include('../_modules/footer.ejs', { thanks: false, version, commit }) %>
+<%- include('../_modules/footer.ejs', { thanks: false, version, commit }) %>
 </body>
 
 </html>

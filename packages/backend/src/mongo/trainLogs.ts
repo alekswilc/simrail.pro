@@ -1,72 +1,73 @@
-import { Model, model, Schema } from 'mongoose';
+import { Model, model, Schema } from "mongoose";
 
 
 export const raw_schema = {
     id: {
         type: String,
-        required: true
+        required: true,
     },
     trainNumber: {
         type: String,
-        required: true
+        required: true,
     },
     userSteamId: {
         type: String,
-        required: true
+        required: true,
     },
     userUsername: {
         type: String,
-        required: true
+        required: true,
     },
     userAvatar: {
         type: String,
-        required: true
+        required: true,
     },
     joinedDate: {
         type: Number,
         required: false,
-        default: undefined
+        default: undefined,
     },
     leftDate: {
         type: Number,
-        required: true
+        required: true,
     },
     distance: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     points: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     server: {
         type: String,
-        required: true
+        required: true,
     },
     trainName: {
         type: String,
-        default: null
-    }
-}
+        default: null,
+    },
+};
 
 const schema = new Schema<ITrainLog>(raw_schema);
 
 export type TMTrainLog = Model<ITrainLog>
 
-export const MTrainLog = model<ITrainLog>('train_logs', schema);
+export const MTrainLog = model<ITrainLog>("train_logs", schema);
 
-export interface ITrainLog {
-    id: string
-    userSteamId: string
-    userUsername: string
-    userAvatar: string
-    joinedDate?: number
-    leftDate: number
-    trainNumber: string
-    trainName: string
-    distance: number
-    points: number
-    server: string
+export interface ITrainLog
+{
+    id: string;
+    userSteamId: string;
+    userUsername: string;
+    userAvatar: string;
+    joinedDate?: number;
+    leftDate: number;
+    trainNumber: string;
+    trainName: string;
+    distance: number;
+    points: number;
+    server: string;
 }

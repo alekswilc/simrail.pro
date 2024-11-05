@@ -1,4 +1,4 @@
-import wcmatch from 'wildcard-match'
+import wcmatch from "wildcard-match";
 
 /* 
 E186_134 = "Traxx/E186-134", 
@@ -48,80 +48,81 @@ E186_134 = "Traxx/E186-134",
 
 export const trainsList = [
     {
-        train: 'Traxx (E186)',
+        train: "Traxx (E186)",
         pattern: [
-            'Traxx/E186-*',
-        ]
+            "Traxx/E186-*",
+        ],
     },
     {
-        train: 'Dragon2 (E6ACTa, E6ACTadb)',
+        train: "Dragon2 (E6ACTa, E6ACTadb)",
         pattern: [
-            'Dragon2/E6ACTa-*',
-            'Dragon2/E6ACTadb-*'
-        ]
+            "Dragon2/E6ACTa-*",
+            "Dragon2/E6ACTadb-*",
+        ],
     },
     {
-        train: 'Dragon2 (ET25)',
+        train: "Dragon2 (ET25)",
         pattern: [
-            'Dragon2/ET25-*',
-        ]
+            "Dragon2/ET25-*",
+        ],
     },
     {
-        train: 'Pendolino (ED250)',
+        train: "Pendolino (ED250)",
         pattern: [
-            'Pendolino/ED250-*',
-        ]
+            "Pendolino/ED250-*",
+        ],
     },
     {
-        train: 'EN57',
+        train: "EN57",
         pattern: [
-            'EN57/EN57-*',
-        ]
+            "EN57/EN57-*",
+        ],
     },
     {
-        train: 'EN71',
+        train: "EN71",
         pattern: [
-            'EN57/EN71-*',
-        ] 
+            "EN57/EN71-*",
+        ],
     },
     {
-        train: 'EN96',
+        train: "EN96",
         pattern: [
-            'Elf/EN76-*',
-        ] 
-    },
-
-    {
-        train: 'EP07',
-        pattern: [
-            '4E/EP07-*',
-        ] 
+            "Elf/EN76-*",
+        ],
     },
 
     {
-        train: 'EP08',
+        train: "EP07",
         pattern: [
-            '4E/EP08-*',
-        ] 
+            "4E/EP07-*",
+        ],
     },
 
     {
-        train: 'ET22',
+        train: "EP08",
         pattern: [
-            '201E/ET22-*',
-        ] 
+            "4E/EP08-*",
+        ],
     },
 
-    
     {
-        train: 'EU07',
+        train: "ET22",
         pattern: [
-            '4E/EU07-*',
-        ] 
-    }
-]
+            "201E/ET22-*",
+        ],
+    },
 
 
-export const getVehicle = (name: string) => {
+    {
+        train: "EU07",
+        pattern: [
+            "4E/EU07-*",
+        ],
+    },
+];
+
+
+export const getVehicle = (name: string) =>
+{
     return trainsList.find(x => wcmatch(x.pattern)(name))?.train;
 };
