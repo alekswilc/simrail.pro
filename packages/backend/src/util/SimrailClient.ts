@@ -60,7 +60,7 @@ export class SimrailClient extends EventEmitter
         {
             return null;
         }
-        const player = PlayerUtil.getPlayer(this.stationsOccupied[ server ][ name ].SteamId);
+        const player = PlayerUtil.getPlayer(this.stationsOccupied[ server ][ name ]?.SteamId!);
         return { player, joinedAt: this.stationsOccupied[ name ].joinedAt };
     }
 
@@ -70,8 +70,8 @@ export class SimrailClient extends EventEmitter
         {
             return null;
         }
-        const player = PlayerUtil.getPlayer(this.trainsOccupied[ server ][ name ].SteamId);
-        return { player, joinedAt: this.trainsOccupied[ server ][ name ].JoinedAt, startPlayerDistance: this.trainsOccupied[ server ][ name ].StartPlayerDistance };
+        const player = PlayerUtil.getPlayer(this.trainsOccupied[ server ][ name ]?.SteamId!);
+        return { player, joinedAt: this.trainsOccupied[ server ][ name ]?.JoinedAt, startPlayerDistance: this.trainsOccupied[ server ][ name ]?.StartPlayerDistance };
     }
 
 
@@ -121,12 +121,12 @@ export class SimrailClient extends EventEmitter
 
             }
 
-            stations.data.forEach(async (x) =>
+            for (const x of stations.data)
             {
                 const data = this.stations[ server.ServerCode ].find(y => y.Name === x.Name);
                 if (!data)
                 {
-                    return;
+                    continue;
                 }
 
                 if (data.DispatchedBy[ 0 ]?.SteamId !== x.DispatchedBy[ 0 ]?.SteamId)
@@ -143,7 +143,7 @@ export class SimrailClient extends EventEmitter
                             JoinedAt: date.getTime(),
                         };
 
-                        return;
+                        continue;
                     }
                     // leave
                     const player = await PlayerUtil.getPlayer(data.DispatchedBy[ 0 ]?.SteamId);
@@ -152,7 +152,7 @@ export class SimrailClient extends EventEmitter
                     delete this.stationsOccupied[ server.ServerCode ][ data.Prefix ];
 
                 }
-            });
+            }
             redis.json.set("stations_occupied", "$", this.stationsOccupied);
 
             this.stations[ server.ServerCode ] = stations.data;
@@ -181,12 +181,12 @@ export class SimrailClient extends EventEmitter
                 return;
             }
 
-            trains.data.forEach(async (x) =>
+            for (const x of trains.data)
             {
                 const data = this.trains[ server.ServerCode ].find(y => y.id === x.id);
                 if (!data)
                 {
-                    return;
+                    continue;
                 }
 
                 if (data.TrainData.ControlledBySteamID !== x.TrainData.ControlledBySteamID)
@@ -196,7 +196,7 @@ export class SimrailClient extends EventEmitter
                     {
                         if (!x.TrainData.ControlledBySteamID)
                         {
-                            return;
+                            continue;
                         }
                         // join
                         const date = new Date();
@@ -214,12 +214,12 @@ export class SimrailClient extends EventEmitter
                             StartPlayerDistance: playerStats?.stats.find(x => x.name === "DISTANCE_M")?.value!,
                             StartPlayerPoints: playerStats?.stats.find(x => x.name === "SCORE")?.value!,
                         };
-                        return;
+                        continue;
                     }
 
                     if (!data.TrainData.ControlledBySteamID)
                     {
-                        return;
+                        continue;
                     }
                     const date = new Date();
 
@@ -249,7 +249,7 @@ export class SimrailClient extends EventEmitter
                     delete this.trainsOccupied[ server.ServerCode ][ data.TrainNoLocal ];
 
                 }
-            });
+            }
 
 
             this.trains[ server.ServerCode ] = trains.data;
@@ -261,7 +261,7 @@ export class SimrailClient extends EventEmitter
     private async update()
     {
         const servers = (await fetch("https://panel.simrail.eu:8084/servers-open").then(x => x.json()).catch(x => ({ data: [], result: false })) as ApiResponse<Server>)
-            .data?.filter(x => x.ServerName.includes("Polski")) ?? []; // no plans to support other servers
+            .data?.filter(x => x.ServerName.includes("Polski")) ?? []; // TODO: remove this in v3
 
         if (!servers.length)
         {
@@ -270,7 +270,7 @@ export class SimrailClient extends EventEmitter
 
         // TODO: maybe node:worker_threads?
         // TODO: check performance
-        servers.forEach(async (server) =>
+        for (const server of servers)
         {
             const stations = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Station>;
             const trains = (await fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Train>;
@@ -279,6 +279,6 @@ export class SimrailClient extends EventEmitter
             this.processTrain(server, trains);
 
 
-        });
+        }
     }
 } 
