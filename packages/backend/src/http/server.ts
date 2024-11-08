@@ -26,6 +26,6 @@ export class ApiModule
 
         app.use("/api/v1", router);
 
-        app.listen(2005);
+        app.listen(process.env.PORT);
     }
 }
