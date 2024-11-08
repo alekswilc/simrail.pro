@@ -5,7 +5,6 @@
   "version": "3.0.0",
   "scripts": {
     "build": "tsc",
-    "postbuild": "copyfiles --error --up 1 src/http/views/**/* src/http/views/* ../../dist/backend/",
     "start": "yarn build && doppler run node ../../dist/backend/index.js"
   },
   "author": "Aleksander <alekswilc> Wilczyński",
