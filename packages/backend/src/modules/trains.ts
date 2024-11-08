@@ -1,5 +1,4 @@
-import { Server, Station, Train } from "@simrail/types";
-import { MLog } from "../mongo/logs.js";
+import { Server, Train } from "@simrail/types";
 import { IPlayer } from "../types/player.js";
 import { SimrailClientEvents } from "../util/SimrailClient.js";
 import { v4 } from "uuid";
@@ -63,7 +62,7 @@ export class TrainsModule
                 await MProfile.findOneAndUpdate({ id: userProfile.id }, { trainStats: userProfile.trainStats, trainTime: userProfile.trainTime, trainPoints: userProfile.trainPoints, trainDistance: userProfile.trainDistance });
             }
 
-            MTrainLog.create({
+            await MTrainLog.create({
                 id: v4(),
                 userSteamId: player.steamid,
                 userAvatar: player.avatarfull,
@@ -73,8 +72,8 @@ export class TrainsModule
                 trainNumber: train.TrainNoLocal,
                 server: server.ServerCode,
                 distance, points,
-                trainName: train.TrainName
+                trainName: train.TrainName,
             });
-        })
+        });
     }
 }

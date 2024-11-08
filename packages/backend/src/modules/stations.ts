@@ -51,7 +51,7 @@ export class StationsModule
                 await MProfile.findOneAndUpdate({ id: userProfile.id }, { dispatcherStats: userProfile.dispatcherStats, dispatcherTime: userProfile.dispatcherTime });
             }
 
-            MLog.create({
+            await MLog.create({
                 id: v4(),
                 userSteamId: player.steamid,
                 userAvatar: player.avatarfull,
@@ -60,8 +60,8 @@ export class StationsModule
                 leftDate: date.getTime(),
                 stationName: station.Name,
                 stationShort: station.Prefix,
-                server: server.ServerCode
+                server: server.ServerCode,
             });
-        })
+        });
     }
 }

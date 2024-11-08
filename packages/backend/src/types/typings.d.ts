@@ -5,5 +5,4 @@ declare global
 {
     declare var redis: RedisClientType,
         client: SimrailClient;
-
 }

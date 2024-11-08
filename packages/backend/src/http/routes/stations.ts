@@ -59,29 +59,6 @@ export class StationsRoute
             );
         });
 
-        app.get("/details/:id", async (req, res) =>
-        {
-            if (!req.params.id)
-            {
-                return res.redirect("/stations/");
-            }
-            const record = await MLog.findOne({ id: req.params.id });
-            const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
-            if (blacklist && blacklist.status)
-            {
-                return res.redirect("/stations/");
-            }
-            const player = await SteamUtil.getPlayer(record?.userSteamId!);
-
-            res.render("stations/details.ejs", {
-                record,
-                dayjs,
-                player,
-                msToTime,
-                ...GitUtil.getData()
-            });
-        });
-
         return app;
     }
 }

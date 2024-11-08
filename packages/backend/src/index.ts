@@ -29,7 +29,7 @@ import dayjs from "dayjs";
         StationsModule.load();
         TrainsModule.load();
     }
- 
+
     ApiModule.load(); // TODO: use fastify
 
     if (process.env.NODE_ENV === "development")

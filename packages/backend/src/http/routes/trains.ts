@@ -56,77 +56,7 @@ export class TrainsRoute
                     .setData({ records: records.map(x => removeProperties<Omit<ITrainLog, "_id" | "__v">>(x, [ "_id", "__v" ])) })
                     .toJSON(),
             );
-
-            // res.render('trains/index.ejs', {
-            //     records,
-            //     dayjs,
-            //     q: req.query.q,
-            //     msToTime,
-            //     ...GitUtil.getData()
-            // });
         });
-
-        app.get("/details/:id", async (req, res) =>
-        {
-            if (!req.params.id)
-            {
-                return res.redirect("/trains/");
-            }
-            const record = await MTrainLog.findOne({ id: req.params.id });
-            const player = await SteamUtil.getPlayer(record?.userSteamId!);
-            const blacklist = await MBlacklist.findOne({ steam: record?.userSteamId! });
-            if (blacklist && blacklist.status)
-            {
-                return res.redirect("/trains/");
-            }
-
-            res.render("trains/details.ejs", {
-                record,
-                dayjs,
-                player,
-                msToTime,
-                ...GitUtil.getData(),
-            });
-        });
-
-        app.get("/leaderboard/", async (req, res) =>
-        {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(x, "i"));
-
-            const data = Object.keys(raw_schema)
-                .reduce((o, key) => ({ ...o, [ key ]: `$${ key }` }), {});
-
-            const filter: PipelineStage[] = [
-                {
-                    $project: {
-                        // record.leftDate - record.joinedDate
-                        result: { $subtract: [ "$leftDate", "$joinedDate" ] },
-                        ...data,
-                    },
-                },
-            ];
-
-            s && filter.unshift(
-                {
-                    $match: {
-                        $and: [
-                            ...s.map(x => ({ $or: generateSearch(x) })),
-                        ],
-                    },
-                },
-            );
-
-
-            const records = await MTrainLog.aggregate(filter)
-                .sort({ result: -1 })
-                .limit(30);
-            res.render("trains/leaderboard.ejs", {
-                records,
-                dayjs,
-                q: req.query.q,
-                msToTime
-            });
-        })
 
         return app;
     }

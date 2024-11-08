@@ -19,4 +19,4 @@ export const msToTime = (duration: number, long = false) =>
     }
 
     return time.humanize();
-}
+};
