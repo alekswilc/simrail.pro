@@ -13,13 +13,17 @@ const resources = {
     },
 };
 
-i18n
+void i18n
     .use(initReactI18next)
     .use(LanguageDetector)
     .init({
         resources,
         debug: false,
-        fallbackLng: "en",
+        fallbackLng: {
+            "pl-PL": [ "pl" ],
+
+            default: [ "en" ],
+        },
         interpolation: {
             escapeValue: false,
         },

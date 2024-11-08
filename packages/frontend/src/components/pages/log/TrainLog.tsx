@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { TLogStationData } from '../../../types/log.ts';
+import { TLogTrainData } from '../../../types/log.ts';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
 
-export const StationLog = ({ data }: { data: TLogStationData }) => {
+export const TrainLog = ({ data }: { data: TLogTrainData }) => {
     const { t } = useTranslation();
 
     const copyLink = () => {
@@ -15,7 +15,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) => {
         toast.info(t('log.toasts.report'), {
             autoClose: 5000
         });
-        void navigator.clipboard.writeText(`;user: \`${data.userUsername}\`\n;steam: \`${data.userSteamId}\`\n;left: <t:${data.leftDate}>${data.joinedDate ? `\n;joined: <t:${data.joinedDate}>` : ''}\n;station: \`${data.stationName}\`\n;link: ${location.href}\n\n`);
+        void navigator.clipboard.writeText(`;user: \`${data.userUsername}\`\n;steam: \`${data.userSteamId}\`\n;left: <t:${data.leftDate}>${data.joinedDate ? `\n;joined: <t:${data.joinedDate}>` : ''}\n;train: \`${data.trainNumber}\`\n;link: ${location.href}\n\n`);
     };
 
     return <div
@@ -37,15 +37,19 @@ export const StationLog = ({ data }: { data: TLogStationData }) => {
         <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-end">
                 <div className="flex flex-col">
-                    <h1 className="text-xl text-black dark:text-white pb-5">{t('log.station.header')}</h1>
-                    <p>{t('log.station.server', { server: data.server.toUpperCase() })}</p>
-                    <p>{t('log.station.station', { name: data.stationName, short: data.stationShort })}</p>
+                    <h1 className="text-xl text-black dark:text-white pb-5">{t('log.train.header')}</h1>
+                    <p>{t('log.train.server', { server: data.server.toUpperCase() })}</p>
+                    <p>{t('log.train.train', { name: data.trainName, number: data.trainNumber })}</p>
+                    {(data.distance || data.distance === 0) &&
+                            <p>{t('log.train.distance', { distance: (data.distance / 1000).toFixed(2) })}</p>}
+
+                    {(data.points || data.points === 0) && <p>{t('log.train.points', { points: data.points })}</p>}
 
                     {data.joinedDate &&
-                            <p>{t('log.station.joined', { date: dayjs(data.joinedDate).format('DD/MM/YYYY HH:mm') })}</p>}
-                    <p>{t('log.station.left', { date: dayjs(data.leftDate).format('DD/MM/YYYY HH:mm') })}</p>
+                            <p>{t('log.train.joined', { date: dayjs(data.joinedDate).format('DD/MM/YYYY HH:mm') })}</p>}
+                    <p>{t('log.train.left', { date: dayjs(data.leftDate).format('DD/MM/YYYY HH:mm') })}</p>
                     {data.joinedDate &&
-                            <p>{t('log.station.spent', { date: dayjs.duration(data.leftDate - data.joinedDate).format('H[h] m[m]') })}</p>}
+                            <p>{t('log.train.spent', { date: dayjs.duration(data.leftDate - data.joinedDate).format('H[h] m[m]') })}</p>}
                 </div>
                 <div className="flex flex-col gap-5 mt-5 sm:mt-0 sm:ml-auto">
                     <a

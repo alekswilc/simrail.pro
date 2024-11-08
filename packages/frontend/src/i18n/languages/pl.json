@@ -2,10 +2,14 @@
   "_": {
     "title": "Simrail Stats"
   },
+  "preview": {
+    "title": "Wersja preview!",
+    "description": "Strona znajduje się w wersji V3-PREVIEW, może zawierać błędy. Będe wdzieczny za zgłaszanie wszystkich błędów na stronie projektu (git.alekswilc.dev) lub w wiadomości prywatnej na discordzie - alekswilc. Stay tuned!"
+  },
   "home": {
     "stats": {
-      "trains": "Pociągi",
-      "dispatchers": "Dyżurni ruchu",
+      "trains": "Pociągów",
+      "dispatchers": "Dyżurnych ruchu",
       "profiles": "Profili"
     },
     "title": "Simrail Stats",
@@ -20,13 +24,6 @@
       "thanks": "Specjalne podziękowania dla <bahu>serwerowni BAHU.PRO</bahu>, <simrailelite>discorda Simrail ELITE</simrailelite>, społeczności Simrail i mojej dziewczyny",
       "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
     }
-  },
-  "pages": {
-    "home": "Strona główna",
-    "logs": "Logi",
-    "stations": "Stacje",
-    "trains": "Pociągi",
-    "leaderboard": "Tablica wyników"
   },
   "leaderboard": {
     "user": "Gracz",
@@ -104,6 +101,34 @@
       "joined": "Data wejścia: {{date}}",
       "left": "Data wyjścia: {{date}}",
       "spent": "Spędzony czas: {{date}}"
+    },
+    "train": {
+      "header": "Wyjście z pociągu",
+      "server": "Serwer: {{server}}",
+      "train": "Pociąg: {{name}} {{number}}",
+      "joined": "Data wejścia: {{date}}",
+      "left": "Data wyjścia: {{date}}",
+      "spent": "Spędzony czas: {{date}}",
+      "distance": "Dystans: {{distance}}km",
+      "points": "Punkty: {{points}}"
+    },
+    "toasts": {
+      "copied": "Skopiowano link do schowka!",
+      "report": "Do schowka skopiowano dane wyjścia z posterunku, możesz ich użyć do wysłania na kanale #multiplayer-help-requests na oficjalnym serwerze Discord gry simrail. Nie zapomnij dodać powodu zgłoszenia!"
+    },
+    "buttons": {
+      "report": "Zgłoś",
+      "copy": "Kopiuj link"
     }
-  }
+  },
+  "sidebar": {
+    "home": "Strona główna",
+    "logs": "Logi",
+    "stations": "Stacje",
+    "trains": "Pociągi",
+    "leaderboard": "Tablica wyników",
+    "info": "INFO",
+    "admin": "ADMIN"
+  },
+  "admin": {}
 }

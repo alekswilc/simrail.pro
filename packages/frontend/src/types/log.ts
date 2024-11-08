@@ -13,8 +13,8 @@ export interface TLogTrainData
     userUsername: string;
     userAvatar: string;
     leftDate: number;
-    distance: number;
-    points: number;
+    distance?: number;
+    points?: number;
     server: string;
     trainName: string;
     joinedDate?: number;

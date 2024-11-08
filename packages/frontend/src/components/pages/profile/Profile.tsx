@@ -1,181 +1,151 @@
-import { useState } from "react";
-import { TProfileData } from "../../../types/profile.ts";
-import { useTranslation } from "react-i18next";
+import { useState } from 'react';
+import { TProfileData } from '../../../types/profile.ts';
+import { useTranslation } from 'react-i18next';
+import { ArrowIcon } from '../../mini/icons/ArrowIcon.tsx';
 
-export const ProfileCard = ({ data }: { data: TProfileData }) =>
-{
+export const ProfileCard = ({ data }: { data: TProfileData }) => {
 
-    const [ showTrains, setShowTrains ] = useState(false);
-    const [ showStations, setShowStations ] = useState(false);
+    const [showTrains, setShowTrains] = useState(false);
+    const [showStations, setShowStations] = useState(false);
 
     const { t } = useTranslation();
     return <div
-        className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="px-4 pt-6 text-center lg:pb-8 xl:pb-11.5">
             <div
-                className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+                    className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                 <div className="relative drop-shadow-2">
-                    <img className="rounded-full" src={ data.steam.avatarfull } alt="profile"/>
+                    <img className="rounded-full" src={data.steam.avatarfull} alt="profile" />
                 </div>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.steam.personname }
+                    {data.steam.personname}
                 </h3>
 
                 <div
-                    className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-2 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+                        className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-2 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
                     <div
-                        className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                            className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                         <span className="font-semibold text-black dark:text-white">
-                            { Math.floor(data.player.trainDistance / 1000) }km
+                            {Math.floor(data.player.trainDistance / 1000)}km
                         </span>
-                        <span className="text-sm text-wrap">{ t("profile.stats.distance") }</span>
+                        <span className="text-sm text-wrap">{t('profile.stats.distance')}</span>
                     </div>
                     <div
-                        className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                            className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                         <span className="font-semibold text-black dark:text-white">
-                            { Math.floor(data.player.dispatcherTime / 3600000) }h
+                            {Math.floor(data.player.dispatcherTime / 3600000)}h
                         </span>
-                        <span className="text-sm text-wrap">{ t("profile.stats.time") }</span>
+                        <span className="text-sm text-wrap">{t('profile.stats.time')}</span>
                     </div>
                 </div>
             </div>
         </div>
-        { Object.keys(data.player.trainStats || {}).length > 0 &&
-            <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
-                <div className="group relative cursor-pointer" onClick={ () => setShowTrains(val => !val) }>
-                    <h1 className="text-xl text-black dark:text-white pb-5">{ t("profile.trains.header") }</h1>
-                    <svg
-                        className={ `absolute right-4 top-1/2 -translate-y-1/2 fill-current ${ showTrains && "rotate-180"
-                        }` }
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                            fill=""
-                        />
-                    </svg>
-                </div>
-
-                { showTrains && <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
-                    <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.trains.train") }
-                            </h5>
-                        </div>
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.trains.distance") }
-                            </h5>
-                        </div>
-                        <div className="hidden sm:block p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.trains.points") }
-                            </h5>
-                        </div>
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.trains.time") }
-                            </h5>
-                        </div>
+        {Object.keys(data.player.trainStats || {}).length > 0 &&
+                <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
+                    <div className="group relative cursor-pointer" onClick={() => setShowTrains(val => !val)}>
+                        <h1 className="text-xl text-black dark:text-white pb-5">{t('profile.trains.header')}</h1>
+                        <ArrowIcon rotated={showTrains} />
                     </div>
 
-                    { Object.keys(data.player.trainStats).map(trainName =>
-                    {
-                        const train = data.player.trainStats[ trainName ];
+                    {showTrains &&
+                            <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
+                                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+                                    <div className="p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.trains.train')}
+                                        </h5>
+                                    </div>
+                                    <div className="p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.trains.distance')}
+                                        </h5>
+                                    </div>
+                                    <div className="hidden sm:block p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.trains.points')}
+                                        </h5>
+                                    </div>
+                                    <div className="p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.trains.time')}
+                                        </h5>
+                                    </div>
+                                </div>
 
-                        return <div
-                            className={ `grid grid-cols-3 sm:grid-cols-4 border-t border-t-stroke dark:border-t-strokedark` }
-                            key={ 1 }
-                        >
-                            <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
-                                <p className="text-black dark:text-white sm:block break-all">
-                                    { trainName }
-                                </p>
-                            </div>
+                                {Object.keys(data.player.trainStats).map(trainName => {
+                                    const train = data.player.trainStats[trainName];
 
-                            <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                <p className="text-meta-6 sm:block break-all">{ Math.floor(train.distance / 1000) }km</p>
-                            </div>
+                                    return <div
+                                            className={`grid grid-cols-3 sm:grid-cols-4 border-t border-t-stroke dark:border-t-strokedark`}
+                                            key={1}
+                                    >
+                                        <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
+                                            <p className="text-black dark:text-white sm:block break-all">
+                                                {trainName}
+                                            </p>
+                                        </div>
 
-                            <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
-                                <p className="text-meta-3">{ train.score }</p>
-                            </div>
+                                        <div className="flex items-center justify-center p-2.5 lg:p-5">
+                                            <p className="text-meta-6 sm:block break-all">{Math.floor(train.distance / 1000)}km</p>
+                                        </div>
 
-                            <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
-                                <p className="text-meta-3">{ Math.floor(train.time / 3600000) }h</p>
-                            </div>
-                        </div>;
-                    }) }
+                                        <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
+                                            <p className="text-meta-3">{train.score}</p>
+                                        </div>
+
+                                        <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
+                                            <p className="text-meta-3">{Math.floor(train.time / 3600000)}h</p>
+                                        </div>
+                                    </div>;
+                                })}
 
 
-                </div> }
+                            </div>}
 
-            </div> }
-        { Object.keys(data.player.dispatcherStats || {}).length > 0 &&
-            <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
-                <div className="group relative cursor-pointer" onClick={ () => setShowStations(val => !val) }>
-                    <h1 className="text-xl text-black dark:text-white pb-5">{ t("profile.stations.header") }</h1>
-                    <svg
-                        className={ `absolute right-4 top-1/2 -translate-y-1/2 fill-current ${ showStations && "rotate-180"
-                        }` }
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                            fill=""
-                        />
-                    </svg>
-                </div>
-                { showStations && <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
-                    <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4">
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.stations.station") }
-                            </h5>
-                        </div>
-
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("profile.stations.time") }
-                            </h5>
-                        </div>
+                </div>}
+        {Object.keys(data.player.dispatcherStats || {}).length > 0 &&
+                <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
+                    <div className="group relative cursor-pointer" onClick={() => setShowStations(val => !val)}>
+                        <h1 className="text-xl text-black dark:text-white pb-5">{t('profile.stations.header')}</h1>
+                        <ArrowIcon rotated={showTrains} />
                     </div>
-                    { Object.keys(data.player.dispatcherStats).map(stationName =>
-                    {
-                        const station = data.player.dispatcherStats[ stationName ];
-                        return <div
-                            className={ `grid grid-cols-2 border-t border-t-stroke dark:border-t-strokedark` }
-                            key={ 1 }
-                        >
-                            <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
-                                <p className="text-black dark:text-white sm:block break-all">
-                                    { stationName }
-                                </p>
-                            </div>
+                    {showStations &&
+                            <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
+                                <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4">
+                                    <div className="p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.stations.station')}
+                                        </h5>
+                                    </div>
 
-                            <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                <p className="text-meta-3">{ Math.floor(station.time / 3600000) }h</p>
-                            </div>
-                        </div>;
-                    }) }
+                                    <div className="p-2.5 text-center xl:p-5">
+                                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                            {t('profile.stations.time')}
+                                        </h5>
+                                    </div>
+                                </div>
+                                {Object.keys(data.player.dispatcherStats).map(stationName => {
+                                    const station = data.player.dispatcherStats[stationName];
+                                    return <div
+                                            className={`grid grid-cols-2 border-t border-t-stroke dark:border-t-strokedark`}
+                                            key={1}
+                                    >
+                                        <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
+                                            <p className="text-black dark:text-white sm:block break-all">
+                                                {stationName}
+                                            </p>
+                                        </div>
 
-                </div> }
+                                        <div className="flex items-center justify-center p-2.5 lg:p-5">
+                                            <p className="text-meta-3">{Math.floor(station.time / 3600000)}h</p>
+                                        </div>
+                                    </div>;
+                                })}
 
-            </div> }
+                            </div>}
+
+                </div>}
     </div>;
 };
