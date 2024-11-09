@@ -107,7 +107,7 @@ export const Home: React.FC = () =>
                                         } }
                                 /></p>
                                 <p>{ t("home.footer.license") } <Link className="color-orchid"
-                                                                      to={ "/LICENSE" }>GNU
+                                                                      to={ "/LICENSE.txt" }>GNU
                                     AGPL V3</Link></p>
                                 <p>{ t("home.footer.powered") } <Link className="color-orchid"
                                                                       to={ "https://tailadmin.com/" }>TailAdmin</Link>
