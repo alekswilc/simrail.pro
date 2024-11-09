@@ -8,6 +8,7 @@ import { SteamUtil } from "../../util/SteamUtil.js";
 import { GitUtil } from "../../util/git.js";
 import { SuccessResponseBuilder } from "../responseBuilder.js";
 import { removeProperties } from "../../util/functions.js";
+import { MProfile } from "../../mongo/profile.js";
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -33,6 +34,7 @@ export class TrainsRoute
         app.get("/", async (req, res) =>
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(x, "i"));
+            const profiles = await MProfile.find({ verified: true });
 
             const filter: PipelineStage[] = [];
 
@@ -53,7 +55,15 @@ export class TrainsRoute
             res.json(
                 new SuccessResponseBuilder<{ records: Omit<ITrainLog, "_id" | "__v">[] }>()
                     .setCode(200)
-                    .setData({ records: records.map(x => removeProperties<Omit<ITrainLog, "_id" | "__v">>(x, [ "_id", "__v" ])) })
+                    .setData({
+                        records: records.map(x =>
+                        {
+                            return {
+                                ...removeProperties<Omit<ITrainLog, "_id" | "__v">>(x, [ "_id", "__v" ]),
+                                verified: profiles.find(xx => xx.steam === x.userSteamId)
+                            };
+                        }),
+                    })
                     .toJSON(),
             );
         });

@@ -45,6 +45,11 @@ export const raw_schema = {
         required: false,
         default: 0,
     },
+    verified: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 };
 
 const schema = new Schema<IProfile>(raw_schema);
@@ -76,4 +81,5 @@ export interface IProfile
     trainPoints: number;
     steamName: string;
     trainDistance: number;
+    verified: boolean;
 }
