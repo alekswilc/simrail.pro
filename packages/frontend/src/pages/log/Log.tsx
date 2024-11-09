@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { ContentLoader } from '../../components/mini/loaders/ContentLoader.tsx';
 import { WarningAlert } from '../../components/mini/alerts/Warning.tsx';
 import { useTranslation } from 'react-i18next';
-import { PageTitle } from '../../components/mini/util/PageTitle.tsx';
 import { TLogResponse, TLogStationData, TLogTrainData } from '../../types/log.ts';
 import { StationLog } from '../../components/pages/log/StationLog.tsx';
 import { TrainLog } from '../../components/pages/log/TrainLog.tsx';
+import { PageMeta } from '../../components/mini/util/PageMeta.tsx';
 
 export const Log = () => {
     const { id } = useParams();
@@ -41,20 +41,26 @@ export const Log = () => {
                 {/* LOADING */}
                 {error === 0 && <ContentLoader />}
                 {/* NOT FOUND */}
-                {error === 2 && <PageTitle title={`simrail.alekswilc.dev | Profile not found`} />}
+                {error === 2 && <PageMeta title="simrail.alekswilc.dev | Record not found"
+                                          description="This record could not be found." />}
                 {error === 2 && <WarningAlert title={t('log.errors.notfound.title')}
                                               description={t('log.errors.notfound.description')} />}
-                {/* BLACKLISTED PROFILE */}
-                {error === 3 && <PageTitle title={`simrail.alekswilc.dev | Blacklisted profile`} />}
+                {/* BLACKLISTED LOG */}
+                {error === 3 && <PageMeta title="simrail.alekswilc.dev | Blacklisted record"
+                                          description="The record has been blocked." />}
                 {error === 3 && <WarningAlert title={t('log.errors.blacklist.title')}
                                               description={t('log.errors.blacklist.description')} />}
                 {/* SUCCESS */}
-                {error === 1 && stationData && <PageTitle
-                        title={`simrail.alekswilc.dev | ${stationData.userUsername} | ${stationData.stationName}`} />}
+                {error === 1 && stationData && <PageMeta
+                        title={`simrail.alekswilc.dev | ${stationData.userUsername}`}
+                        image={stationData.userAvatar}
+                        description={`${stationData.stationName} - ${stationData.stationShort}`} />}
                 {error === 1 && stationData && < StationLog data={stationData} />}
 
-                {error === 1 && trainData && <PageTitle
-                        title={`simrail.alekswilc.dev | ${trainData.userUsername} | ${trainData.trainName} ${trainData.trainNumber}`} />}
+                {error === 1 && trainData && <PageMeta
+                        title={`simrail.alekswilc.dev | ${trainData.userUsername}`}
+                        image={trainData.userAvatar}
+                        description={`${trainData.trainName} - ${trainData.trainNumber}`} />}
                 {error === 1 && trainData && < TrainLog data={trainData} />}
             </>
     );

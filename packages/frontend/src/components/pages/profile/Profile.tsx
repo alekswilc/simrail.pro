@@ -95,7 +95,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) => {
                                             <p className="text-meta-3">{train.score}</p>
                                         </div>
 
-                                        <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
+                                        <div className="flex items-center justify-center p-2.5 lg:p-5">
                                             <p className="text-meta-3">{Math.floor(train.time / 3600000)}h</p>
                                         </div>
                                     </div>;

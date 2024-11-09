@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CardDataStats from '../old/CardDataStats';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { TStatsResponse } from '../types/stats.ts';
 import { WarningAlert } from '../components/mini/alerts/Warning.tsx';
+import { CardDataStats } from '../components/mini/util/CardDataStats.tsx';
 
 export const Home: React.FC = () => {
     const { t } = useTranslation();
