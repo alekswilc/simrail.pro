@@ -1,51 +1,54 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
-import { Loader } from './components/mini/loaders/PageLoader.tsx';
-import { Home } from './pages/Home';
-import DefaultLayout from './layout/DefaultLayout';
-import './i18n';
-import { TrainLeaderboard } from './pages/leaderboard/TrainLeaderboard.tsx';
-import { StationLeaderboard } from './pages/leaderboard/StationsLeaderboard.tsx';
-import { TrainLogs } from './pages/logs/TrainLogs.tsx';
-import { StationLogs } from './pages/logs/StationLogs.tsx';
-import { Profile } from './pages/profile/Profile.tsx';
-import { Log } from './pages/log/Log.tsx';
+import { Loader } from "./components/mini/loaders/PageLoader.tsx";
+import { Home } from "./pages/Home";
+import DefaultLayout from "./layout/DefaultLayout";
+import "./i18n";
+import { TrainLeaderboard } from "./pages/leaderboard/TrainLeaderboard.tsx";
+import { StationLeaderboard } from "./pages/leaderboard/StationsLeaderboard.tsx";
+import { TrainLogs } from "./pages/logs/TrainLogs.tsx";
+import { StationLogs } from "./pages/logs/StationLogs.tsx";
+import { Profile } from "./pages/profile/Profile.tsx";
+import { Log } from "./pages/log/Log.tsx";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import useColorMode from './hooks/useColorMode.tsx';
-import { HelmetProvider } from 'react-helmet-async';
-import { PageMeta } from './components/mini/util/PageMeta.tsx';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import useColorMode from "./hooks/useColorMode.tsx";
+import { HelmetProvider } from "react-helmet-async";
+import { PageMeta } from "./components/mini/util/PageMeta.tsx";
 
-function App() {
-    const [loading, setLoading] = useState<boolean>(true);
+function App()
+{
+    const [ loading, setLoading ] = useState<boolean>(true);
     const { pathname } = useLocation();
-    const [theme] = useColorMode();
-    useEffect(() => {
+    const [ theme ] = useColorMode();
+    useEffect(() =>
+    {
         window.scrollTo(0, 0);
-    }, [pathname]);
+    }, [ pathname ]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         setTimeout(() => setLoading(false), 400);
     }, []);
 
     return <HelmetProvider>
 
 
-        {loading ? (
-                <Loader />
+        { loading ? (
+                <Loader/>
         ) : (
                 <>
                     <ToastContainer
                             position="bottom-right"
-                            autoClose={1500}
-                            hideProgressBar={false}
-                            newestOnTop={false}
+                            autoClose={ 1500 }
+                            hideProgressBar={ false }
+                            newestOnTop={ false }
                             closeOnClick
-                            rtl={false}
+                            rtl={ false }
                             pauseOnHover
-                            theme={theme as 'light' | 'dark'}
+                            theme={ theme as "light" | "dark" }
                     />
                     <DefaultLayout>
                         <Routes>
@@ -54,8 +57,8 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Home"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            <Home />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <Home/>
                                         </>
                                     }
                             />
@@ -64,8 +67,8 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Train Leaderboard"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            <TrainLeaderboard />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <TrainLeaderboard/>
                                         </>
                                     }
                             />
@@ -75,8 +78,8 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Trains Logs"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            <TrainLogs />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <TrainLogs/>
                                         </>
                                     }
                             />
@@ -86,8 +89,8 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Stations Logs"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            <StationLogs />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <StationLogs/>
                                         </>
                                     }
                             />
@@ -97,8 +100,8 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Station Leaderboard"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            <StationLeaderboard />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <StationLeaderboard/>
                                         </>
                                     }
                             />
@@ -108,9 +111,9 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Profile"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            {/* page meta is modified in component! */}
-                                            <Profile />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            {/* page meta is modified in component! */ }
+                                            <Profile/>
                                         </>
                                     }
                             />
@@ -120,16 +123,16 @@ function App() {
                                     element={
                                         <>
                                             <PageMeta title="simrail.alekswilc.dev | Log"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!" />
-                                            {/* page title is modified after API response */}
-                                            <Log />
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            {/* page title is modified after API response */ }
+                                            <Log/>
                                         </>
                                     }
                             />
                         </Routes>
                     </DefaultLayout>
                 </>
-        )}
+        ) }
     </HelmetProvider>;
 }
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 
-interface CardDataStatsProps {
+interface CardDataStatsProps
+{
     title: string;
     total: string;
     rate?: string;
@@ -13,27 +14,28 @@ export const CardDataStats: React.FC<CardDataStatsProps> = ({
                                                                 total,
                                                                 rate,
                                                                 levelUp,
-                                                                levelDown
-                                                            }) => {
+                                                                levelDown,
+                                                            }) =>
+{
     return (
             <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
 
                 <div className="mt-4 flex items-end justify-between">
                     <div>
                         <h4 className="text-title-md font-bold text-black dark:text-white">
-                            {total}
+                            { total }
                         </h4>
-                        <span className="text-sm font-medium">{title}</span>
+                        <span className="text-sm font-medium">{ title }</span>
                     </div>
 
-                    {rate && <span
-                            className={`flex items-center gap-1 text-sm font-medium ${
-                                    levelUp && 'text-meta-3'
-                            } ${levelDown && 'text-meta-5'} `}
+                    { rate && <span
+                            className={ `flex items-center gap-1 text-sm font-medium ${
+                                    levelUp && "text-meta-3"
+                            } ${ levelDown && "text-meta-5" } ` }
                     >
-          {rate}
+          { rate }
 
-                        {levelUp && (
+                        { levelUp && (
                                 <svg
                                         className="fill-meta-3"
                                         width="10"
@@ -47,8 +49,8 @@ export const CardDataStats: React.FC<CardDataStatsProps> = ({
                                             fill=""
                                     />
                                 </svg>
-                        )}
-                        {levelDown && (
+                        ) }
+                        { levelDown && (
                                 <svg
                                         className="fill-meta-5"
                                         width="10"
@@ -62,8 +64,8 @@ export const CardDataStats: React.FC<CardDataStatsProps> = ({
                                             fill=""
                                     />
                                 </svg>
-                        )}
-        </span>}
+                        ) }
+        </span> }
                 </div>
             </div>
     );

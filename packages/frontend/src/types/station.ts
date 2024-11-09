@@ -21,4 +21,5 @@ export interface TStationRecord
     stationShort: string;
     server: string;
     joinedDate?: number;
+    verified: boolean;
 }

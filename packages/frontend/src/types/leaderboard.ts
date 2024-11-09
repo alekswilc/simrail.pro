@@ -21,6 +21,7 @@ export interface TLeaderboardRecord
     dispatcherTime: number;
     dispatcherStats?: { [ key: string ]: TLeaderboardDispatcherStat };
     trainStats?: { [ key: string ]: TLeaderboardTrainStat };
+    verified: boolean;
 }
 
 export interface TLeaderboardDispatcherStat

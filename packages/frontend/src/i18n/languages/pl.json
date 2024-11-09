@@ -59,8 +59,8 @@
   },
   "profile": {
     "stats": {
-      "distance": "Przejechanych kilometrów",
-      "time": "Godzin dyżurów"
+      "distance": "Staż maszynisty",
+      "time": "Staż dyżurnego ruchu"
     },
     "trains": {
       "header": "Statystyki pociągów",
@@ -87,12 +87,14 @@
   },
   "log": {
     "errors": {
-      "title": "Nie znaleziono rekordu",
-      "description": "Ten rekord nie został znaleziony."
-    },
-    "blacklist": {
-      "title": "Nie można wyświetlić rekordu",
-      "description": "Rekord został zablokowany."
+      "notfound": {
+        "title": "Nie znaleziono rekordu",
+        "description": "Ten rekord nie został znaleziony."
+      },
+      "blacklist": {
+        "title": "Nie można wyświetlić rekordu",
+        "description": "Rekord został zablokowany."
+      }
     },
     "station": {
       "header": "Wyjście z posterunku",
@@ -118,7 +120,8 @@
     },
     "buttons": {
       "report": "Zgłoś",
-      "copy": "Kopiuj link"
+      "copy": "Kopiuj link",
+      "profile": "Profil"
     }
   },
   "sidebar": {

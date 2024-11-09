@@ -1,8 +1,8 @@
 export const ArrowIcon = ({ rotated }: { rotated?: boolean }) =>
         <svg
-                className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                        rotated && 'rotate-180'
-                }`}
+                className={ `absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                        rotated && "rotate-180"
+                }` }
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"

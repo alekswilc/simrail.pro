@@ -23,5 +23,6 @@ export interface TTrainRecord
     points: number;
     server: string;
     trainName: string;
+    verified: boolean;
 }
 

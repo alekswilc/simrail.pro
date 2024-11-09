@@ -32,6 +32,7 @@ export interface TProfilePlayer
     trainStats: Record<string, TProfileTrainStatsRecord>;
     trainDistance: number;
     trainPoints: number;
+    verified: boolean;
 }
 
 export interface TProfileDispatcherStatsRecord

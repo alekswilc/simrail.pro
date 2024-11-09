@@ -18,7 +18,7 @@ export interface TLogTrainData
     server: string;
     trainName: string;
     joinedDate?: number;
-
+    verified: boolean;
 }
 
 export interface TLogStationData
@@ -32,4 +32,6 @@ export interface TLogStationData
     stationShort: string;
     server: string;
     joinedDate?: number;
+    verified: boolean;
+
 }

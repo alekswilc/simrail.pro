@@ -1,134 +1,137 @@
 {
-    "_": {
-        "title": "Simrail Stats"
+  "_": {
+    "title": "Simrail Stats"
+  },
+  "preview": {
+    "title": "Preview version!",
+    "description": "The site is in version V3-PREVIEW, may contain errors. I will be grateful for reporting all errors on the project page (git.alekswilc.dev) or in a private message on discord - alekswilc. Stay tuned!"
+  },
+  "home": {
+    "stats": {
+      "trains": "Trains",
+      "dispatchers": "Dispatchers",
+      "profiles": "Profiles"
     },
-    "preview": {
-        "title": "Preview version!",
-        "description": "The site is in version V3-PREVIEW, may contain errors. I will be grateful for reporting all errors on the project page (git.alekswilc.dev) or in a private message on discord - alekswilc. Stay tuned!"
+    "title": "Simrail Stats",
+    "description": "Simrail Stats - The best SimRail logs and statistics site!",
+    "buttons": {
+      "project": "Project page",
+      "forum": "Forum Page"
     },
-    "home": {
-        "stats": {
-            "trains": "Trains",
-            "dispatchers": "Dispatchers",
-            "profiles": "Profiles"
-        },
-        "title": "Simrail Stats",
-        "description": "Simrail Stats - The best SimRail logs and statistics site!",
-        "buttons": {
-            "project": "Project page",
-            "forum": "Forum Page"
-        },
-        "footer": {
-            "license": "License:",
-            "powered": "Based on:",
-            "thanks": "Special thanks to <bahu>BAHU.PRO hosting</bahu>, <simrailelite>Simrail ELITE discord</simrailelite>, Simrail community and my girlfriend",
-            "author": "Created by <anchor>{{author}}</anchor> with ❤️ for the Simrail community"
-        }
+    "footer": {
+      "license": "License:",
+      "powered": "Based on:",
+      "thanks": "Special thanks to <bahu>BAHU.PRO hosting</bahu>, <simrailelite>Simrail ELITE discord</simrailelite>, Simrail community and my girlfriend",
+      "author": "Created by <anchor>{{author}}</anchor> with ❤️ for the Simrail community"
+    }
+  },
+  "leaderboard": {
+    "user": "Player",
+    "time": "Time",
+    "distance": "Distance",
+    "points": "Points",
+    "profile": "Profile",
+    "actions": "Actions"
+  },
+  "logs": {
+    "user": "Player",
+    "time": "Time",
+    "distance": "Distance",
+    "points": "Points",
+    "profile": "Profile",
+    "record": "Record",
+    "train": "Train",
+    "actions": "Actions",
+    "search": "Type to search",
+    "station": "Station"
+  },
+  "content_loader": {
+    "error": {
+      "header": "Page loading error",
+      "description": "Check your internet connection and refresh the page",
+      "report": "Report a bug",
+      "refresh": "Refresh"
     },
-    "leaderboard": {
-        "user": "Player",
-        "time": "Time",
-        "distance": "Distance",
-        "points": "Points",
-        "profile": "Profile",
-        "actions": "Actions"
+    "notfound": {
+      "header": "No data found",
+      "description": "Your search returned no results."
+    }
+  },
+  "profile": {
+    "stats": {
+      "distance": "Driver experience",
+      "time": "Dispatcher experience"
     },
-    "logs": {
-        "user": "Player",
-        "time": "Time",
-        "distance": "Distance",
-        "points": "Points",
-        "profile": "Profile",
-        "record": "Record",
-        "train": "Train",
-        "actions": "Actions",
-        "search": "Type to search",
-        "station": "Station"
+    "trains": {
+      "header": "Train Statistics",
+      "train": "Train",
+      "distance": "Distance",
+      "points": "Points",
+      "time": "Time"
     },
-    "content_loader": {
-        "error": {
-            "header": "Page loading error",
-            "description": "Check your internet connection and refresh the page",
-            "report": "Report a bug",
-            "refresh": "Refresh"
-        },
-        "notfound": {
-            "header": "No data found",
-            "description": "Your search returned no results."
-        }
+    "stations": {
+      "header": "Station Statistics",
+      "station": "Station",
+      "time": "Time"
     },
-    "profile": {
-        "stats": {
-            "distance": "Kilometers traveled",
-            "time": "Dispatcher hours"
-        },
-        "trains": {
-            "header": "Train Statistics",
-            "train": "Train",
-            "distance": "Distance",
-            "points": "Points",
-            "time": "Time"
-        },
-        "stations": {
-            "header": "Station Statistics",
-            "station": "Station",
-            "time": "Time"
-        },
-        "errors": {
-            "notfound": {
-                "title": "Profile not found",
-                "description": "Player's profile could not be found or the player has a private Steam profile."
-            },
-            "blacklist": {
-                "title": "Unable to display profile",
-                "description": "This player's profile has been blocked."
-            }
-        }
+    "errors": {
+      "notfound": {
+        "title": "Profile not found",
+        "description": "Player's profile could not be found or the player has a private Steam profile."
+      },
+      "blacklist": {
+        "title": "Unable to display profile",
+        "description": "This player's profile has been blocked."
+      }
+    }
+  },
+  "log": {
+    "errors": {
+      "notfound": {
+        "title": "Record not found",
+        "description": "This record could not be found."
+      },
+      "blacklist": {
+        "title": "The record cannot be displayed",
+        "description": "The record has been blocked."
+      }
     },
-    "log": {
-        "errors": {
-            "title": "Record not found",
-            "description": "This record could not be found."
-        },
-        "blacklist": {
-            "title": "The record cannot be displayed",
-            "description": "The record has been blocked."
-        },
-        "station": {
-            "header": "Leaving the station",
-            "server": "Server: {{server}}",
-            "station": "Station: {{name}} - {{short}}",
-            "joined": "Date of entry: {{date}}",
-            "left": "Date of exit: {{date}}",
-            "spent": "Time spent: {{date}}"
-        },
-        "train": {
-            "header": "Leaving the train",
-            "server": "Server: {{server}}",
-            "train": "Train: {{name}} {{number}}",
-            "joined": "Date of entry: {{date}}",
-            "left": "Date of exit: {{date}}",
-            "spent": "Time spent: {{date}}",
-            "distance": "Distance: {{distance}}km",
-            "points": "Points: {{points}}"
-        },
-        "toasts": {
-            "copied": "Link copied to clipboard!",
-            "report": "The outpost exit data has been copied to your clipboard, you can use it to submit to the #multiplayer-help-requests channel on the official simrail Discord server. Don't forget to add a reason for the report!"
-        },
-        "buttons": {
-            "report": "Report",
-            "copy": "Copy link"
-        }
+    "station": {
+      "header": "Leaving the station",
+      "server": "Server: {{server}}",
+      "station": "Station: {{name}} - {{short}}",
+      "joined": "Date of entry: {{date}}",
+      "left": "Date of exit: {{date}}",
+      "spent": "Time spent: {{date}}"
     },
-    "sidebar": {
-        "home": "Home page",
-        "logs": "Logs",
-        "stations": "Stations",
-        "trains": "Trains",
-        "leaderboard": "Leaderboard",
-        "info": "INFO",
-        "admin": "ADMIN"
+    "train": {
+      "header": "Leaving the train",
+      "server": "Server: {{server}}",
+      "train": "Train: {{name}} {{number}}",
+      "joined": "Date of entry: {{date}}",
+      "left": "Date of exit: {{date}}",
+      "spent": "Time spent: {{date}}",
+      "distance": "Distance: {{distance}}km",
+      "points": "Points: {{points}}"
     },
-    "admin": {}
+    "toasts": {
+      "copied": "Link copied to clipboard!",
+      "report": "The outpost exit data has been copied to your clipboard, you can use it to submit to the #multiplayer-help-requests channel on the official simrail Discord server. Don't forget to add a reason for the report!"
+    },
+    "buttons": {
+      "report": "Report",
+      "copy": "Copy link",
+      "profile": "Profile"
+    }
+  },
+  "sidebar": {
+    "home": "Home page",
+    "logs": "Logs",
+    "stations": "Stations",
+    "trains": "Trains",
+    "leaderboard": "Leaderboard",
+    "info": "INFO",
+    "admin": "ADMIN"
+  },
+  "admin": {}
 }
