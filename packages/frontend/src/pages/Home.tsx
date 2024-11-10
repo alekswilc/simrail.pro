@@ -106,9 +106,9 @@ export const Home: React.FC = () =>
                                                                 to={ "https://discord.gg/yDhy3pDrVr" }/>,
                                         } }
                                 /></p>
-                                <p>{ t("home.footer.license") } <Link className="color-orchid"
-                                                                      to={ "/LICENSE.txt" }>GNU
-                                    AGPL V3</Link></p>
+                                <p>{ t("home.footer.license") } <a className="color-orchid"
+                                                                      href={ "/LICENSE.txt" }>GNU
+                                    AGPL V3</a></p>
                                 <p>{ t("home.footer.powered") } <Link className="color-orchid"
                                                                       to={ "https://tailadmin.com/" }>TailAdmin</Link>
                                 </p>
