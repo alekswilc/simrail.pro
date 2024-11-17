@@ -19,13 +19,14 @@ import { TProfileData } from "../../../types/profile.ts";
 import { useTranslation } from "react-i18next";
 import { ArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
 import { formatTime } from "../../../util/time.ts";
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck } from "react-icons/fa6";
 
 export const ProfileCard = ({ data }: { data: TProfileData }) =>
 {
 
     const [ showTrains, setShowTrains ] = useState(false);
     const [ showStations, setShowStations ] = useState(false);
+    const [ sortTrainsBy, setSortTrainsBy ] = useState<"time" | "score" | "distance">("score");
 
     const { t } = useTranslation();
     return <div
@@ -39,7 +40,8 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.steam.personname } { data.player.verified && <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                    { data.steam.personname } { data.player.verified &&
+                        <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                 </h3>
 
                 <div
@@ -76,24 +78,27 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                             { t("profile.trains.train") }
                                         </h5>
                                     </div>
-                                    <div className="p-2.5 text-center xl:p-5">
+                                    <div className="p-2.5 text-center xl:p-5 cursor-pointer"
+                                         onClick={ () => setSortTrainsBy("distance") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.distance") }
                                         </h5>
                                     </div>
-                                    <div className="hidden sm:block p-2.5 text-center xl:p-5">
+                                    <div className="hidden sm:block p-2.5 text-center xl:p-5 cursor-pointer"
+                                         onClick={ () => setSortTrainsBy("score") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.points") }
                                         </h5>
                                     </div>
-                                    <div className="p-2.5 text-center xl:p-5">
+                                    <div className="p-2.5 text-center xl:p-5 cursor-pointer"
+                                         onClick={ () => setSortTrainsBy("time") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.time") }
                                         </h5>
                                     </div>
                                 </div>
 
-                                { Object.keys(data.player.trainStats).map(trainName =>
+                                { Object.keys(data.player.trainStats).sort((a, b) => data.player.trainStats[ b ][ sortTrainsBy ] - data.player.trainStats[ a ][ sortTrainsBy ]).map(trainName =>
                                 {
                                     const train = data.player.trainStats[ trainName ];
 
@@ -146,7 +151,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                         </h5>
                                     </div>
                                 </div>
-                                { Object.keys(data.player.dispatcherStats).map(stationName =>
+                                { Object.keys(data.player.dispatcherStats).sort((a, b) => data.player.dispatcherStats[ b ].time - data.player.dispatcherStats[ a ].time).map(stationName =>
                                 {
                                     const station = data.player.dispatcherStats[ stationName ];
                                     return <div
@@ -160,7 +165,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                         </div>
 
                                         <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                            <p className="text-meta-3">{formatTime(station.time) }</p>
+                                            <p className="text-meta-3">{ formatTime(station.time) }</p>
                                         </div>
                                     </div>;
                                 }) }

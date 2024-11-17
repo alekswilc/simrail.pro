@@ -101,10 +101,17 @@ export const trainsList = [
         ],
     },
     {
-        train: "EN96",
+        train: "EN76",
         pattern: [
             "Elf/EN76-*",
         ],
+    },
+
+    {
+        train: 'EN96',
+        pattern: [
+            'Elf/EN96-*',
+        ] 
     },
 
     {

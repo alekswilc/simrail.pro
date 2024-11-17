@@ -22,7 +22,7 @@ import { PipelineStage } from "mongoose";
 import { MBlacklist } from "../../mongo/blacklist.js";
 import { SteamUtil } from "../../util/SteamUtil.js";
 import { GitUtil } from "../../util/git.js";
-import { removeProperties } from "../../util/functions.js";
+import { escapeRegexString, removeProperties } from "../../util/functions.js";
 import { SuccessResponseBuilder } from "../responseBuilder.js";
 import { MProfile } from "../../mongo/profile.js";
 
@@ -52,7 +52,7 @@ export class StationsRoute
 
         app.get("/", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
             const profiles = await MProfile.find({ verified: true });
             const filter: PipelineStage[] = [];
 

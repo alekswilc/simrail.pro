@@ -18,7 +18,7 @@ import { Router } from "express";
 import { PipelineStage } from "mongoose";
 import { IProfile, MProfile, raw_schema } from "../../mongo/profile.js";
 import { SuccessResponseBuilder } from "../responseBuilder.js";
-import { removeProperties } from "../../util/functions.js";
+import { escapeRegexString, removeProperties } from "../../util/functions.js";
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -37,7 +37,7 @@ export class LeaderboardRoute
 
         app.get("/train", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
 
@@ -64,7 +64,7 @@ export class LeaderboardRoute
 
         app.get("/station", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
             s && filter.push({
