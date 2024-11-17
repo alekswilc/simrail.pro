@@ -6,6 +6,7 @@ import { MTrainLog, raw_schema } from '../../mongo/trainLogs.js';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
 import { GitUtil } from '../../util/git.js';
+import { escapeRegexString } from '../../util/functions.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -27,7 +28,7 @@ export class TrainsRoute {
         const app = Router();
 
         app.get('/', async (req, res) => {
-            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
 
@@ -69,7 +70,7 @@ export class TrainsRoute {
         })
 
         app.get('/leaderboard/', async (req, res) => {
-            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(escapeRegexString(x), "i"));
 
             const data = Object.keys(raw_schema)
                 .reduce((o, key) => ({ ...o, [key]: `$${key}` }), {});

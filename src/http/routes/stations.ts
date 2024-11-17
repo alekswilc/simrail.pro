@@ -6,6 +6,7 @@ import { PipelineStage } from 'mongoose';
 import { MBlacklist } from '../../mongo/blacklist.js';
 import { SteamUtil } from '../../util/SteamUtil.js';
 import { GitUtil } from '../../util/git.js';
+import { escapeRegexString } from '../../util/functions.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -30,7 +31,7 @@ export class StationsRoute {
         const app = Router();
 
         app.get('/', async (req, res) => {
-            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
 

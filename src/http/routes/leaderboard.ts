@@ -5,6 +5,7 @@ import { msToTime } from '../../util/time.js';
 import { PipelineStage } from 'mongoose';
 import { MProfile, raw_schema } from '../../mongo/profile.js';
 import { GitUtil } from '../../util/git.js';
+import { escapeRegexString } from '../../util/functions.js';
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -20,7 +21,7 @@ export class LeaderboardRoute {
         const app = Router();
 
         app.get('/train', async (req, res) => {
-            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
 
@@ -52,7 +53,7 @@ export class LeaderboardRoute {
 
 
         app.get('/station', async (req, res) => {
-            const s = req.query.q?.toString().split(',').map(x => new RegExp(x, "i"));
+            const s = req.query.q?.toString().split(',').map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
 
