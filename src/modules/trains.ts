@@ -12,7 +12,7 @@ export class TrainsModule {
 
         client.on(SimrailClientEvents.TrainLeft, async (server: Server, train: Train, player: IPlayer, joinedAt: number, leftAt: number, points: number, distance: number, vehicle: string) => {
             if (distance) {
-                const time = (leftAt - joinedAt) ?? 0;
+                const time = joinedAt ? (leftAt - joinedAt) : 0;
                 const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4(), steamName: player.personaname });
 
                 const vehicleName = getVehicle(vehicle) ?? vehicle;
