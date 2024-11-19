@@ -27,7 +27,6 @@ import { TrainLogs } from "./pages/logs/TrainLogs.tsx";
 import { StationLogs } from "./pages/logs/StationLogs.tsx";
 import { Profile } from "./pages/profile/Profile.tsx";
 import { Log } from "./pages/log/Log.tsx";
-
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import useColorMode from "./hooks/useColorMode.tsx";
@@ -49,6 +48,7 @@ function App()
         setTimeout(() => setLoading(false), 400);
     }, []);
 
+
     return <HelmetProvider>
 
 
@@ -57,7 +57,7 @@ function App()
         ) : (
                 <>
                     <ToastContainer
-                            position="bottom-right"
+                            position="top-center"
                             autoClose={ 1500 }
                             hideProgressBar={ false }
                             newestOnTop={ false }

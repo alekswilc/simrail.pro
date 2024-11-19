@@ -1,6 +1,9 @@
 {
   "_": {
-    "title": "Simrail Stats"
+    "title": "Simrail Stats",
+    "popup": {
+      "ranking": "Data in the rankings are collected from 19.08.2024"
+    }
   },
   "preview": {
     "title": "Preview version!",
