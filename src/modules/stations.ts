@@ -13,7 +13,7 @@ export class StationsModule {
             const stats = await SteamUtil.getPlayerStats(player.steamid);
             const date = new Date();
             if (stats) {
-                const time = (date.getTime() - joinedAt) ?? 0;
+                const time = joinedAt ? (date.getTime() - joinedAt) : 0;
 
                 const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4(), steamName: player.personaname });
                 if (!userProfile.dispatcherStats) userProfile.dispatcherStats = {};
