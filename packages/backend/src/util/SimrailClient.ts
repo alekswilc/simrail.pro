@@ -93,28 +93,38 @@ export class SimrailClient extends EventEmitter
 
     private async setup()
     {
-        if (!await redis.json.get("stations"))
-        {
-            redis.json.set("stations", "$", []);
-        }
-        if (!await redis.json.get("trains"))
-        {
-            redis.json.set("trains", "$", []);
-        }
-        if (!await redis.json.get("trains_occupied"))
-        {
-            redis.json.set("trains_occupied", "$", {});
+        if (!await redis.get('last_updated')) {
+            await redis.json.set('trains_occupied', '$', {});
+            await redis.json.set('trains', '$', []);
+            await redis.json.set('stations', '$', []);
+            await redis.json.set('stations_occupied', '$', {});
         }
 
-        if (!await redis.json.get("stations_occupied"))
-        {
-            redis.json.set("stations_occupied", "$", {});
+        const lastUpdated = Date.now() - (Number(await redis.get('last_updated')) ?? 0);
+
+        if (lastUpdated > 300_000) {
+            console.log('REDIS: last updated more than > 5 mins');
+            await redis.json.set('trains_occupied', '$', {});
+            await redis.json.set('trains', '$', []);
+            await redis.json.set('stations', '$', []);
+            await redis.json.set('stations_occupied', '$', {});
         }
 
-        this.stations = (await redis.json.get("stations") as unknown as SimrailClient["stations"]);
-        this.stationsOccupied = (await redis.json.get("stations_occupied") as unknown as SimrailClient["stationsOccupied"]);
-        this.trains = (await redis.json.get("trains") as unknown as SimrailClient["trains"]);
-        this.trainsOccupied = (await redis.json.get("trains_occupied") as unknown as SimrailClient["trainsOccupied"]);
+        if (!await redis.json.get('stations'))
+            redis.json.set('stations', '$', []);
+        if (!await redis.json.get('trains'))
+            redis.json.set('trains', '$', []);
+        if (!await redis.json.get('trains_occupied'))
+            redis.json.set('trains_occupied', '$', {});
+        if (!await redis.json.get('stations_occupied'))
+            redis.json.set('stations_occupied', '$', {});
+
+        this.stations = (await redis.json.get('stations') as unknown as SimrailClient['stations']);
+        this.stationsOccupied = (await redis.json.get('stations_occupied') as unknown as SimrailClient['stationsOccupied']);
+        this.trains = (await redis.json.get('trains') as unknown as SimrailClient['trains']);
+        this.trainsOccupied = (await redis.json.get('trains_occupied') as unknown as SimrailClient['trainsOccupied']);
+
+        redis.set('last_updated', Date.now().toString());
     }
 
     private async processStation(server: Server, stations: ApiResponse<Station>)
@@ -134,7 +144,7 @@ export class SimrailClient extends EventEmitter
             {
                 this.stations[ server.ServerCode ] = stations.data;
                 redis.json.set("stations", "$", this.stations);
-
+                redis.set('last_updated', Date.now().toString());
             }
 
             for (const x of stations.data)
@@ -173,6 +183,7 @@ export class SimrailClient extends EventEmitter
 
             this.stations[ server.ServerCode ] = stations.data;
             redis.json.set("stations", "$", this.stations);
+            redis.set('last_updated', Date.now().toString());
         }
     }
 
@@ -192,8 +203,8 @@ export class SimrailClient extends EventEmitter
             if (!this.trains[ server.ServerCode ].length)
             {
                 this.trains[ server.ServerCode ] = trains.data;
-
                 redis.json.set("trains", "$", this.trains);
+                redis.set('last_updated', Date.now().toString());
                 return;
             }
 
@@ -271,6 +282,7 @@ export class SimrailClient extends EventEmitter
             this.trains[ server.ServerCode ] = trains.data;
             redis.json.set("trains", "$", this.trains);
             redis.json.set("trains_occupied", "$", this.trainsOccupied);
+            redis.set('last_updated', Date.now().toString());
         }
     }
 
@@ -291,8 +303,8 @@ export class SimrailClient extends EventEmitter
             const stations = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Station>;
             const trains = (await fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Train>;
 
-            this.processStation(server, stations);
-            this.processTrain(server, trains);
+            void this.processStation(server, stations);
+            void this.processTrain(server, trains);
 
 
         }
