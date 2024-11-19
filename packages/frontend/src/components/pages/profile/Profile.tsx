@@ -17,7 +17,7 @@
 import { useState } from "react";
 import { TProfileData } from "../../../types/profile.ts";
 import { useTranslation } from "react-i18next";
-import { ArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
+import { ArrowIcon, FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
 import { formatTime } from "../../../util/time.ts";
 import { FaCheck } from "react-icons/fa6";
 
@@ -26,7 +26,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
     const [ showTrains, setShowTrains ] = useState(false);
     const [ showStations, setShowStations ] = useState(false);
-    const [ sortTrainsBy, setSortTrainsBy ] = useState<"time" | "score" | "distance">("score");
+    const [ sortTrainsBy, setSortTrainsBy ] = useState<"time" | "score" | "distance">("distance");
 
     const { t } = useTranslation();
     return <div
@@ -78,23 +78,26 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                             { t("profile.trains.train") }
                                         </h5>
                                     </div>
-                                    <div className="p-2.5 text-center xl:p-5 cursor-pointer"
+                                    <div className="flex flex-row align-center justify-center gap-2  p-2.5 text-center xl:p-5 cursor-pointer"
                                          onClick={ () => setSortTrainsBy("distance") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.distance") }
                                         </h5>
+                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "distance") }/>
                                     </div>
-                                    <div className="hidden sm:block p-2.5 text-center xl:p-5 cursor-pointer"
+                                    <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"
                                          onClick={ () => setSortTrainsBy("score") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.points") }
                                         </h5>
+                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "score") }/>
                                     </div>
-                                    <div className="p-2.5 text-center xl:p-5 cursor-pointer"
+                                    <div className="hidden sm:flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"
                                          onClick={ () => setSortTrainsBy("time") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.time") }
                                         </h5>
+                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "time") }/>
                                     </div>
                                 </div>
 
@@ -116,11 +119,11 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                             <p className="text-meta-6 sm:block break-all">{ Math.floor(train.distance / 1000) }km</p>
                                         </div>
 
-                                        <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
+                                        <div className="flex items-center justify-center p-2.5 lg:p-5">
                                             <p className="text-meta-3">{ train.score }</p>
                                         </div>
 
-                                        <div className="flex items-center justify-center p-2.5 lg:p-5">
+                                        <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
                                             <p className="text-meta-3">{ formatTime(train.time) }</p>
                                         </div>
                                     </div>;

@@ -29,6 +29,12 @@ const generateSearch = (regex: RegExp) => [
     },
 ];
 
+const sortyByMap: Record<string, any> = {
+    time: { trainTime: -1 },
+    points: { trainPoints: -1 },
+    distance: { trainDistance: -1 },
+}
+
 export class LeaderboardRoute
 {
     static load()
@@ -48,9 +54,10 @@ export class LeaderboardRoute
                     ],
                 },
             });
+            const sortBy = sortyByMap[req.query.s?.toString() ?? 'distance'] ?? sortyByMap.distance;
 
             const records = await MProfile.aggregate(filter)
-                .sort({ trainPoints: -1 })
+                .sort(sortBy)
                 .limit(10);
 
             res.json(

@@ -26,6 +26,8 @@ export const TrainLeaderboard = () =>
     const [ data, setData ] = useState<TLeaderboardRecord[]>([]);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
+    const [ sortBy, setSortBy ] = useState(searchParams.get("distance") ?? "");
+
 
     useEffect(() =>
     {
@@ -43,14 +45,19 @@ export const TrainLeaderboard = () =>
         searchValue === "" ? searchParams.delete("q") : searchParams.set("q", searchValue);
         setSearchParams(searchParams);
 
+        const params = new URLSearchParams();
+
+        searchValue && params.set('q', searchValue);
+        sortBy && params.set('s', sortBy);
+
         setData([]);
         setError(0);
-        fetch(`${ import.meta.env.VITE_API_URL }/leaderboard/train/?q=${ searchValue }`).then(x => x.json()).then(x =>
+        fetch(`${ import.meta.env.VITE_API_URL }/leaderboard/train/?${params.toString()}`).then(x => x.json()).then(x =>
         {
             setData(x.data.records);
             setError(x.data.records.length > 0 ? 1 : 2);
         });
-    }, [ searchValue ]);
+    }, [ searchValue, sortBy ]);
 
     useEffect(() =>
     {
@@ -66,7 +73,7 @@ export const TrainLeaderboard = () =>
             <>
                 <div className="flex flex-col gap-10">
                     <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
-                    <TrainTable trains={ data } error={ error }/>
+                    <TrainTable trains={ data } error={ error } setSortBy={setSortBy} sortBy={sortBy}/>
 
                 </div>
             </>
