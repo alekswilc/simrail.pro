@@ -43,7 +43,7 @@ export const LoadError = () =>
                         <div className="mb-7.5 flex flex-wrap gap-4">
                             <Link
                                     className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-70 lg:px-6 xl:px-8"
-                                    to="https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/issues/new">{ t("content_loader.error.report") }</Link>
+                                    to="https://git.alekswilc.dev/simrail/simrail.pro/issues/new">{ t("content_loader.error.report") }</Link>
 
                             <Link
                                     className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-70 lg:px-6 xl:px-8"

@@ -38,25 +38,25 @@ export const Log = () =>
                 {/* LOADING */ }
                 { isLoading && <ContentLoader/> }
                 {/* NOT FOUND */ }
-                { data && data.code === 404 && <PageMeta title="simrail.alekswilc.dev | Record not found"
+                { data && data.code === 404 && <PageMeta title="simrail.pro | Record not found"
                                                          description="This record could not be found."/> }
                 { data && data.code === 404 && <WarningAlert title={ t("log.errors.notfound.title") }
                                                              description={ t("log.errors.notfound.description") }/> }
                 {/* BLACKLISTED LOG */ }
-                { data && data.code === 403 && <PageMeta title="simrail.alekswilc.dev | Blacklisted record"
+                { data && data.code === 403 && <PageMeta title="simrail.pro | Blacklisted record"
                                                          description="The record has been blocked."/> }
                 { data && data.code === 403 && <WarningAlert title={ t("log.errors.blacklist.title") }
                                                              description={ t("log.errors.blacklist.description") }/> }
                 {/* SUCCESS */ }
                 { data && data.code === 200 && !("trainNumber" in data.data) && <PageMeta
-                        title={ `simrail.alekswilc.dev | ${ data.data.player.username }` }
+                        title={ `simrail.pro | ${ data.data.player.username }` }
                         image={ data.data.player.avatar }
                         description={ `${ data.data.stationName } - ${ data.data.stationShort }` }/> }
                 { data && data.code === 200 && !("trainNumber" in data.data) && data.data &&
                         < StationLog data={ data.data }/> }
 
                 { data && data.code === 200 && ("trainNumber" in data.data) && <PageMeta
-                        title={ `simrail.alekswilc.dev | ${ data.data.player.username }` }
+                        title={ `simrail.pro | ${ data.data.player.username }` }
                         image={ data.data.player.avatar }
                         description={ `${ data.data.trainName } - ${ data.data.trainNumber }` }/> }
                 { data && data.code === 200 && ("trainNumber" in data.data) && < TrainLog data={ data.data }/> }

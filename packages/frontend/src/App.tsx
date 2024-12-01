@@ -74,7 +74,7 @@ function App()
                                     index
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Home"
+                                            <PageMeta title="simrail.pro | Home"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <Home/>
                                         </>
@@ -84,7 +84,7 @@ function App()
                                     path="/leaderboard/trains"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Train Leaderboard"
+                                            <PageMeta title="simrail.pro | Train Leaderboard"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <TrainLeaderboard/>
                                         </>
@@ -95,7 +95,7 @@ function App()
                                     path="/logs/trains"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Trains Logs"
+                                            <PageMeta title="simrail.pro | Trains Logs"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <TrainLogs/>
                                         </>
@@ -106,7 +106,7 @@ function App()
                                     path="/logs/stations"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Stations Logs"
+                                            <PageMeta title="simrail.pro | Stations Logs"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <StationLogs/>
                                         </>
@@ -117,7 +117,7 @@ function App()
                                     path="/leaderboard/stations"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Station Leaderboard"
+                                            <PageMeta title="simrail.pro | Station Leaderboard"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <StationLeaderboard/>
                                         </>
@@ -129,7 +129,7 @@ function App()
                                     path="/leaderboard/steam/trains"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Steam Train Leaderboard"
+                                            <PageMeta title="simrail.pro | Steam Train Leaderboard"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <SteamTrainLeaderboard/>
                                         </>
@@ -140,7 +140,7 @@ function App()
                                     path="/leaderboard/steam/stations"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Steam Station Leaderboard"
+                                            <PageMeta title="simrail.pro | Steam Station Leaderboard"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <SteamStationLeaderboard/>
                                         </>
@@ -151,7 +151,7 @@ function App()
                                     path="/profile/:id"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Profile"
+                                            <PageMeta title="simrail.pro | Profile"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             {/* page meta is modified in component! */ }
                                             <Profile/>
@@ -163,7 +163,7 @@ function App()
                                     path="/log/:id"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.alekswilc.dev | Log"
+                                            <PageMeta title="simrail.pro | Log"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             {/* page title is modified after API response */ }
                                             <Log/>

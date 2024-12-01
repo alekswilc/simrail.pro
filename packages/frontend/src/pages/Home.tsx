@@ -55,7 +55,7 @@ export const Home = () =>
 
                                 <div className="p-4 md:p-6 xl:p-9 flex gap-2 justify-center">
                                     <Link
-                                            to="https://git.alekswilc.dev/simrail/simrail.alekswilc.dev"
+                                            to="https://git.alekswilc.dev/simrail/simrail.pro"
                                             className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                                     >
                                         { t("home.buttons.project") }
@@ -99,9 +99,9 @@ export const Home = () =>
                                 </p>
 
                                 <p>{ data?.data?.git?.version && <Link className="color-orchid"
-                                                      to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
+                                                      to={ `https://git.alekswilc.dev/simrail/simrail.pro/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
                                         <Link className="color-orchid"
-                                              to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/commit/${ data?.data?.git?.commit }` }>{ data?.data?.git?.commit }</Link> }</p>
+                                              to={ `https://git.alekswilc.dev/simrail/simrail.pro/commit/${ data?.data?.git?.commit }` }>{ data?.data?.git?.commit }</Link> }</p>
 
                             </div>
 

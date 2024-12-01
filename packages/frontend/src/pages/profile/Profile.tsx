@@ -41,14 +41,14 @@ export const Profile = () =>
                 {/* ERROR */}
                 { error && <LoadError /> }
                 {/* NOT FOUND */ }
-                { data && data.code === 404 && <PageMeta title="simrail.alekswilc.dev | Profile not found"
+                { data && data.code === 404 && <PageMeta title="simrail.pro | Profile not found"
                                            description="Player's profile could not be found or the player has a private Steam profile."/> }
                 { data && data.code === 404 && <WarningAlert title={ t("profile.errors.notfound.title") }
                                                description={ t("profile.errors.notfound.description") }/> }
 
                 {/* SUCCESS */ }
                 { data && data.code === 200 && <PageMeta image={ data.data.player.username }
-                                           title={ `simrail.alekswilc.dev | ${ data.data.player.username }'s profile` }
+                                           title={ `simrail.pro | ${ data.data.player.username }'s profile` }
                                            description={ `${ data.data.player.trainDistance ? 0 : ((data.data.player.trainDistance / 1000).toFixed(2)) } driving experience |
 ${ data.data.player.dispatcherTime ? 0 : formatTime(data.data.player.dispatcherTime) } dispatcher experience` }/> }
                 { data && data.code === 200 && <ProfileCard data={ data.data }/> }
