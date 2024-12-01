@@ -32,6 +32,8 @@ import { ToastContainer } from "react-toastify";
 import useColorMode from "./hooks/useColorMode.tsx";
 import { HelmetProvider } from "react-helmet-async";
 import { PageMeta } from "./components/mini/util/PageMeta.tsx";
+import { SteamStationLeaderboard } from "./pages/steamLeaderboard/SteamStationsLeaderboard.tsx";
+import { SteamTrainLeaderboard } from "./pages/steamLeaderboard/SteamTrainLeaderboard.tsx";
 
 function App()
 {
@@ -118,6 +120,29 @@ function App()
                                             <PageMeta title="simrail.alekswilc.dev | Station Leaderboard"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                             <StationLeaderboard/>
+                                        </>
+                                    }
+                            />
+
+
+                            <Route
+                                    path="/leaderboard/steam/trains"
+                                    element={
+                                        <>
+                                            <PageMeta title="simrail.alekswilc.dev | Steam Train Leaderboard"
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <SteamTrainLeaderboard/>
+                                        </>
+                                    }
+                            />
+
+                            <Route
+                                    path="/leaderboard/steam/stations"
+                                    element={
+                                        <>
+                                            <PageMeta title="simrail.alekswilc.dev | Steam Station Leaderboard"
+                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                            <SteamStationLeaderboard/>
                                         </>
                                     }
                             />

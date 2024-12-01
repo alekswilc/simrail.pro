@@ -16,19 +16,19 @@
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-
-import { TStationRecord } from "../../../types/station.ts";
-
+import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
 import { FaCheck } from "react-icons/fa6";
+import { Dispatch, SetStateAction } from "react";
+import { FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
 
-
-// setSearchItem: Dispatch<SetStateAction<string>>
-export const StationTable = ({ stations }: {
-    stations: TStationRecord[]
+export const SteamTrainTable = ({ trains, setSortBy, sortBy }: {
+    trains: TLeaderboardRecord[],
+    setSortBy: Dispatch<SetStateAction<string>>
+    sortBy: string
 }) =>
 {
     const { t } = useTranslation();
+
 
     return (
             <div
@@ -37,69 +37,66 @@ export const StationTable = ({ stations }: {
                     <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
                         <div className="p-2.5 text-center xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.user") }
+                                { t("leaderboard.user") }
                             </h5>
                         </div>
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.station") }
+                        <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5">
+                            <h5 className="cursor-pointer  text-sm font-medium uppercase xsm:text-base"
+                                onClick={ () => setSortBy("distance") }>
+                                { t("leaderboard.distance") }
                             </h5>
+                            <FlexArrowIcon rotated={ sortBy === "distance" || !sortBy }/>
                         </div>
-                        <div className="hidden sm:block p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.time") }
+                        <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5">
+                            <h5 className="cursor-pointer text-sm font-medium uppercase xsm:text-base"
+                                onClick={ () => setSortBy("points") }>
+                                { t("leaderboard.points") }
                             </h5>
+                            <FlexArrowIcon rotated={ sortBy === "points" }/>
                         </div>
-                        <div className="p-2.5 text-center xl:p-5">
+                        <div className="hidden p-2.5 text-center sm:block xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.actions") }
+                                { t("leaderboard.actions") }
                             </h5>
                         </div>
                     </div>
 
-                    { stations.map((station, key) => (
+                    { trains.map((train, key) => (
                             <div
-                                    className={ `grid grid-cols-3 sm:grid-cols-4 ${ stations.length === (key + 1)
+                                    className={ `grid grid-cols-3 sm:grid-cols-4 ${ trains.length === (key + 1)
                                             ? ""
                                             : "border-b border-stroke dark:border-strokedark"
                                     }` }
-                                    key={ station.id }
+                                    key={ train.id }
                             >
-                                <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
+                                <div className="flex items-center justify-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
-                                        <Link to={ "/profile/" + (station.steam ?? station.player.id) }
-                                              className="color-orchid">{ station.username ?? station.player.username }</Link> { station.player.flags.includes("verified") &&
+                                        <Link to={ "/profile/" + train.id }
+                                              className="color-orchid">{ train.username }</Link> { train.flags.includes("verified") &&
                                             <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                                     </p>
                                 </div>
 
                                 <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-6 sm:block break-all">{ station.server.toUpperCase() } - { station.stationName ?? "--" }</p>
+                                    <p className="text-meta-6">{ (train.steamTrainDistance / 1000).toFixed(2) }km</p>
                                 </div>
 
-                                <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-3">{ dayjs(station.leftDate).format("HH:mm DD/MM/YYYY") }</p>
+                                <div className="flex items-center justify-center p-2.5 lg:p-5">
+                                    <p className="text-meta-5">{ train.steamTrainScore }</p>
                                 </div>
 
-                                <div
-                                        className="items-center justify-center p-2.5 flex xl:p-5 gap-2 flex-wrap sm:flex-nowrap	">
+                                <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                                     <Link
-                                            to={ "/profile/" + (station.steam ?? station.player.id) }
-                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ station.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
-                                            style={ station.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }
-                                    >
-                                        { t("logs.profile") }
-                                    </Link>
-                                    <Link
-                                            to={ "/log/" + station.id }
+                                            to={ "/profile/" + train.id }
                                             className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                     >
-                                        { t("logs.record") }
+                                        { t("leaderboard.profile") }
                                     </Link>
                                 </div>
                             </div>
                     )) }
                 </div>
             </div>
-    );
+    )
+            ;
 };

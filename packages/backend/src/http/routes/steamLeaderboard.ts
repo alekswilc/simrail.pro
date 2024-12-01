@@ -22,20 +22,19 @@ import { escapeRegexString, removeProperties } from "../../util/functions.js";
 
 const generateSearch = (regex: RegExp) => [
     {
-        steam: { $regex: regex },
+        id: { $regex: regex },
     },
     {
-        steamName: { $regex: regex },
+        username: { $regex: regex },
     },
 ];
 
 const sortyByMap: Record<string, any> = {
-    time: { trainTime: -1 },
-    points: { trainPoints: -1 },
-    distance: { trainDistance: -1 },
+    points: { steamTrainDistance: -1 },
+    distance: { steamTrainScore: -1 },
 }
 
-export class LeaderboardRoute
+export class SteamLeaderboardRoute
 {
     static load()
     {
@@ -75,6 +74,7 @@ export class LeaderboardRoute
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
 
             const filter: PipelineStage[] = [];
+
             s && filter.push({
                 $match: {
                     $and: [
@@ -84,7 +84,7 @@ export class LeaderboardRoute
             });
 
             const records = await MProfile.aggregate(filter)
-                .sort({ dispatcherTime: -1 })
+                .sort({ steamDispatcherTime: -1 })
                 .limit(10);
 
             res.json(

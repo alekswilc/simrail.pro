@@ -29,3 +29,8 @@ export const removeProperties = <T>(data: any, names: string[]) =>
 export const escapeRegexString = (str: string) => {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
+
+export const isTruthyAndGreaterThanZero = (data: number) => {
+    if (!data) return false;
+    return data > 0;
+}

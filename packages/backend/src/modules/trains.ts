@@ -15,80 +15,111 @@
  */
 
 import { Server, Train } from "@simrail/types";
-import { IPlayer } from "../types/player.js";
 import { SimrailClientEvents } from "../util/SimrailClient.js";
 import { v4 } from "uuid";
 import { getVehicle } from "../util/contants.js";
-import { MProfile } from "../mongo/profile.js";
-import { MTrainLog } from "../mongo/trainLogs.js";
+import { MProfile, TMProfile } from "../mongo/profile.js";
+import { MTrainLog } from "../mongo/trainLog.js";
+import { PlayerUtil } from "../util/PlayerUtil.js";
+import { isTruthyAndGreaterThanZero } from "../util/functions.js";
 
 export class TrainsModule
 {
     public static load()
     {
 
-        client.on(SimrailClientEvents.TrainLeft, async (server: Server, train: Train, player: IPlayer, joinedAt: number, leftAt: number, points: number, distance: number, vehicle: string) =>
+        client.on(SimrailClientEvents.TrainLeft, async (server: Server, train: Train, player: TMProfile, joinedAt: number, leftAt: number, points: number, distance: number, vehicle: string) =>
         {
-            if (distance)
+            const stats = await PlayerUtil.getPlayerStats(player.id);
+
+            if (stats && (leftAt - joinedAt) && (leftAt - joinedAt) > 0)
             {
                 const time = (leftAt - joinedAt) || 0;
-                const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4(), steamName: player.personaname });
 
                 const vehicleName = getVehicle(vehicle) ?? vehicle;
 
-                if (!userProfile.trainStats)
+                if (!isTruthyAndGreaterThanZero(distance))
+                    distance = 0;
+
+                if (!isTruthyAndGreaterThanZero(points))
+                    points = 0;
+
+
+                if (!player.trainStats)
                 {
-                    userProfile.trainStats = {};
+                    player.trainStats = {};
                 }
 
-                if (userProfile.trainStats[ vehicleName ])
+                if (player.trainStats[ vehicleName ])
                 {
-                    userProfile.trainStats[ vehicleName ].distance = userProfile.trainStats[ vehicleName ].distance + distance;
-                    userProfile.trainStats[ vehicleName ].score = userProfile.trainStats[ vehicleName ].score + points;
-                    userProfile.trainStats[ vehicleName ].time = userProfile.trainStats[ vehicleName ].time + time;
+                    if (isTruthyAndGreaterThanZero(player.trainStats[ vehicleName ].distance + distance))
+                    {
+                        player.trainStats[ vehicleName ].distance = player.trainStats[ vehicleName ].distance + distance;
+                    }
+                    if (isTruthyAndGreaterThanZero(player.trainStats[ vehicleName ].score + points))
+                    {
+                        player.trainStats[ vehicleName ].score = player.trainStats[ vehicleName ].score + points;
+                    }
+                    if (isTruthyAndGreaterThanZero(player.trainStats[ vehicleName ].time + time))
+                    {
+                        player.trainStats[ vehicleName ].time = player.trainStats[ vehicleName ].time + time;
+                    }
                 }
                 else
                 {
-                    userProfile.trainStats[ vehicleName ] = {
+                    player.trainStats[ vehicleName ] = {
                         distance, score: points, time,
                     };
                 }
 
-                if (!userProfile.trainTime)
+
+                if (isTruthyAndGreaterThanZero(player.trainTime + time))
                 {
-                    userProfile.trainTime = 0;
+                    player.trainTime = player.trainTime + time;
                 }
 
-                userProfile.trainTime = userProfile.trainTime + time;
-
-                if (!userProfile.trainPoints)
+                if (isTruthyAndGreaterThanZero(player.trainPoints + points))
                 {
-                    userProfile.trainPoints = 0;
+                    player.trainPoints = player.trainPoints + points;
                 }
 
-                userProfile.trainPoints = userProfile.trainPoints + points;
-
-                if (!userProfile.trainDistance)
+                if (isTruthyAndGreaterThanZero(player.trainDistance + distance))
                 {
-                    userProfile.trainDistance = 0;
+                    player.trainDistance = player.trainDistance + distance;
                 }
 
-                userProfile.trainDistance = userProfile.trainDistance + distance;
+                player.steamTrainDistance = stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0;
+                player.steamDispatcherTime = stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0;
+                player.steamTrainScore = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
 
-                await MProfile.findOneAndUpdate({ id: userProfile.id }, { trainStats: userProfile.trainStats, trainTime: userProfile.trainTime, trainPoints: userProfile.trainPoints, trainDistance: userProfile.trainDistance });
+                player.flags = player.flags.filter(x => x !== "private");
             }
+
+            const playerData = await PlayerUtil.getPlayerSteamData(player.id);
+
+            !stats && !player.flags.includes('private') && player.flags.push("private");
+
+            player.flags = [...new Set(player.flags)];
+
+            player.username = playerData?.personaname ?? player.username;
+            player.avatar = playerData?.avatarfull ?? player.avatar;
+
+            await MProfile.updateOne({ id: player.id }, player);
 
             await MTrainLog.create({
                 id: v4(),
-                userSteamId: player.steamid,
-                userAvatar: player.avatarfull,
-                userUsername: player.personaname,
+
+                steam: player.id,
+                username: player.username,
+
                 joinedDate: joinedAt,
                 leftDate: leftAt,
                 trainNumber: train.TrainNoLocal,
                 server: server.ServerCode,
                 distance, points,
                 trainName: train.TrainName,
+
+                player: player._id,
             });
         });
     }

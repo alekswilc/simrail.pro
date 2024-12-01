@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { HamburgerGoBackIcon } from "../icons/SidebarIcons.tsx";
 import { ArrowIcon } from "../icons/ArrowIcon.tsx";
 import { FaHome, FaClipboardList } from "react-icons/fa";
-import { FaChartSimple, FaTrain, FaBuildingFlag } from "react-icons/fa6";
+import { FaChartSimple, FaTrain, FaBuildingFlag, FaSteam } from "react-icons/fa6";
 
 interface SidebarProps
 {
@@ -219,7 +219,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                                             to="#"
                                                             className={ `group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                                                     (pathname === "/leaderboard" ||
-                                                                            pathname.includes("leaderboard")) &&
+                                                                            (pathname.includes("leaderboard/") && !pathname.includes('leaderboard/steam'))) &&
                                                                     "bg-graydark dark:bg-meta-4"
                                                             }` }
                                                             onClick={ (e) =>
@@ -271,6 +271,71 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                     } }
                                 </SidebarLinkGroup>
 
+
+                                <SidebarLinkGroup
+                                        activeCondition={
+                                                pathname === "/leaderboard/steam" || pathname.includes("leaderboard/steam")
+                                        }
+                                >
+                                    { (handleClick, open) =>
+                                    {
+                                        return (
+                                                <React.Fragment>
+                                                    <NavLink
+                                                            to="#"
+                                                            className={ `group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                                                    (pathname === "/leaderboard/steam" ||
+                                                                            pathname.includes("leaderboard/steam")) &&
+                                                                    "bg-graydark dark:bg-meta-4"
+                                                            }` }
+                                                            onClick={ (e) =>
+                                                            {
+                                                                e.preventDefault();
+                                                                sidebarExpanded
+                                                                        ? handleClick()
+                                                                        : setSidebarExpanded(true);
+                                                            } }
+                                                    >
+                                                        <FaSteam/>
+                                                        { t("sidebar.steam_leaderboard") }
+                                                        <ArrowIcon rotated={ open }/>
+                                                    </NavLink>
+                                                    <div
+                                                            className={ `translate transform overflow-hidden ${
+                                                                    !open && "hidden"
+                                                            }` }
+                                                    >
+                                                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                                                            <li>
+                                                                <NavLink
+                                                                        to="/leaderboard/steam/stations"
+                                                                        className={ ({ isActive }) =>
+                                                                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
+                                                                                (isActive && "!text-white")
+                                                                        }
+                                                                >
+                                                                    <FaBuildingFlag/>
+                                                                    { t("sidebar.stations") }
+                                                                </NavLink>
+                                                            </li>
+                                                            <li>
+                                                                <NavLink
+                                                                        to="/leaderboard/steam/trains"
+                                                                        className={ ({ isActive }) =>
+                                                                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
+                                                                                (isActive && "!text-white")
+                                                                        }
+                                                                >
+                                                                    <FaTrain/>
+                                                                    { t("sidebar.trains") }
+                                                                </NavLink>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </React.Fragment>
+                                        );
+                                    } }
+                                </SidebarLinkGroup>
                             </ul>
                         </div>
 

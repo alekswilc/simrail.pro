@@ -15,68 +15,74 @@
  */
 
 import { Server, Station } from "@simrail/types";
-import { MLog } from "../mongo/logs.js";
-import { IPlayer } from "../types/player.js";
+import { MStationLog } from "../mongo/stationLog.js";
 import { SimrailClientEvents } from "../util/SimrailClient.js";
 import { v4 } from "uuid";
-import { MProfile } from "../mongo/profile.js";
-import { SteamUtil } from "../util/SteamUtil.js";
+import { MProfile, TMProfile } from "../mongo/profile.js";
+import { PlayerUtil } from "../util/PlayerUtil.js";
+import { isTruthyAndGreaterThanZero } from "../util/functions.js";
 
 export class StationsModule
 {
     public static load()
     {
 
-        client.on(SimrailClientEvents.StationLeft, async (server: Server, station: Station, player: IPlayer, joinedAt: number) =>
+        client.on(SimrailClientEvents.StationLeft, async (server: Server, station: Station, player: TMProfile, joinedAt: number) =>
         {
-            const stats = await SteamUtil.getPlayerStats(player.steamid);
+            const stats = await PlayerUtil.getPlayerStats(player.id);
             const date = new Date();
-            if (stats)
+
+            if (stats && (date.getTime() - joinedAt) && (date.getTime() - joinedAt) > 0)
             {
                 const time = (date.getTime() - joinedAt) || 0;
 
-                const userProfile = await MProfile.findOne({ steam: player.steamid }) ?? await MProfile.create({ steam: player.steamid, id: v4(), steamName: player.personaname });
-                if (!userProfile.dispatcherStats)
-                {
-                    userProfile.dispatcherStats = {};
-                }
+                if (!player.dispatcherStats) player.dispatcherStats = {};
 
-                if (userProfile.dispatcherStats[ station.Name ])
+                if (player.dispatcherStats[ station.Name ] && isTruthyAndGreaterThanZero(player.dispatcherStats[ station.Name ].time + time))
                 {
-                    userProfile.dispatcherStats[ station.Name ].time = userProfile.dispatcherStats[ station.Name ].time + time;
+                    player.dispatcherStats[ station.Name ].time = player.dispatcherStats[ station.Name ].time + time;
                 }
                 else
                 {
-                    userProfile.dispatcherStats[ station.Name ] = {
+                    player.dispatcherStats[ station.Name ] = {
                         time,
                     };
                 }
 
-                if (Number.isNaN(userProfile.dispatcherStats[ station.Name ].time))
-                {
-                    userProfile.dispatcherStats[ station.Name ].time = 0;
-                }
+                if (isTruthyAndGreaterThanZero(player.dispatcherTime + time)) player.dispatcherTime = player.dispatcherTime + time;
 
-                if (!userProfile.dispatcherTime)
-                {
-                    userProfile.dispatcherTime = 0;
-                }
+                player.steamTrainDistance = stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0;
+                player.steamDispatcherTime = stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0;
+                player.steamTrainScore = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
 
-                userProfile.dispatcherTime = userProfile.dispatcherTime + time;
-
-                await MProfile.findOneAndUpdate({ id: userProfile.id }, { dispatcherStats: userProfile.dispatcherStats, dispatcherTime: userProfile.dispatcherTime });
+                player.flags = player.flags.filter(x => x !== "private");
             }
 
-            await MLog.create({
+            const playerData = await PlayerUtil.getPlayerSteamData(player.id);
+
+            !stats && !player.flags.includes('private') && player.flags.push("private");
+
+            player.flags = [...new Set(player.flags)];
+
+            player.username = playerData?.personaname ?? player.username;
+            player.avatar = playerData?.avatarfull ?? player.avatar;
+
+            await MProfile.updateOne({ id: player.id }, player);
+
+            await MStationLog.create({
                 id: v4(),
-                userSteamId: player.steamid,
-                userAvatar: player.avatarfull,
-                userUsername: player.personaname,
+
+                steam: player.id,
+                username: player.username,
+
                 joinedDate: joinedAt,
                 leftDate: date.getTime(),
                 stationName: station.Name,
                 stationShort: station.Prefix,
                 server: server.ServerCode,
+
+                player: player._id,
+
             });
         });
     }

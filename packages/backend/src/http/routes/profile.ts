@@ -15,12 +15,8 @@
  */
 
 import { Router } from "express";
-import { msToTime } from "../../util/time.js";
-import { MProfile } from "../../mongo/profile.js";
-import { MBlacklist } from "../../mongo/blacklist.js";
-import { SteamUtil } from "../../util/SteamUtil.js";
 import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
-import { removeProperties } from "../../util/functions.js";
+import { PlayerUtil } from "../../util/PlayerUtil.js";
 
 export class ProfilesRoute
 {
@@ -36,30 +32,33 @@ export class ProfilesRoute
                 return;
             }
 
-            const player = await MProfile.findOne({ steam: req.params.id });
+            const player = await PlayerUtil.getPlayer(req.params.id);
             if (!player)
             {
                 res.status(404).json(new ErrorResponseBuilder()
-                    .setCode(404).setData("Profile not found! (probably private)"));
+                    .setCode(404).setData("Profile not found!"));
                 return;
             }
 
-            const blacklist = await MBlacklist.findOne({ steam: req.params.id! });
-            if (blacklist && blacklist.status)
+            if (player.flags.includes('blacklist'))
             {
                 res.status(403).json(new ErrorResponseBuilder()
                     .setCode(403).setData("Profile blacklisted!"));
                 return;
             }
 
-            const steam = await SteamUtil.getPlayer(player?.steam!);
-            const steamStats = await SteamUtil.getPlayerStats(player?.steam!);
+            if (player.flags.includes('private'))
+            {
+                res.status(404).json(new ErrorResponseBuilder()
+                    .setCode(404).setData("Profile is private!"));
+                return;
+            }
 
             res.json(
                 new SuccessResponseBuilder()
                     .setCode(200)
                     .setData({
-                        player: removeProperties(player, ['_id', '__v']), steam, steamStats,
+                        player
                     })
                     .toJSON(),
             );

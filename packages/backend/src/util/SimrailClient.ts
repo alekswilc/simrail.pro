@@ -15,10 +15,9 @@
  */
 
 import { EventEmitter } from "node:events";
-
-import { IPlayer } from "../types/player.js";
 import { PlayerUtil } from "./PlayerUtil.js";
 import { Station, ApiResponse, Server, Train } from "@simrail/types";
+import { TMProfile } from "../mongo/profile.js";
 
 export enum SimrailClientEvents
 {
@@ -31,14 +30,14 @@ export enum SimrailClientEvents
 
 export declare interface SimrailClient
 {
-    on(event: SimrailClientEvents.StationJoined, listener: (server: Server, station: Station, player: IPlayer) => void): this;
+    on(event: SimrailClientEvents.StationJoined, listener: (server: Server, station: Station, player: TMProfile) => void): this;
 
-    on(event: SimrailClientEvents.StationLeft, listener: (server: Server, station: Station, player: IPlayer, joinedAt: number) => void): this;
+    on(event: SimrailClientEvents.StationLeft, listener: (server: Server, station: Station, player: TMProfile, joinedAt: number) => void): this;
 
 
-    on(event: SimrailClientEvents.TrainJoined, listener: (server: Server, train: Train, player: IPlayer, startDistance: number) => void): this;
+    on(event: SimrailClientEvents.TrainJoined, listener: (server: Server, train: Train, player: TMProfile, startDistance: number) => void): this;
 
-    on(event: SimrailClientEvents.TrainLeft, listener: (server: Server, train: Train, player: IPlayer, joinedAt: number, leftAt: number, points: number, distance: number, vehicle: string) => void): this;
+    on(event: SimrailClientEvents.TrainLeft, listener: (server: Server, train: Train, player: TMProfile, joinedAt: number, leftAt: number, points: number, distance: number, vehicle: string) => void): this;
 
     //on(event: string, listener: Function): this;
 }
@@ -66,30 +65,14 @@ export class SimrailClient extends EventEmitter
     public constructor()
     {
         super();
-        this.setup();
-        setTimeout(() => setInterval(() => this.update(), 500), 1000);
+        this.setup().then(() => {
+            void this.update();
+        });
+
     }
 
-    public getStation(server: Server["ServerCode"], name: string)
-    {
-        if (!this.stationsOccupied[ server ] || !this.stationsOccupied[ server ][ name ])
-        {
-            return null;
-        }
-        const player = PlayerUtil.getPlayer(this.stationsOccupied[ server ][ name ]?.SteamId!);
-        return { player, joinedAt: this.stationsOccupied[ name ].joinedAt };
-    }
-
-    public getTrain(server: Server["ServerCode"], name: string)
-    {
-        if (!this.trainsOccupied[ server ] || !this.trainsOccupied[ server ][ name ])
-        {
-            return null;
-        }
-        const player = PlayerUtil.getPlayer(this.trainsOccupied[ server ][ name ]?.SteamId!);
-        return { player, joinedAt: this.trainsOccupied[ server ][ name ]?.JoinedAt, startPlayerDistance: this.trainsOccupied[ server ][ name ]?.StartPlayerDistance };
-    }
-
+    // todo: full rewrite, rewrite db structure with option to join log to user profile, check for negative values in user profile
+    // todo: wipe database 13.12.2024
 
     private async setup()
     {
@@ -161,7 +144,8 @@ export class SimrailClient extends EventEmitter
                     {
                         // join
                         const date = new Date();
-                        const player = await PlayerUtil.getPlayer(x.DispatchedBy[ 0 ]?.SteamId);
+
+                        const player = await PlayerUtil.ensurePlayer(x.DispatchedBy[ 0 ]?.SteamId);
 
                         this.emit(SimrailClientEvents.StationJoined, server, x, player);
                         this.stationsOccupied[ server.ServerCode ][ data.Prefix ] = {
@@ -172,7 +156,7 @@ export class SimrailClient extends EventEmitter
                         continue;
                     }
                     // leave
-                    const player = await PlayerUtil.getPlayer(data.DispatchedBy[ 0 ]?.SteamId);
+                    const player = await PlayerUtil.ensurePlayer(data.DispatchedBy[ 0 ]?.SteamId);
 
                     this.emit(SimrailClientEvents.StationLeft, server, x, player, this.stationsOccupied[ server.ServerCode ][ data.Prefix ]?.JoinedAt);
                     delete this.stationsOccupied[ server.ServerCode ][ data.Prefix ];
@@ -228,7 +212,7 @@ export class SimrailClient extends EventEmitter
                         // join
                         const date = new Date();
 
-                        const player = await PlayerUtil.getPlayer(x.TrainData.ControlledBySteamID!);
+                        const player = await PlayerUtil.ensurePlayer(x.TrainData.ControlledBySteamID!);
 
                         const playerStats = await PlayerUtil.getPlayerStats(x.TrainData.ControlledBySteamID!);
 
@@ -250,34 +234,41 @@ export class SimrailClient extends EventEmitter
                     }
                     const date = new Date();
 
-                    const player = await PlayerUtil.getPlayer(data.TrainData.ControlledBySteamID!);
+                    const player = await PlayerUtil.ensurePlayer(data.TrainData.ControlledBySteamID!);
 
                     const playerId = data.TrainData.ControlledBySteamID!;
                     const trainOccupied = this.trainsOccupied[ server.ServerCode ][ data.TrainNoLocal ] && JSON.parse(JSON.stringify(this.trainsOccupied[ server.ServerCode ][ data.TrainNoLocal ])) || null;
 
                     setTimeout(() =>
                     {
-
-
                         PlayerUtil.getPlayerStats(playerId).then(playerStats =>
                         {
                             const oldKm = trainOccupied?.StartPlayerDistance ?? 0;
 
-                            const distance = oldKm ? (playerStats?.stats.find(x => x.name === "DISTANCE_M")?.value ?? 0) - oldKm : 0;
+                            let distance = oldKm ? (playerStats?.stats.find(x => x.name === "DISTANCE_M")?.value ?? 0) - oldKm : 0;
 
                             const oldPoints = trainOccupied?.StartPlayerPoints ?? 0;
 
-                            const points = oldPoints ? (playerStats?.stats.find(x => x.name === "SCORE")?.value ?? 0) - oldPoints : 0;
+                            let points = oldPoints ? (playerStats?.stats.find(x => x.name === "SCORE")?.value ?? 0) - oldPoints : 0;
 
+
+                            if (distance < 0) {
+                                console.warn(`Player ${playerId}, Train ${data.TrainNoLocal} - distance < 0`);
+                                distance = 0;
+                            }
+
+                            if (points < 0) {
+                                console.warn(`Player ${playerId}, Train ${data.TrainNoLocal} - distance < 0`);
+                                points = 0;
+                            }
 
                             this.emit(SimrailClientEvents.TrainLeft, server, data, player, trainOccupied?.JoinedAt, date.getTime(), points, distance, x.Vehicles[ 0 ]);
                         });
-                    }, 80_000);
+                    }, 30_000);
                     delete this.trainsOccupied[ server.ServerCode ][ data.TrainNoLocal ];
 
                 }
             }
-
 
             this.trains[ server.ServerCode ] = trains.data;
             redis.json.set("trains", "$", this.trains);
@@ -289,11 +280,12 @@ export class SimrailClient extends EventEmitter
     private async update()
     {
         const servers = (await fetch("https://panel.simrail.eu:8084/servers-open").then(x => x.json()).catch(() => ({ data: [], result: false })) as ApiResponse<Server>)
-            .data?.filter(x => x.ServerName.includes("Polski")) ?? []; // TODO: remove this in v3
+            .data ?? [] //?.filter(x => x.ServerName.includes("Polski")) ?? []; // TODO: remove this in v3
 
         if (!servers.length)
         {
             console.log("SimrailAPI is down");
+            return;
         }
 
         // TODO: maybe node:worker_threads?
@@ -303,10 +295,10 @@ export class SimrailClient extends EventEmitter
             const stations = (await fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Station>;
             const trains = (await fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + server.ServerCode).then(x => x.json()).catch(() => ({ result: false }))) as ApiResponse<Train>;
 
-            void this.processStation(server, stations);
-            void this.processTrain(server, trains);
-
-
+            await this.processStation(server, stations);
+            await this.processTrain(server, trains);
         }
+        await new Promise(res => setTimeout(res, 1000));
+        await this.update();
     }
 } 

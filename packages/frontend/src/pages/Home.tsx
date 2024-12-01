@@ -14,49 +14,33 @@
  * See LICENSE for more.
  */
 
-import React, { useEffect, useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TStatsResponse } from "../types/stats.ts";
 import { WarningAlert } from "../components/mini/alerts/Warning.tsx";
 import { CardDataStats } from "../components/mini/util/CardDataStats.tsx";
+import { fetcher } from "../util/fetcher.ts";
+import useSWR from 'swr';
+import { LoadError } from "../components/mini/loaders/ContentLoader.tsx";
 
-export const Home: React.FC = () =>
+export const Home = () =>
 {
     const { t } = useTranslation();
 
-    const [ commit, setCommit ] = useState("");
-    const [ version, setVersion ] = useState("");
-    const [ trains, setTrains ] = useState(0);
-    const [ dispatchers, setDispatchers ] = useState(0);
-    const [ profiles, setProfiles ] = useState(0);
-
-    useEffect(() =>
-    {
-        fetch(`${ import.meta.env.VITE_API_URL }/stats/`).then(x => x.json()).then((data: TStatsResponse) =>
-        {
-            data.data.git.commit && setCommit(data.data.git.commit);
-            data.data.git.version && setVersion(data.data.git.version);
-
-            //  ADD ALERT IF API DOESN'T WORK! toast?
-            setTrains(data.data.stats.trains);
-            setDispatchers(data.data.stats.dispatchers);
-            setProfiles(data.data.stats.profiles);
-        });
-    }, []);
-
+    const { data, error } = useSWR<TStatsResponse>("/stats/", fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     return (
             <>
                 <div className="flex pb-5">
                     <WarningAlert description={ t("preview.description") } title={ t("preview.title") }/>
+                    { error && <LoadError /> }
                 </div>
 
                 <div className="flex flex-col gap-10">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-                        <CardDataStats title={ t("home.stats.trains") } total={ trains.toString() }/>
-                        <CardDataStats title={ t("home.stats.dispatchers") } total={ dispatchers.toString() }/>
-                        <CardDataStats title={ t("home.stats.profiles") } total={ profiles.toString() }/>
+                        <CardDataStats title={ t("home.stats.trains") } total={ data?.data?.stats?.trains ?? "-" }/>
+                        <CardDataStats title={ t("home.stats.dispatchers") } total={ data?.data?.stats?.dispatchers ?? "-" }/>
+                        <CardDataStats title={ t("home.stats.profiles") } total={ data?.data?.stats?.profiles ?? "-" }/>
                     </div>
 
 
@@ -108,16 +92,16 @@ export const Home: React.FC = () =>
                                         } }
                                 /></p>
                                 <p>{ t("home.footer.license") } <a className="color-orchid"
-                                                                      href={ "/LICENSE.txt" }>GNU
+                                                                   href={ "/LICENSE.txt" }>GNU
                                     AGPL V3</a></p>
                                 <p>{ t("home.footer.powered") } <Link className="color-orchid"
                                                                       to={ "https://tailadmin.com/" }>TailAdmin</Link>
                                 </p>
 
-                                <p>{ version && <Link className="color-orchid"
-                                                      to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/releases/tag/${ version }` }>{ version }</Link> }{ version && commit && " | " }{ commit &&
+                                <p>{ data?.data?.git?.version && <Link className="color-orchid"
+                                                      to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
                                         <Link className="color-orchid"
-                                              to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/commit/${ commit }` }>{ commit }</Link> }</p>
+                                              to={ `https://git.alekswilc.dev/simrail/simrail.alekswilc.dev/commit/${ data?.data?.git?.commit }` }>{ data?.data?.git?.commit }</Link> }</p>
 
                             </div>
 

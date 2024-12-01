@@ -14,71 +14,100 @@
  * See LICENSE for more.
  */
 
-import { Model, model, Schema } from "mongoose";
-
+import { HydratedDocument, model, Schema } from "mongoose";
 
 export const raw_schema = {
+    // STEAM HEX
     id: {
         type: String,
         required: true,
+        unique: true
     },
-    steam: {
-        type: String,
-        required: true,
-    },
-    steamName: {
+    // USERNAME FROM STEAM
+    username: {
         type: String,
         required: true,
     },
 
+    // AVATAR FROM STEAM
+    avatar: {
+        type: String,
+        required: true,
+    },
+
+    // OBJECT WITH TRAIN STATS
     trainStats: {
         type: Object,
         required: false,
         default: {},
     },
+    // OBJECT WITH DISPATCHER STATS
     dispatcherStats: {
         type: Object,
         required: false,
         default: {},
     },
+    // FULL TRAIN-TIME for easy access
     trainTime: {
         type: Number,
         required: false,
         default: 0,
     },
+    // FULL TRAIN-SCORE for easy access
     trainPoints: {
         type: Number,
         required: false,
         default: 0,
     },
+    // FULL TRAIN-DISTANCE for easy access
     trainDistance: {
         type: Number,
         required: false,
         default: 0,
     },
+    // FULL DISPATCHER-TIME for easy access
     dispatcherTime: {
         type: Number,
         required: false,
         default: 0,
     },
-    verified: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
+    steamDispatcherTime: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    steamTrainDistance: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+    steamTrainScore: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
+
+    flags: [
+        {
+            type: String,
+            required: false,
+            default: []
+        }
+    ]
 };
 
 const schema = new Schema<IProfile>(raw_schema);
 
-
-export type TMProfile = Model<IProfile>
+export type TMProfile = HydratedDocument<IProfile>;
 
 export const MProfile = model<IProfile>("profile", schema);
 
 export interface IProfile
 {
     id: string;
-    steam: string;
+    username: string;
+    avatar: string;
+
     trainStats: {
         [ trainName: string ]: {
             score: number,
@@ -92,10 +121,16 @@ export interface IProfile
         }
     };
 
-    dispatcherTime: number;
     trainTime: number;
     trainPoints: number;
-    steamName: string;
     trainDistance: number;
-    verified: boolean;
+
+    dispatcherTime: number;
+
+    steamDispatcherTime: number;
+    steamTrainDistance: number;
+    steamTrainScore: number;
+
+
+    flags: string[]
 }

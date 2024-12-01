@@ -28,16 +28,17 @@ export interface TLeaderboardData
 
 export interface TLeaderboardRecord
 {
-    id: string;
-    steam: string;
-    steamName: string;
-    trainTime: number;
-    trainPoints: number;
-    trainDistance: number;
-    dispatcherTime: number;
-    dispatcherStats?: { [ key: string ]: TLeaderboardDispatcherStat };
-    trainStats?: { [ key: string ]: TLeaderboardTrainStat };
-    verified: boolean;
+    "id": string,
+    "username": string,
+    "avatar": string,
+    "trainTime": number,
+    "trainPoints": number,
+    "trainDistance": number,
+    "dispatcherTime": number,
+    "steamDispatcherTime": number,
+    "steamTrainDistance": number,
+    "steamTrainScore": number,
+    "flags": string[]
 }
 
 export interface TLeaderboardDispatcherStat

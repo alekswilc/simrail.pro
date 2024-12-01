@@ -37,7 +37,7 @@ export const ArrowIcon = ({ rotated }: { rotated?: boolean }) =>
 export const FlexArrowIcon = ({ rotated }: { rotated?: boolean }) =>
         <svg
                 className={ `fill-current ${
-                        rotated && "rotate-180"
+                        !rotated && "rotate-180"
                 }` }
                 width="20"
                 height="20"

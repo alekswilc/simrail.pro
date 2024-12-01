@@ -16,90 +16,70 @@
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-
-import { TStationRecord } from "../../../types/station.ts";
-
+import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
+import { formatTime } from "../../../util/time.ts";
 import { FaCheck } from "react-icons/fa6";
 
-
-// setSearchItem: Dispatch<SetStateAction<string>>
-export const StationTable = ({ stations }: {
-    stations: TStationRecord[]
-}) =>
+export const SteamStationTable = ({ stations }: { stations: TLeaderboardRecord[] }) =>
 {
     const { t } = useTranslation();
 
     return (
             <div
                     className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+
                 <div className="flex flex-col">
-                    <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3">
                         <div className="p-2.5 text-center xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.user") }
+                                { t("leaderboard.user") }
                             </h5>
                         </div>
                         <div className="p-2.5 text-center xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.station") }
+                                { t("leaderboard.time") }
                             </h5>
                         </div>
-                        <div className="hidden sm:block p-2.5 text-center xl:p-5">
+                        <div className="hidden p-2.5 text-center sm:block xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.time") }
-                            </h5>
-                        </div>
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("logs.actions") }
+                                { t("leaderboard.actions") }
                             </h5>
                         </div>
                     </div>
 
                     { stations.map((station, key) => (
                             <div
-                                    className={ `grid grid-cols-3 sm:grid-cols-4 ${ stations.length === (key + 1)
+                                    className={ `grid grid-cols-2 sm:grid-cols-3 ${ stations.length === (key + 1) // todo: ...
                                             ? ""
                                             : "border-b border-stroke dark:border-strokedark"
                                     }` }
                                     key={ station.id }
                             >
-                                <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
+                                <div className="flex justify-center items-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
-                                        <Link to={ "/profile/" + (station.steam ?? station.player.id) }
-                                              className="color-orchid">{ station.username ?? station.player.username }</Link> { station.player.flags.includes("verified") &&
+                                        <Link to={ "/profile/" + station.id }
+                                              className="color-orchid">{ station.username }</Link> { station.flags.includes("verified") &&
                                             <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                                     </p>
                                 </div>
 
                                 <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-6 sm:block break-all">{ station.server.toUpperCase() } - { station.stationName ?? "--" }</p>
+                                    <p className="text-meta-3">{ formatTime(station.steamDispatcherTime * 1000 * 60) }</p>
                                 </div>
 
-                                <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-3">{ dayjs(station.leftDate).format("HH:mm DD/MM/YYYY") }</p>
-                                </div>
-
-                                <div
-                                        className="items-center justify-center p-2.5 flex xl:p-5 gap-2 flex-wrap sm:flex-nowrap	">
+                                <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                                     <Link
-                                            to={ "/profile/" + (station.steam ?? station.player.id) }
-                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ station.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
-                                            style={ station.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }
-                                    >
-                                        { t("logs.profile") }
-                                    </Link>
-                                    <Link
-                                            to={ "/log/" + station.id }
+                                            to={ "/profile/" + station.id }
                                             className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                     >
-                                        { t("logs.record") }
+                                        { t("leaderboard.profile") }
                                     </Link>
                                 </div>
                             </div>
                     )) }
                 </div>
             </div>
+
+
     );
 };

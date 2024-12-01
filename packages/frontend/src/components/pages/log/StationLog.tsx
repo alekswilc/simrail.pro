@@ -36,7 +36,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
         toast.info(t("log.toasts.report"), {
             autoClose: 5000,
         });
-        void navigator.clipboard.writeText(`;user: \`${ data.userUsername }\`\n;steam: \`${ data.userSteamId }\`\n;left: <t:${ Math.floor(data.leftDate / 1000) }>${ data.joinedDate ? `\n;joined: <t:${ Math.floor(data.joinedDate / 1000) }>` : "" }\n;station: \`${ data.stationName }\`\n;link: ${ location.href }\n\n`);
+        void navigator.clipboard.writeText(`;user: \`${ data.player.username }\`\n;steam: \`${ data.player.avatar }\`\n;left: <t:${ Math.floor(data.leftDate / 1000) }>${ data.joinedDate ? `\n;joined: <t:${ Math.floor(data.joinedDate / 1000) }>` : "" }\n;station: \`${ data.stationName }\`\n;link: ${ location.href }\n\n`);
     };
 
     return <div
@@ -45,12 +45,12 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
             <div
                     className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                 <div className="relative drop-shadow-2">
-                    <img className="rounded-full" src={ data.userAvatar } alt="profile"/>
+                    <img className="rounded-full" src={ data.player.avatar } alt="profile"/>
                 </div>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.userUsername }{ data.verified && <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                    { data.player.username }{ data.player.flags.includes('verified') && <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                 </h3>
             </div>
         </div>
@@ -84,9 +84,9 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
                         { t("log.buttons.copy") }
                     </a>
                     <Link
-                            to={"/profile/" + data.userSteamId}
-                            className="inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-                    >
+                            to={"/profile/" + data.player.id}
+                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10  ${ data.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
+                            style={ data.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }>
 
                         { t("log.buttons.profile") }
                     </Link>

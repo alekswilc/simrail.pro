@@ -35,12 +35,12 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
             <div
                     className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                 <div className="relative drop-shadow-2">
-                    <img className="rounded-full" src={ data.steam.avatarfull } alt="profile"/>
+                    <img className="rounded-full" src={ data.player.avatar } alt="profile"/>
                 </div>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.steam.personname } { data.player.verified &&
+                    { data.player.username } { data.player.flags.includes('verified') &&
                         <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                 </h3>
 
@@ -83,21 +83,21 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.distance") }
                                         </h5>
-                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "distance") }/>
+                                        <FlexArrowIcon rotated={ sortTrainsBy === "distance" || !sortTrainsBy }/>
                                     </div>
                                     <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"
                                          onClick={ () => setSortTrainsBy("score") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.points") }
                                         </h5>
-                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "score") }/>
+                                        <FlexArrowIcon rotated={ sortTrainsBy === "score" }/>
                                     </div>
                                     <div className="hidden sm:flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"
                                          onClick={ () => setSortTrainsBy("time") }>
                                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                                             { t("profile.trains.time") }
                                         </h5>
-                                        <FlexArrowIcon rotated={ !(sortTrainsBy === "time") }/>
+                                        <FlexArrowIcon rotated={ sortTrainsBy === "time" }/>
                                     </div>
                                 </div>
 
@@ -107,7 +107,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
                                     return <div
                                             className={ `grid grid-cols-3 sm:grid-cols-4 border-t border-t-stroke dark:border-t-strokedark` }
-                                            key={ 1 }
+                                            key={ trainName }
                                     >
                                         <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
                                             <p className="text-black dark:text-white sm:block break-all">
@@ -137,7 +137,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                 <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
                     <div className="group relative cursor-pointer" onClick={ () => setShowStations(val => !val) }>
                         <h1 className="text-xl text-black dark:text-white pb-5">{ t("profile.stations.header") }</h1>
-                        <ArrowIcon rotated={ showTrains }/>
+                        <ArrowIcon rotated={ showStations }/>
                     </div>
                     { showStations &&
                             <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
@@ -159,7 +159,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                     const station = data.player.dispatcherStats[ stationName ];
                                     return <div
                                             className={ `grid grid-cols-2 border-t border-t-stroke dark:border-t-strokedark` }
-                                            key={ 1 }
+                                            key={ stationName }
                                     >
                                         <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
                                             <p className="text-black dark:text-white sm:block break-all">

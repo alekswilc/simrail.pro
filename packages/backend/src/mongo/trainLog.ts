@@ -22,15 +22,7 @@ export const raw_schema = {
         type: String,
         required: true,
     },
-    userSteamId: {
-        type: String,
-        required: true,
-    },
-    userUsername: {
-        type: String,
-        required: true,
-    },
-    userAvatar: {
+    trainNumber: {
         type: String,
         required: true,
     },
@@ -43,36 +35,58 @@ export const raw_schema = {
         type: Number,
         required: true,
     },
-    stationName: {
-        type: String,
-        required: true,
+    distance: {
+        type: Number,
+        required: false,
+        default: 0,
     },
-    stationShort: {
-        type: String,
-        required: true,
+    points: {
+        type: Number,
+        required: false,
+        default: 0,
     },
     server: {
         type: String,
         required: true,
     },
+    trainName: {
+        type: String,
+        default: null,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    steam: {
+        type: String,
+        required: true,
+    },
+    player: {
+        type: Schema.Types.ObjectId,
+        ref: "profile"
+    }
 };
 
-const schema = new Schema<ILog>(raw_schema);
-schema.index({ stationName: "text", userUsername: "text", stationShort: "text", userSteamId: "text", server: "text" });
+const schema = new Schema<ITrainLog>(raw_schema);
 
-export type TMLog = Model<ILog>
+export type TMTrainLog = Model<ITrainLog>
 
-export const MLog = model<ILog>("logs", schema);
+export const MTrainLog = model<ITrainLog>("trains", schema);
 
-export interface ILog
+export interface ITrainLog
 {
     id: string;
-    userSteamId: string;
-    userUsername: string;
-    userAvatar: string;
     joinedDate?: number;
     leftDate: number;
-    stationName: string;
-    stationShort: string;
+    trainNumber: string;
+    trainName: string;
+    distance: number;
+    points: number;
     server: string;
+
+    player: Schema.Types.ObjectId;
+
+    username: string;
+    steam: string;
+
 }

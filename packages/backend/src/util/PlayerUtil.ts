@@ -15,18 +15,20 @@
  */
 
 import { IPlayerPayload, IPlayerStatsPayload } from "../types/player.js";
+import { MProfile } from "../mongo/profile.js";
+import { assert } from "node:console";
 
 const STEAM_API_KEY = process.env.STEAM_APIKEY;
 
-const fetchFuckingSteamApi = (url: string) =>
+const steamFetch = (url: string, maxRetries: number = 5) =>
 {
     let retries = 0;
 
-    return new Promise((res, rej) =>
+    return new Promise((res, _rej) =>
     {
         const req = () =>
         {
-            if (retries > 5)
+            if (retries > maxRetries)
             {
                 throw new Error("request failed to api steam");
             }
@@ -47,25 +49,78 @@ const fetchFuckingSteamApi = (url: string) =>
 
 export class PlayerUtil
 {
-    public static async getPlayer(steamId: number | string)
+    public static async ensurePlayer(steamId: number | string)
     {
-        const data = await fetchFuckingSteamApi(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`) as IPlayerPayload;
+        assert(steamId, "expected steamId to be a string or a number");
+        steamId = steamId.toString();
+        let player = await MProfile.findOne({ id: steamId });
 
-        if (!data.response.players)
+        if (!player)
         {
-            return;
+            const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`, 20) as IPlayerPayload;
+
+            assert(data.response.players, "Expected data.response.players to be truthy")
+
+            const stats = await this.getPlayerStats(steamId);
+
+            player = await MProfile.findOne({ id: steamId });
+            if (player) return player;
+
+            player = await MProfile.create({
+                id: steamId,
+                username: data.response.players[ 0 ].personaname,
+                avatar: data.response.players[ 0 ].avatarfull,
+
+                steamDispatcherTime: stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0,
+                steamTrainScore: stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0,
+                steamTrainDistance: stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0,
+
+                trainStats: {},
+                dispatcherStats: {},
+
+                trainPoints: 0,
+                trainDistance: 0,
+                trainTime: 0,
+
+                dispatcherTime: 0,
+
+                flags: !stats ? [ 'private' ] : []
+            }).catch(e => e);
+
+            if (player instanceof Error)
+                player = await MProfile.findOne({ id: steamId });
+
         }
-        return data.response.players[ 0 ];
+
+        assert(player, "expected player to be truthy");
+
+        return player;
+    }
+
+    public static async getPlayer(steamId: string) {
+        const player = await MProfile.findOne({ id: steamId });
+
+        if (!player) return undefined;
+
+        return player;
+    }
+
+    public static async getPlayerSteamData(steamId: string) {
+        const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`, 5) as IPlayerPayload;
+
+        if (!data?.response?.players?.length)
+            return undefined;
+
+        return data.response.players[0];
     }
 
     public static async getPlayerStats(steamId: string)
     {
-        const data = await fetchFuckingSteamApi(`http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=1422130&key=${ STEAM_API_KEY }&steamid=${ steamId }`) as IPlayerStatsPayload;
-
+        const data = await steamFetch(`https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=1422130&key=${ STEAM_API_KEY }&steamid=${ steamId }`) as IPlayerStatsPayload;
 
         if (!data.playerstats?.stats)
         {
-            return;
+            return undefined;
         }
         return data.playerstats;
     }

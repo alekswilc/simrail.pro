@@ -14,6 +14,8 @@
  * See LICENSE for more.
  */
 
+import { TProfilePlayer } from "./profile.ts";
+
 export interface TLogResponse
 {
     success: boolean;
@@ -23,31 +25,25 @@ export interface TLogResponse
 
 export interface TLogTrainData
 {
-    id: string;
-    trainNumber: string;
-    userSteamId: string;
-    userUsername: string;
-    userAvatar: string;
-    leftDate: number;
-    distance?: number;
-    points?: number;
-    server: string;
-    trainName: string;
-    joinedDate?: number;
-    verified: boolean;
+
+    "id": string,
+    "trainNumber": string,
+    "leftDate": number,
+    "joinedDate": number,
+    "distance": number,
+    "points": number,
+    "server": string,
+    "trainName": string,
+    player: TProfilePlayer
 }
 
 export interface TLogStationData
 {
-    id: string;
-    userSteamId: string;
-    userUsername: string;
-    userAvatar: string;
-    leftDate: number;
-    stationName: string;
-    stationShort: string;
-    server: string;
-    joinedDate?: number;
-    verified: boolean;
-
+    "id": string,
+    "joinedDate": number,
+    "leftDate": number,
+    "stationName": string,
+    "stationShort": string,
+    "server": string,
+    player: TProfilePlayer
 }

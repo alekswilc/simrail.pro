@@ -33,58 +33,29 @@ export interface TProfileSuccessResponse
 export interface TProfileData
 {
     player: TProfilePlayer;
-    steam: TProfileSteam;
-    steamStats: TProfileSteamStats;
 }
 
 export interface TProfilePlayer
 {
-    id: string;
-    steam: string;
-    steamName: string;
-    trainTime: number;
-    dispatcherTime: number;
-    dispatcherStats: Record<string, TProfileDispatcherStatsRecord>;
-    trainStats: Record<string, TProfileTrainStatsRecord>;
-    trainDistance: number;
-    trainPoints: number;
-    verified: boolean;
-}
+    "id": string,
+    "username": string,
+    "avatar": string,
+    "trainTime": number,
+    "trainPoints": number,
+    "trainDistance": number,
+    "dispatcherTime": number,
+    "steamDispatcherTime": number,
+    "steamTrainDistance": number,
+    "steamTrainScore": number,
+    "flags": string[]
 
-export interface TProfileDispatcherStatsRecord
-{
-    time: number;
-}
+    trainStats: Record<string, {
+        time: number;
+        score: number;
+        distance: number;
+    }>
 
-export interface TProfileTrainStatsRecord
-{
-    distance: number;
-    score: number;
-    time: number;
-}
-
-export interface TProfileSteam
-{
-    personname: string;
-    avatarfull: string;
-}
-
-export interface TProfileSteamStats
-{
-    steamID: string;
-    gameName: string;
-    stats: TProfileSteamStatsAchievementStat[];
-    achievements: TProfileSteamStatsAchievement[];
-}
-
-export interface TProfileSteamStatsAchievement
-{
-    name: string;
-    achieved: number;
-}
-
-export interface TProfileSteamStatsAchievementStat
-{
-    name: string;
-    value: number;
+    dispatcherStats: Record<string, {
+        time: number;
+    }>
 }

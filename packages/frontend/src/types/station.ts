@@ -14,6 +14,8 @@
  * See LICENSE for more.
  */
 
+import { TProfilePlayer } from "./profile.ts";
+
 export interface TStationResponse
 {
     success: boolean;
@@ -28,14 +30,16 @@ export interface TStationData
 
 export interface TStationRecord
 {
-    id: string;
-    userSteamId: string;
-    userUsername: string;
-    userAvatar: string;
-    leftDate: number;
-    stationName: string;
-    stationShort: string;
-    server: string;
-    joinedDate?: number;
-    verified: boolean;
+    "id": string,
+    "joinedDate": number,
+    "leftDate": number,
+    "stationName": string,
+    "stationShort": string,
+    "server": string,
+    username: string
+    steam: string;
+
+
+    player: TProfilePlayer
+
 }

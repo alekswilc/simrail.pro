@@ -14,25 +14,28 @@
  * See LICENSE for more.
  */
 
+
 import { ChangeEvent, useEffect, useState } from "react";
-import { StationTable } from "../../components/pages/logs/StationTable.tsx";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
-import useSWR from 'swr';
+import { useTranslation } from "react-i18next";
 import { fetcher } from "../../util/fetcher.ts";
+import useSWR from "swr";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
-import { useTranslation } from 'react-i18next';
+import { SteamTrainTable } from "../../components/pages/steamLeaderboard/SteamTrainTable.tsx";
 
-export const StationLogs = () =>
+export const SteamTrainLeaderboard = () =>
 {
-    const [params, setParams] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/stations/?${params.toString()}`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const [ params, setParams ] = useState(new URLSearchParams());
+
+    const { data, error, isLoading } = useSWR(`/steam/leaderboard/train/?${ params.toString() }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-
+    const [ sortBy, setSortBy ] = useState("distance");
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -40,11 +43,13 @@ export const StationLogs = () =>
         searchValue === "" ? searchParams.delete("q") : searchParams.set("q", searchValue);
 
         const params = new URLSearchParams();
-        searchValue && params.set('q', searchValue);
+        searchValue && params.set("q", searchValue);
+        sortBy && params.set("s", sortBy);
+
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue ]);
+    }, [ searchValue, sortBy ]);
 
     useEffect(() =>
     {
@@ -63,14 +68,15 @@ export const StationLogs = () =>
                 <div className="flex flex-col gap-10">
                     <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
                     <>
-                        { error && <LoadError /> }
+                        { error && <LoadError/> }
 
-                        {isLoading && <ContentLoader/> }
+                        { isLoading && <ContentLoader/> }
 
-                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                       description={ t("content_loader.notfound.description") }/> }
+                        { (data && data.code === 404) || (data && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
+                                                                     description={ t("content_loader.notfound.description") }/>
+                        }
 
-                        {data && data.code === 200 && !!data?.data?.records?.length && <StationTable stations={data.data.records} /> }
+                        { data && data.code === 200 && !!data?.data?.records?.length && <SteamTrainTable trains={ data?.data?.records } setSortBy={ setSortBy } sortBy={ sortBy }/> }
                     </>
                 </div>
             </>

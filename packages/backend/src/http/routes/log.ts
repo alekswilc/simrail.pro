@@ -15,12 +15,10 @@
  */
 
 import { Router } from "express";
-import { ITrainLog, MTrainLog } from "../../mongo/trainLogs.js";
-import { MBlacklist } from "../../mongo/blacklist.js";
+import { MTrainLog } from "../../mongo/trainLog.js";
 import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
-import { removeProperties } from "../../util/functions.js";
-import { ILog, MLog } from "../../mongo/logs.js";
-import { MProfile } from "../../mongo/profile.js";
+import { MStationLog } from "../../mongo/stationLog.js";
+import { IProfile } from "../../mongo/profile.js";
 
 
 export class LogRoute
@@ -40,7 +38,7 @@ export class LogRoute
                 return;
             }
 
-            const log = await MLog.findOne({ id }) || await MTrainLog.findOne({ id });
+            const log = await MStationLog.findOne({ id }).populate<{ player: IProfile }>('player').orFail().catch(() => null) || await MTrainLog.findOne({ id }).populate<{ player: IProfile }>('player').orFail().catch(() => null);
 
             if (!log)
             {
@@ -49,12 +47,9 @@ export class LogRoute
                     .setData("Invalid Id parameter").toJSON());
                 return;
             }
-            const profile = await MProfile.findOne({ steam: log.userSteamId });
-
 
             res.status(200).json(new SuccessResponseBuilder().setCode(200).setData({
-                verified: profile?.verified,
-                ...removeProperties<Omit<(ILog | ITrainLog), "_id" | "__v">>(log.toJSON(), [ "_id", "__v" ])
+                ...log.toJSON()
             }));
         });
 

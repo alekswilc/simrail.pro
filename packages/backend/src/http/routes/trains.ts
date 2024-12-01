@@ -15,15 +15,10 @@
  */
 
 import { Router } from "express";
-import dayjs from "dayjs";
-import { msToTime } from "../../util/time.js";
 import { PipelineStage } from "mongoose";
-import { ITrainLog, MTrainLog, raw_schema } from "../../mongo/trainLogs.js";
-import { MBlacklist } from "../../mongo/blacklist.js";
-import { SteamUtil } from "../../util/SteamUtil.js";
-import { GitUtil } from "../../util/git.js";
+import { ITrainLog, MTrainLog } from "../../mongo/trainLog.js";
 import { SuccessResponseBuilder } from "../responseBuilder.js";
-import { escapeRegexString, removeProperties } from "../../util/functions.js";
+import { escapeRegexString } from "../../util/functions.js";
 import { MProfile } from "../../mongo/profile.js";
 
 const generateSearch = (regex: RegExp) => [
@@ -31,13 +26,13 @@ const generateSearch = (regex: RegExp) => [
         trainNumber: { $regex: regex },
     },
     {
-        userSteamId: { $regex: regex },
+        username: { $regex: regex },
     },
     {
         server: { $regex: regex },
     },
     {
-        userUsername: { $regex: regex },
+        steam: { $regex: regex },
     },
 ];
 
@@ -50,7 +45,6 @@ export class TrainsRoute
         app.get("/", async (req, res) =>
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
-            const profiles = await MProfile.find({ verified: true });
 
             const filter: PipelineStage[] = [];
 
@@ -67,18 +61,13 @@ export class TrainsRoute
                 .sort({ leftDate: -1 })
                 .limit(30);
 
+            await MProfile.populate(records, { path: "player" });
 
             res.json(
-                new SuccessResponseBuilder<{ records: Omit<ITrainLog, "_id" | "__v">[] }>()
+                new SuccessResponseBuilder<{ records: ITrainLog[] }>()
                     .setCode(200)
                     .setData({
-                        records: records.map(x =>
-                        {
-                            return {
-                                ...removeProperties<Omit<ITrainLog, "_id" | "__v">>(x, [ "_id", "__v" ]),
-                                verified: profiles.find(xx => xx.steam === x.userSteamId)
-                            };
-                        }),
+                        records
                     })
                     .toJSON(),
             );
