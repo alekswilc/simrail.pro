@@ -100,7 +100,8 @@ export const TrainTable = ({ trains, setSortBy, sortBy }: {
                                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                                     <Link
                                             to={ "/profile/" + train.id }
-                                            className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
+                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ train.flags.includes("private") ? "bg-opacity-50" : "" }` }
+                                            style={ train.flags.includes("private") ? { pointerEvents: "none" } : undefined }
                                     >
                                         { t("leaderboard.profile") }
                                     </Link>
