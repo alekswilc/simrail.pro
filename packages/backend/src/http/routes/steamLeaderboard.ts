@@ -30,8 +30,8 @@ const generateSearch = (regex: RegExp) => [
 ];
 
 const sortyByMap: Record<string, any> = {
-    points: { steamTrainDistance: -1 },
-    distance: { steamTrainScore: -1 },
+    distance: { steamTrainDistance: -1 },
+    points: { steamTrainScore: -1 },
 }
 
 export class SteamLeaderboardRoute
