@@ -66,7 +66,7 @@ export class SimrailClient extends EventEmitter
     {
         super();
         this.setup().then(() => {
-            void this.update();
+            void this.update(false);
         });
 
     }
@@ -277,7 +277,7 @@ export class SimrailClient extends EventEmitter
         }
     }
 
-    private async update()
+    private async update(needSetup: boolean = false)
     {
         const servers = (await fetch("https://panel.simrail.eu:8084/servers-open").then(x => x.json()).catch(() => ({ data: [], result: false })) as ApiResponse<Server>)
             .data ?? [] //?.filter(x => x.ServerName.includes("Polski")) ?? []; // TODO: remove this in v3
@@ -285,7 +285,14 @@ export class SimrailClient extends EventEmitter
         if (!servers.length)
         {
             console.log("SimrailAPI is down");
+            await new Promise(res => setTimeout(res, 5000));
+            await this.update(true);
             return;
+        }
+
+        if (needSetup) 
+        {
+            await this.setup();
         }
 
         // TODO: maybe node:worker_threads?
