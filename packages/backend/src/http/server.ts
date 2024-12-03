@@ -22,7 +22,7 @@ import { LeaderboardRoute } from "./routes/leaderboard.js";
 import cors from "cors";
 import { StatsRoute } from "./routes/stats.js";
 import { LogRoute } from "./routes/log.js";
-import { SteamLeaderboardRoute } from "./routes/steamLeaderboard.js";
+import { ActivePlayersRoute } from "./routes/activePlayer.js";
 
 export class ApiModule
 {
@@ -36,7 +36,7 @@ export class ApiModule
         router.use("/trains/", TrainsRoute.load());
         router.use("/profiles/", ProfilesRoute.load());
         router.use("/leaderboard/", LeaderboardRoute.load());
-        router.use("/steam/leaderboard/", SteamLeaderboardRoute.load());
+        router.use("/active/", ActivePlayersRoute.load());
 
         router.use("/stats/", StatsRoute.load());
         router.use("/log/", LogRoute.load());

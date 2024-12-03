@@ -19,23 +19,22 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { fetcher } from "../../util/fetcher.ts";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
-import { useTranslation } from "react-i18next";
-import { SteamStationTable } from "../../components/pages/steamLeaderboard/SteamStationTable.tsx";
+import { ActiveTrainTable } from "../../components/pages/active/ActiveTrainTable.tsx";
 
-export const SteamStationLeaderboard = () =>
+export const ActiveTrainPlayers = () =>
 {
     const [ params, setParams ] = useState(new URLSearchParams());
 
-    const { data, error, isLoading } = useSWR(`/steam/leaderboard/station/?${params.toString()}`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/active/train/?${ params.toString() }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
 
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -44,6 +43,7 @@ export const SteamStationLeaderboard = () =>
 
         const params = new URLSearchParams();
         searchValue && params.set("q", searchValue);
+
 
         setSearchParams(params.toString());
         setParams(params);
@@ -66,16 +66,16 @@ export const SteamStationLeaderboard = () =>
                 <div className="flex flex-col gap-10">
                     <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
                     <>
-                        { error && <LoadError /> }
+                        { error && <LoadError/> }
 
                         { isLoading && <ContentLoader/> }
 
-                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                       description={ t("content_loader.notfound.description") }/> }
+                        { (data && data.code === 404) || (data && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
+                                                                     description={ t("content_loader.notfound.description") }/>
+                        }
 
-                        { data && data.code === 200 && data.data && !!data?.data?.records?.length && <SteamStationTable stations={ data.data.records } /> }
+                        { data && data.code === 200 && !!data?.data?.records?.length && <ActiveTrainTable trains={ data?.data?.records } /> }
                     </>
-
                 </div>
             </>
     );

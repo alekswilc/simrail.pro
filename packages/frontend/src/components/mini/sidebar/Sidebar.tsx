@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { HamburgerGoBackIcon } from "../icons/SidebarIcons.tsx";
 import { ArrowIcon } from "../icons/ArrowIcon.tsx";
 import { FaHome, FaClipboardList } from "react-icons/fa";
-import { FaChartSimple, FaTrain, FaBuildingFlag, FaSteam } from "react-icons/fa6";
+import { FaChartSimple, FaTrain, FaBuildingFlag, FaBolt  } from "react-icons/fa6";
 
 interface SidebarProps
 {
@@ -274,7 +274,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
 
                                 <SidebarLinkGroup
                                         activeCondition={
-                                                pathname === "/leaderboard/steam" || pathname.includes("leaderboard/steam")
+                                                pathname === "/active/trains" || pathname.includes("active/trains")
                                         }
                                 >
                                     { (handleClick, open) =>
@@ -284,8 +284,8 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                                     <NavLink
                                                             to="#"
                                                             className={ `group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                                                    (pathname === "/leaderboard/steam" ||
-                                                                            pathname.includes("leaderboard/steam")) &&
+                                                                    (pathname === "/active" ||
+                                                                            pathname.includes("/active/")) &&
                                                                     "bg-graydark dark:bg-meta-4"
                                                             }` }
                                                             onClick={ (e) =>
@@ -296,8 +296,8 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                                                         : setSidebarExpanded(true);
                                                             } }
                                                     >
-                                                        <FaSteam/>
-                                                        { t("sidebar.steam_leaderboard") }
+                                                        <FaBolt />
+                                                        { t("sidebar.active_players") }
                                                         <ArrowIcon rotated={ open }/>
                                                     </NavLink>
                                                     <div
@@ -308,7 +308,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                                                             <li>
                                                                 <NavLink
-                                                                        to="/leaderboard/steam/stations"
+                                                                        to="/active/stations"
                                                                         className={ ({ isActive }) =>
                                                                                 "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                                                                 (isActive && "!text-white")
@@ -320,7 +320,7 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                                             </li>
                                                             <li>
                                                                 <NavLink
-                                                                        to="/leaderboard/steam/trains"
+                                                                        to="/active/trains"
                                                                         className={ ({ isActive }) =>
                                                                                 "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                                                                 (isActive && "!text-white")

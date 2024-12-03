@@ -36,6 +36,14 @@
     "profile": "Profil",
     "actions": "Akcje"
   },
+  "active": {
+    "server": "Serwer",
+    "user": "Gracz",
+    "train": "Pociąg",
+    "station": "Stacja",
+    "profile": "Profil",
+    "actions": "Akcje"
+  },
   "logs": {
     "user": "Gracz",
     "time": "Czas",
@@ -133,7 +141,7 @@
     "stations": "Stacje",
     "trains": "Pociągi",
     "leaderboard": "Tablica wyników",
-    "steam_leaderboard": "Tablica wyników steam",
+    "active_players": "Aktywni gracze",
     "info": "INFO",
     "admin": "ADMIN"
   },

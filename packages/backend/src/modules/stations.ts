@@ -36,7 +36,33 @@ export class StationsModule
             {
                 const time = (date.getTime() - joinedAt) || 0;
 
-                if (!player.dispatcherStats) player.dispatcherStats = {};
+                if (player.flags.includes("private"))
+                {
+                    player.trainStats = {
+                        [ "N/A" ]: {
+                            score: stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0,
+                            distance: stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0,
+                            time: 0,
+                        },
+                    };
+
+                    player.dispatcherStats = {
+                        [ "N/A" ]: {
+                            time: (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60,
+                        },
+                    };
+
+                    player.trainPoints = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
+                    player.trainDistance = stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0;
+                    player.dispatcherTime = (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60;
+                    player.trainTime = 0;
+                }
+
+
+                if (!player.dispatcherStats)
+                {
+                    player.dispatcherStats = {};
+                }
 
                 if (player.dispatcherStats[ station.Name ] && isTruthyAndGreaterThanZero(player.dispatcherStats[ station.Name ].time + time))
                 {
@@ -49,20 +75,23 @@ export class StationsModule
                     };
                 }
 
-                if (isTruthyAndGreaterThanZero(player.dispatcherTime + time)) player.dispatcherTime = player.dispatcherTime + time;
+                if (isTruthyAndGreaterThanZero(player.dispatcherTime + time))
+                {
+                    player.dispatcherTime = player.dispatcherTime + time;
+                }
 
                 player.steamTrainDistance = stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0;
                 player.steamDispatcherTime = stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0;
                 player.steamTrainScore = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
+
 
                 player.flags = player.flags.filter(x => x !== "private");
             }
 
             const playerData = await PlayerUtil.getPlayerSteamData(player.id);
 
-            !stats && !player.flags.includes('private') && player.flags.push("private");
 
-            player.flags = [...new Set(player.flags)];
+            player.flags = [ ...new Set(player.flags) ];
 
             player.username = playerData?.personaname ?? player.username;
             player.avatar = playerData?.avatarfull ?? player.avatar;

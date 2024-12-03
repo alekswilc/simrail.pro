@@ -19,7 +19,7 @@ import { TLogTrainData } from "../../../types/log.ts";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck } from "react-icons/fa6";
 
 
 export const TrainLog = ({ data }: { data: TLogTrainData }) =>
@@ -51,7 +51,8 @@ export const TrainLog = ({ data }: { data: TLogTrainData }) =>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.player.username } { data.player.flags.includes('verified') && <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                    { data.player.username } { data.player.flags.includes("verified") &&
+                        <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                 </h3>
             </div>
         </div>
@@ -62,10 +63,17 @@ export const TrainLog = ({ data }: { data: TLogTrainData }) =>
                     <h1 className="text-xl text-black dark:text-white pb-5">{ t("log.train.header") }</h1>
                     <p>{ t("log.train.server", { server: data.server.toUpperCase() }) }</p>
                     <p>{ t("log.train.train", { name: data.trainName, number: data.trainNumber }) }</p>
-                    { (data.distance || data.distance === 0) &&
-                            <p>{ t("log.train.distance", { distance: (data.distance / 1000).toFixed(2) }) }</p> }
 
-                    { (data.points || data.points === 0) && <p>{ t("log.train.points", { points: data.points }) }</p> }
+                    {
+                            !data.player.flags.includes("private") &&
+                            <>
+                                { (data.distance || data.distance === 0) &&
+                                        <p>{ t("log.train.distance", { distance: (data.distance / 1000).toFixed(2) }) }</p> }
+
+                                { (data.points || data.points === 0) &&
+                                        <p>{ t("log.train.points", { points: data.points }) }</p> }
+                            </>
+                    }
 
                     { data.joinedDate &&
                             <p>{ t("log.train.joined", { date: dayjs(data.joinedDate).format("DD/MM/YYYY HH:mm") }) }</p> }

@@ -19,23 +19,22 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { fetcher } from "../../util/fetcher.ts";
 import useSWR from "swr";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
-import { SteamTrainTable } from "../../components/pages/steamLeaderboard/SteamTrainTable.tsx";
+import { useTranslation } from "react-i18next";
+import { ActiveStationTable } from "../../components/pages/active/ActiveStationTable.tsx";
 
-export const SteamTrainLeaderboard = () =>
+export const ActiveStationsPlayers = () =>
 {
     const [ params, setParams ] = useState(new URLSearchParams());
 
-    const { data, error, isLoading } = useSWR(`/steam/leaderboard/train/?${ params.toString() }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
-
+    const { data, error, isLoading } = useSWR(`/active/station/?${ params.toString() }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-    const [ sortBy, setSortBy ] = useState("distance");
+
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -44,12 +43,10 @@ export const SteamTrainLeaderboard = () =>
 
         const params = new URLSearchParams();
         searchValue && params.set("q", searchValue);
-        sortBy && params.set("s", sortBy);
-
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, sortBy ]);
+    }, [ searchValue ]);
 
     useEffect(() =>
     {
@@ -72,12 +69,14 @@ export const SteamTrainLeaderboard = () =>
 
                         { isLoading && <ContentLoader/> }
 
-                        { (data && data.code === 404) || (data && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                                     description={ t("content_loader.notfound.description") }/>
-                        }
+                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                                <WarningAlert title={ t("content_loader.notfound.header") }
+                                              description={ t("content_loader.notfound.description") }/> }
 
-                        { data && data.code === 200 && !!data?.data?.records?.length && <SteamTrainTable trains={ data?.data?.records } setSortBy={ setSortBy } sortBy={ sortBy }/> }
+                        { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
+                                <ActiveStationTable stations={ data.data.records }/> }
                     </>
+
                 </div>
             </>
     );

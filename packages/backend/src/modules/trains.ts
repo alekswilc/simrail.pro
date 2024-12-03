@@ -36,6 +36,28 @@ export class TrainsModule
             {
                 const time = (leftAt - joinedAt) || 0;
 
+                if (player.flags.includes("private"))
+                {
+                    player.trainStats = {
+                        [ "N/A" ]: {
+                            score: stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0,
+                            distance: stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0,
+                            time: 0,
+                        },
+                    };
+
+                    player.dispatcherStats = {
+                        [ "N/A" ]: {
+                            time: (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60,
+                        },
+                    };
+
+                    player.trainPoints = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
+                    player.trainDistance = stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0;
+                    player.dispatcherTime = (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60;
+                    player.trainTime = 0;
+                }
+
                 const vehicleName = getVehicle(vehicle) ?? vehicle;
 
                 if (!isTruthyAndGreaterThanZero(distance))

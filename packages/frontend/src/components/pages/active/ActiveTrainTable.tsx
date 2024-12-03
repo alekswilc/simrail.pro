@@ -16,15 +16,10 @@
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
 import { FaCheck } from "react-icons/fa6";
-import { Dispatch, SetStateAction } from "react";
-import { FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
-
-export const SteamTrainTable = ({ trains, setSortBy, sortBy }: {
-    trains: TLeaderboardRecord[],
-    setSortBy: Dispatch<SetStateAction<string>>
-    sortBy: string
+import { TActiveTrainPlayersData } from "../../../types/active.ts";
+export const ActiveTrainTable = ({ trains }: {
+    trains: TActiveTrainPlayersData[],
 }) =>
 {
     const { t } = useTranslation();
@@ -37,26 +32,25 @@ export const SteamTrainTable = ({ trains, setSortBy, sortBy }: {
                     <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
                         <div className="p-2.5 text-center xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("leaderboard.user") }
+                                { t("active.server") }
                             </h5>
                         </div>
-                        <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5">
-                            <h5 className="cursor-pointer  text-sm font-medium uppercase xsm:text-base"
-                                onClick={ () => setSortBy("distance") }>
-                                { t("leaderboard.distance") }
+
+                        <div className="p-2.5 text-center xl:p-5">
+                            <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                { t("active.user") }
                             </h5>
-                            <FlexArrowIcon rotated={ sortBy === "distance" || !sortBy }/>
                         </div>
-                        <div className="flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5">
-                            <h5 className="cursor-pointer text-sm font-medium uppercase xsm:text-base"
-                                onClick={ () => setSortBy("points") }>
-                                { t("leaderboard.points") }
+
+                        <div className="p-2.5 text-center xl:p-5">
+                            <h5 className="text-sm font-medium uppercase xsm:text-base">
+                                { t("active.train") }
                             </h5>
-                            <FlexArrowIcon rotated={ sortBy === "points" }/>
                         </div>
+
                         <div className="hidden p-2.5 text-center sm:block xl:p-5">
                             <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("leaderboard.actions") }
+                                { t("active.actions") }
                             </h5>
                         </div>
                     </div>
@@ -67,30 +61,31 @@ export const SteamTrainTable = ({ trains, setSortBy, sortBy }: {
                                             ? ""
                                             : "border-b border-stroke dark:border-strokedark"
                                     }` }
-                                    key={ train.id }
+                                    key={ train.steam }
                             >
+                                <div className="flex items-center justify-center p-2.5 lg:p-5">
+                                    <p className="text-meta-6">{ train.server.toUpperCase() }</p>
+                                </div>
+
                                 <div className="flex items-center justify-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
-                                        <Link to={ "/profile/" + train.id }
-                                              className="color-orchid">{ train.username }</Link> { train.flags.includes("verified") &&
+                                        <Link to={ "/profile/" + train.steam }
+                                              className="color-orchid">{ train.username }</Link> { train.player.flags.includes("verified") &&
                                             <FaCheck className={ "inline text-meta-3 ml-1" }/> }
                                     </p>
                                 </div>
 
                                 <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-6">{ (train.steamTrainDistance / 1000).toFixed(2) }km</p>
-                                </div>
-
-                                <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-5">{ train.steamTrainScore }</p>
+                                    <p className="text-meta-5">{ train.trainName } { train.trainNumber }</p>
                                 </div>
 
                                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                                     <Link
-                                            to={ "/profile/" + train.id }
-                                            className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
+                                            to={ "/profile/" + train.steam }
+                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ train.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
+                                            style={ train.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }
                                     >
-                                        { t("leaderboard.profile") }
+                                        { t("active.profile") }
                                     </Link>
                                 </div>
                             </div>

@@ -36,6 +36,14 @@
     "profile": "Profile",
     "actions": "Actions"
   },
+  "active": {
+    "server": "Server",
+    "user": "Player",
+    "train": "Train",
+    "station": "Station",
+    "profile": "Profile",
+    "actions": "Actions"
+  },
   "logs": {
     "user": "Player",
     "time": "Time",
@@ -133,7 +141,7 @@
     "stations": "Stations",
     "trains": "Trains",
     "leaderboard": "Leaderboard",
-    "steam_leaderboard": "Steam leaderboard",
+    "active_players": "Active Players",
     "info": "INFO",
     "admin": "ADMIN"
   },

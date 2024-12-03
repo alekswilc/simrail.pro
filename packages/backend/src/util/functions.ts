@@ -34,3 +34,9 @@ export const isTruthyAndGreaterThanZero = (data: number) => {
     if (!data) return false;
     return data > 0;
 }
+
+export const arrayGroupBy = <T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) =>
+    Object.values((array.reduce((acc, value, index, array) => {
+        (acc[predicate(value, index, array)] ||= []).push(value);
+        return acc;
+    }, {} as { [key: string]: T[] }))).flat();

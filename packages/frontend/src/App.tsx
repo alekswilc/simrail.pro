@@ -32,8 +32,8 @@ import { ToastContainer } from "react-toastify";
 import useColorMode from "./hooks/useColorMode.tsx";
 import { HelmetProvider } from "react-helmet-async";
 import { PageMeta } from "./components/mini/util/PageMeta.tsx";
-import { SteamStationLeaderboard } from "./pages/steamLeaderboard/SteamStationsLeaderboard.tsx";
-import { SteamTrainLeaderboard } from "./pages/steamLeaderboard/SteamTrainLeaderboard.tsx";
+import { ActiveStationsPlayers } from "./pages/activePlayers/ActiveStationsPlayers.tsx";
+import { ActiveTrainPlayers } from "./pages/activePlayers/ActiveTrainPlayers.tsx";
 
 function App()
 {
@@ -126,23 +126,23 @@ function App()
 
 
                             <Route
-                                    path="/leaderboard/steam/trains"
+                                    path="/active/trains"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.pro | Steam Train Leaderboard"
+                                            <PageMeta title="simrail.pro | Active Trains"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <SteamTrainLeaderboard/>
+                                            <ActiveTrainPlayers/>
                                         </>
                                     }
                             />
 
                             <Route
-                                    path="/leaderboard/steam/stations"
+                                    path="/active/stations"
                                     element={
                                         <>
-                                            <PageMeta title="simrail.pro | Steam Station Leaderboard"
+                                            <PageMeta title="simrail.pro | Active Station"
                                                       description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <SteamStationLeaderboard/>
+                                            <ActiveStationsPlayers/>
                                         </>
                                     }
                             />
