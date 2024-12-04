@@ -22,13 +22,13 @@ import { useSearchParams } from "react-router-dom";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { useTranslation } from "react-i18next";
-import { fetcher } from "../../util/fetcher.ts";
+import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
 
 export const TrainLogs = () =>
 {
     const [ params, setParams ] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/trains/?${ params.toString() }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/trains/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");

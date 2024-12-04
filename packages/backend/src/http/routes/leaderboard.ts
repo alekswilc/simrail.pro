@@ -22,10 +22,10 @@ import { escapeRegexString, removeProperties } from "../../util/functions.js";
 
 const generateSearch = (regex: RegExp) => [
     {
-        steam: { $regex: regex },
+        id: { $regex: regex },
     },
     {
-        steamName: { $regex: regex },
+        username: { $regex: regex },
     },
 ];
 
@@ -45,7 +45,13 @@ export class LeaderboardRoute
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
 
-            const filter: PipelineStage[] = [];
+            const filter: PipelineStage[] = [
+                {
+                    $match: {
+                        flags: { $nin: ["hidden"] }
+                    }
+                }
+            ];
 
             s && filter.push({
                 $match: {
@@ -74,7 +80,13 @@ export class LeaderboardRoute
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
 
-            const filter: PipelineStage[] = [];
+            const filter: PipelineStage[] = [
+                {
+                    $match: {
+                        flags: { $nin: ["hidden"] }
+                    }
+                }
+            ];
             s && filter.push({
                 $match: {
                     $and: [

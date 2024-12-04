@@ -22,6 +22,7 @@ import { HamburgerGoBackIcon } from "../icons/SidebarIcons.tsx";
 import { ArrowIcon } from "../icons/ArrowIcon.tsx";
 import { FaHome, FaClipboardList } from "react-icons/fa";
 import { FaChartSimple, FaTrain, FaBuildingFlag, FaBolt  } from "react-icons/fa6";
+import { useAuth } from "../../../hooks/useAuth.tsx";
 
 interface SidebarProps
 {
@@ -94,6 +95,8 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
             document.querySelector("body")?.classList.remove("sidebar-expanded");
         }
     }, [ sidebarExpanded ]);
+
+    const { isAdmin, username } = useAuth();
 
     return (
             <aside
@@ -337,6 +340,23 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) =>
                                     } }
                                 </SidebarLinkGroup>
                             </ul>
+
+                            { isAdmin && <ul className="mb-6 flex flex-col gap-1.5">
+                                <h3 className="ml-4 text-sm font-semibold text-bodydark2">
+                                    { t("sidebar.admin") }
+                                </h3>
+
+                                <li>
+                                    <p className="group relative flex items-center rounded-sm py-2 px-4 text-sm text-bodydark1 duration-300 ease-in-out ">{t("sidebar.logged", { username })}</p>
+                                </li>
+                                <button onClick={() => {
+                                    window.localStorage.setItem('auth_token', 'undefined');
+                                    window.location.reload();
+                                }} className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-8 text-center text-sm text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                                >{t("sidebar.logout")}
+                                </button>
+
+                            </ul> }
                         </div>
 
                         {/* TODO: add admin panel with simple auth */ }

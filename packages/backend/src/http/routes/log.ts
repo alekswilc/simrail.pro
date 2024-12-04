@@ -38,7 +38,11 @@ export class LogRoute
                 return;
             }
 
-            const log = await MStationLog.findOne({ id }).populate<{ player: IProfile }>('player').orFail().catch(() => null) || await MTrainLog.findOne({ id }).populate<{ player: IProfile }>('player').orFail().catch(() => null);
+            const log = await MStationLog.findOne({ id }).populate<{
+                player: IProfile
+            }>("player").orFail().catch(() => null) || await MTrainLog.findOne({
+                id,
+            }).populate<{ player: IProfile }>("player").orFail().catch(() => null);
 
             if (!log)
             {
@@ -48,8 +52,16 @@ export class LogRoute
                 return;
             }
 
+            if (log.player.flags.includes("hidden"))
+            {
+                res.status(403).json(new ErrorResponseBuilder()
+                    .setCode(403)
+                    .setData("Log blocked!").toJSON());
+                return;
+            }
+
             res.status(200).json(new SuccessResponseBuilder().setCode(200).setData({
-                ...log.toJSON()
+                ...log,
             }));
         });
 

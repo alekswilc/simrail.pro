@@ -77,7 +77,8 @@ export const ActiveStationTable = ({ stations }: { stations: TActiveStationPlaye
                                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                                     <Link
                                             to={ "/profile/" + station.steam }
-                                            className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
+                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ station.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
+                                            style={ station.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }
                                     >
                                         { t("active.profile") }
                                     </Link>

@@ -23,6 +23,7 @@ import cors from "cors";
 import { StatsRoute } from "./routes/stats.js";
 import { LogRoute } from "./routes/log.js";
 import { ActivePlayersRoute } from "./routes/activePlayer.js";
+import { AdminRoute } from "./routes/admin.js";
 
 export class ApiModule
 {
@@ -37,6 +38,7 @@ export class ApiModule
         router.use("/profiles/", ProfilesRoute.load());
         router.use("/leaderboard/", LeaderboardRoute.load());
         router.use("/active/", ActivePlayersRoute.load());
+        router.use("/admin/", AdminRoute.load());
 
         router.use("/stats/", StatsRoute.load());
         router.use("/log/", LogRoute.load());

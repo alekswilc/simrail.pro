@@ -24,13 +24,13 @@ import { useTranslation } from "react-i18next";
 import { PageMeta } from "../../components/mini/util/PageMeta.tsx";
 import { formatTime } from "../../util/time.ts";
 import useSWR from 'swr';
-import { fetcher } from "../../util/fetcher.ts";
+import { get } from "../../util/fetcher.ts";
 
 
 export const Profile = () =>
 {
     const { id } = useParams();
-    const { data, error, isLoading } = useSWR(`/profiles/${ id }`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/profiles/${ id }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const { t } = useTranslation();
 
@@ -40,6 +40,11 @@ export const Profile = () =>
                 { isLoading && <ContentLoader/> }
                 {/* ERROR */}
                 { error && <LoadError /> }
+                {/* BLACKLISTED */ }
+                { data && data.code === 403 && <PageMeta title="simrail.pro | Profile hidden"
+                                                         description="The player's profile could not be displayed due to active moderator actions."/> }
+                { data && data.code === 403 && <WarningAlert title={ t("profile.errors.blacklist.title") }
+                                                             description={ t("profile.errors.blacklist.description") }/> }
                 {/* NOT FOUND */ }
                 { data && data.code === 404 && <PageMeta title="simrail.pro | Profile not found"
                                            description="Player's profile could not be found or the player has a private Steam profile."/> }

@@ -34,6 +34,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { PageMeta } from "./components/mini/util/PageMeta.tsx";
 import { ActiveStationsPlayers } from "./pages/activePlayers/ActiveStationsPlayers.tsx";
 import { ActiveTrainPlayers } from "./pages/activePlayers/ActiveTrainPlayers.tsx";
+import { AuthProvider } from "./hooks/useAuth.tsx";
+import { NotFoundError } from "./pages/errors/NotFound.tsx";
 
 function App()
 {
@@ -52,8 +54,7 @@ function App()
 
 
     return <HelmetProvider>
-
-
+        <AuthProvider>
         { loading ? (
                 <Loader/>
         ) : (
@@ -170,10 +171,20 @@ function App()
                                         </>
                                     }
                             />
+
+                            <Route
+                                    path="*"
+                                    element={
+                                        <>
+                                            <NotFoundError/>
+                                        </>
+                                    }
+                            />
                         </Routes>
                     </DefaultLayout>
                 </>
         ) }
+        </AuthProvider>
     </HelmetProvider>;
 }
 

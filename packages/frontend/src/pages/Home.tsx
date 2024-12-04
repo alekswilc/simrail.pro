@@ -15,11 +15,11 @@
  */
 
 import { useTranslation, Trans } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { TStatsResponse } from "../types/stats.ts";
 import { WarningAlert } from "../components/mini/alerts/Warning.tsx";
 import { CardDataStats } from "../components/mini/util/CardDataStats.tsx";
-import { fetcher } from "../util/fetcher.ts";
+import { get } from "../util/fetcher.ts";
 import useSWR from 'swr';
 import { LoadError } from "../components/mini/loaders/ContentLoader.tsx";
 
@@ -27,7 +27,15 @@ export const Home = () =>
 {
     const { t } = useTranslation();
 
-    const { data, error } = useSWR<TStatsResponse>("/stats/", fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error } = useSWR<TStatsResponse>("/stats/", get, { refreshInterval: 10_000, errorRetryCount: 5 });
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    if (searchParams.get('admin_token')) {
+        window.localStorage.setItem('auth_token', searchParams.get('admin_token')!);
+        setSearchParams(new URLSearchParams());
+        setTimeout(() => window.location.reload(), 1000);
+    }
 
     return (
             <>

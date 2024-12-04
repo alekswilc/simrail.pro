@@ -40,10 +40,10 @@ export class ProfilesRoute
                 return;
             }
 
-            if (player.flags.includes('blacklist'))
+            if (player.flags.includes('hidden'))
             {
                 res.status(403).json(new ErrorResponseBuilder()
-                    .setCode(403).setData("Profile blacklisted!"));
+                    .setCode(403).setData("Profile blocked!"));
                 return;
             }
 

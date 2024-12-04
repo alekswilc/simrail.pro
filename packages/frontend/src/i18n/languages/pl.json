@@ -28,6 +28,11 @@
       "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
     }
   },
+  "notfound": {
+    "title": "Nie znaleziono strony",
+    "description": "Wygląda na to, że się zgubiłeś.",
+    "button": "Wróć do strony głównej"
+  },
   "leaderboard": {
     "user": "Gracz",
     "time": "Czas",
@@ -92,7 +97,7 @@
       },
       "blacklist": {
         "title": "Nie można wyświetlić profilu",
-        "description": "Profil tego gracza został zablokowany."
+        "description": "Profil gracza nie mógł zostać wyświetlony ze względu na aktywne działania moderatora."
       }
     }
   },
@@ -104,7 +109,7 @@
       },
       "blacklist": {
         "title": "Nie można wyświetlić rekordu",
-        "description": "Rekord został zablokowany."
+        "description": "Nie udało się wyświetlić tego rekordu ze względu na aktywne działania moderatora."
       }
     },
     "station": {
@@ -143,7 +148,25 @@
     "leaderboard": "Tablica wyników",
     "active_players": "Aktywni gracze",
     "info": "INFO",
-    "admin": "ADMIN"
+    "admin": "ADMIN",
+    "logged": "Zalogowano jako {{username}}",
+    "logout": "Wyloguj"
   },
-  "admin": {}
+  "admin": {
+    "clear": {
+      "modal": {
+        "title": "Czy jesteś pewien?",
+        "description": "Ta akcja permanentnie wyczyści wszystkie statystyki gracza."
+      },
+
+      "alert": "Wyczyszczono statystyki gracza."
+    },
+    "hide": {
+      "modal": {
+        "title": "Czy jesteś pewien?",
+        "description": "Ta akcja ukryje profil gracza."
+      },
+      "alert": "Ukryto profil gracza."
+    }
+  }
 }

@@ -14,6 +14,27 @@
  * See LICENSE for more.
  */
 
-export const get = (url: string) => fetch(`${ import.meta.env.VITE_API_URL }${url}`, { signal: AbortSignal.timeout(2500) }).then((res) => res.json());
+import { HydratedDocument, model, Schema } from "mongoose";
 
-export const post = (url: string, body?: any, headers: Record<string, string> = {}) => fetch(`${ import.meta.env.VITE_API_URL }${url}`, { signal: AbortSignal.timeout(2500), method:'POST',body: JSON.stringify(body), headers: Object.assign(headers, { 'Content-Type': "application/json", }) }).then((res) => res.json());
+export const raw_schema = {
+    username: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        required: true,
+    },
+};
+
+const schema = new Schema<IAdmin>(raw_schema);
+
+export type TMAdmin = HydratedDocument<IAdmin>;
+
+export const MAdmin = model<IAdmin>("admin", schema);
+
+export interface IAdmin
+{
+    token: string
+    username: string
+}

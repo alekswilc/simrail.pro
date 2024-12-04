@@ -20,7 +20,7 @@ import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
 import useSWR from 'swr';
-import { fetcher } from "../../util/fetcher.ts";
+import { get } from "../../util/fetcher.ts";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 export const StationLogs = () =>
 {
     const [params, setParams] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/stations/?${params.toString()}`, fetcher, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/stations/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");

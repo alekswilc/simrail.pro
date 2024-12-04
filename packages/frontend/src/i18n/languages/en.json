@@ -28,6 +28,11 @@
       "author": "Created by <anchor>{{author}}</anchor> with ❤️ for the Simrail community"
     }
   },
+  "notfound": {
+    "title": "Not Found",
+    "description": "It seems you're lost.",
+    "button": "Return to homepage."
+  },
   "leaderboard": {
     "user": "Player",
     "time": "Time",
@@ -92,7 +97,7 @@
       },
       "blacklist": {
         "title": "Unable to display profile",
-        "description": "This player's profile has been blocked."
+        "description": "The player's profile could not be displayed due to active moderator actions."
       }
     }
   },
@@ -104,7 +109,7 @@
       },
       "blacklist": {
         "title": "The record cannot be displayed",
-        "description": "The record has been blocked."
+        "description": "This record could not be displayed due to active moderator actions."
       }
     },
     "station": {
@@ -143,7 +148,25 @@
     "leaderboard": "Leaderboard",
     "active_players": "Active Players",
     "info": "INFO",
-    "admin": "ADMIN"
+    "admin": "ADMIN",
+    "logged": "Logged as {{username}}",
+    "logout": "Log out"
   },
-  "admin": {}
+  "admin": {
+    "clear": {
+      "modal": {
+        "title": "Are you sure?",
+        "description": "This action will permanently clear user statistics."
+      },
+
+      "alert": "Player stats cleared."
+    },
+    "hide": {
+      "modal": {
+        "title": "Are you sure?",
+        "description": "This action will hide user profile from displaying in the leaderboard."
+      },
+      "alert": "Player profile hidden."
+    }
+  }
 }

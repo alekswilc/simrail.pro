@@ -21,13 +21,13 @@ import { useTranslation } from "react-i18next";
 import { StationLog } from "../../components/pages/log/StationLog.tsx";
 import { TrainLog } from "../../components/pages/log/TrainLog.tsx";
 import { PageMeta } from "../../components/mini/util/PageMeta.tsx";
-import { fetcher } from "../../util/fetcher.ts";
+import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
 
 export const Log = () =>
 {
     const { id } = useParams();
-    const { data, error, isLoading } = useSWR(`/log/${ id }`, fetcher, { refreshInterval: 30_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/log/${ id }`, get, { refreshInterval: 30_000, errorRetryCount: 5 });
 
     const { t } = useTranslation();
 
