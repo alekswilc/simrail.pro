@@ -35,7 +35,7 @@ export const TrainLeaderboard = () =>
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-    const [ sortBy, setSortBy ] = useState("distance");
+    const [ sortBy, setSortBy ] = useState(searchParams.get("s") ?? "distance");
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -54,6 +54,7 @@ export const TrainLeaderboard = () =>
     useEffect(() =>
     {
         setSearchItem(searchParams.get("q") ?? "");
+        setSortBy(searchParams.get("s") ?? "distance");
     }, [ searchParams ]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
