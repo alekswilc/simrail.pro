@@ -52,8 +52,10 @@ export class ActivePlayersRoute
 
             let a: ActiveTrain[] = [];
 
-            for (const data of Object.values(client.trains)) {
-                for (const d of data.filter(d => d.TrainData.ControlledBySteamID)) {
+            for (const data of Object.values(client.trains))
+            {
+                for (const d of data.filter(d => d.TrainData.ControlledBySteamID))
+                {
                     const p = await PlayerUtil.getPlayer(d.TrainData.ControlledBySteamID!);
                     p && a.push({
                         server: d.ServerCode,
@@ -63,12 +65,13 @@ export class ActivePlayersRoute
 
                         username: p?.username,
                         steam: p?.id,
-                    })
+                    });
                 }
             }
 
-            if (s) {
-                a = a.filter(d => s.some(c => c.test(d.server)) || s.some(c => c.test(d.username)) || s.some(c => c.test(d.steam)) || s.some(c => c.test(d.steam)) || s.some(c => c.test(d.trainName) || s.some(c => c.test(d.trainNumber))));
+            if (s)
+            {
+                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.trainName) || c.test(d.trainNumber) ).length === s.length);
             }
 
             a = arrayGroupBy(a, d => d.server);
@@ -88,9 +91,11 @@ export class ActivePlayersRoute
 
             let a: ActiveStation[] = [];
 
-            for (const server of Object.keys(client.stations)) {
-                for (const d of client.stations[server].filter(d => d.DispatchedBy.length && d.DispatchedBy[0]?.SteamId)) {
-                    const p = await PlayerUtil.getPlayer(d.DispatchedBy[0].SteamId!);
+            for (const server of Object.keys(client.stations))
+            {
+                for (const d of client.stations[ server ].filter(d => d.DispatchedBy.length && d.DispatchedBy[ 0 ]?.SteamId))
+                {
+                    const p = await PlayerUtil.getPlayer(d.DispatchedBy[ 0 ].SteamId!);
                     p && a.push({
                         server: server,
                         player: p,
@@ -99,12 +104,13 @@ export class ActivePlayersRoute
 
                         username: p?.username,
                         steam: p?.id,
-                    })
+                    });
                 }
             }
 
-            if (s) {
-                a = a.filter(d => s.some(c => c.test(d.server)) || s.some(c => c.test(d.username)) || s.some(c => c.test(d.steam)) || s.some(c => c.test(d.steam)) || s.some(c => c.test(d.stationName) || s.some(c => c.test(d.stationShort))));
+            if (s)
+            {
+                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.stationName) || c.test(d.stationShort) ).length === s.length);
             }
 
 
