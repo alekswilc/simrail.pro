@@ -17,7 +17,6 @@
 import { useTranslation, Trans } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
 import { TStatsResponse } from "../types/stats.ts";
-import { WarningAlert } from "../components/mini/alerts/Warning.tsx";
 import { CardDataStats } from "../components/mini/util/CardDataStats.tsx";
 import { get } from "../util/fetcher.ts";
 import useSWR from 'swr';
@@ -40,7 +39,6 @@ export const Home = () =>
     return (
             <>
                 <div className="flex pb-5">
-                    <WarningAlert description={ t("preview.description") } title={ t("preview.title") }/>
                     { error && <LoadError /> }
                 </div>
 

@@ -231,16 +231,22 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                     <div className="items-center justify-center p-2.5 flex xl:p-5 gap-2 flex-wrap sm:flex-nowrap">
                         <button className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                 onClick={ () => setClearStatsModal(true) }>
-                            Clear stats
+                            {t("admin.clear.button")}
                         </button>
 
                         <button className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                 onClick={ () => setHideProfileModal(true) }>
-                            Hide profile
+                            {t("admin.hide.button")}
                         </button>
                     </div>
                 </div>
             </> }
+
+            <div className="shadow-default dark:bg-boxdark items-center justify-center p-2.5 flex flex-col xl:p-5 gap-2">
+                <h1 className="text-sm text-black dark:text-white">
+                    {t("profile.info")}
+                </h1>
+            </div>
 
         </div>
     </>;

@@ -99,7 +99,8 @@
         "title": "Unable to display profile",
         "description": "The player's profile could not be displayed due to active moderator actions."
       }
-    }
+    },
+    "info": "Note: We have been collecting statistics since 13/12/2024."
   },
   "log": {
     "errors": {
@@ -158,7 +159,7 @@
         "title": "Are you sure?",
         "description": "This action will permanently clear user statistics."
       },
-
+      "button": "Clear profile",
       "alert": "Player stats cleared."
     },
     "hide": {
@@ -166,6 +167,7 @@
         "title": "Are you sure?",
         "description": "This action will hide user profile from displaying in the leaderboard."
       },
+      "button": "Hide profile",
       "alert": "Player profile hidden."
     }
   }

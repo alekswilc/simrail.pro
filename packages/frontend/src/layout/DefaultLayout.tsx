@@ -14,34 +14,13 @@
  * See LICENSE for more.
  */
 
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, ReactNode } from "react";
 import { Header } from "../components/mini/header/Header";
 import { Sidebar } from "../components/mini/sidebar/Sidebar";
-import { useCookies } from 'react-cookie';
-import { toast } from "react-toastify";
-import { useTranslation } from 'react-i18next';
-
 
 export const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) =>
 {
     const [ sidebarOpen, setSidebarOpen ] = useState(false);
-
-    const { t } = useTranslation();
-
-    const [cookies, setCookie, _removeCookie] = useCookies(['info1'], { doNotParse: true, doNotUpdate: true });
-
-    useEffect(() =>
-    {
-        if (!cookies['info1']) {
-            setCookie('info1', true, {
-                maxAge: 259_200
-            });
-            toast.info(t("_.popup.ranking"), {
-                autoClose: 15_000,
-            });
-        }
-    }, []);
-
 
     return (
             <div className="dark:bg-boxdark-2 dark:text-bodydark">

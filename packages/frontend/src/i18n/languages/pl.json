@@ -99,7 +99,8 @@
         "title": "Nie można wyświetlić profilu",
         "description": "Profil gracza nie mógł zostać wyświetlony ze względu na aktywne działania moderatora."
       }
-    }
+    },
+    "info": "Uwaga: Gromadzimy statystyki od 13.12.2024 r."
   },
   "log": {
     "errors": {
@@ -158,7 +159,7 @@
         "title": "Czy jesteś pewien?",
         "description": "Ta akcja permanentnie wyczyści wszystkie statystyki gracza."
       },
-
+      "button": "Wyczyść profil",
       "alert": "Wyczyszczono statystyki gracza."
     },
     "hide": {
@@ -166,6 +167,7 @@
         "title": "Czy jesteś pewien?",
         "description": "Ta akcja ukryje profil gracza."
       },
+      "button": "Ukryj profil",
       "alert": "Ukryto profil gracza."
     }
   }
