@@ -97,6 +97,7 @@ export class AdminRoute
                 dispatcherTime: 0,
                 trainTime: 0,
                 trainDistance: 0,
+                trainPoints: 0,
 
                 trainStats: {},
                 dispatcherStats: {},
