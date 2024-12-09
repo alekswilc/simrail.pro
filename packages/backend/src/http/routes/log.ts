@@ -60,9 +60,7 @@ export class LogRoute
                 return;
             }
 
-            res.status(200).json(new SuccessResponseBuilder().setCode(200).setData({
-                ...log,
-            }));
+            res.status(200).json(new SuccessResponseBuilder().setCode(200).setData(log.toJSON()));
         });
 
         return app;
