@@ -3,8 +3,8 @@
 # License
     Copyright (C) 2024 Aleksander <alekswilc> Wilczyński
 
-- API: [GNU AGPL](LICENSES/API)
-- WEB: [GNU AGPL](LICENSES/WEB) & [MIT](LICENSES/WEB-TEMPLATE) (TailAdmin template)
+- API: [GNU AGPL](./LICENSE.txt)
+- WEB: [GNU AGPL](./LICENSE.txt) & [MIT](./LICENSE.txt) (TailAdmin template)
 
 
 Made with ❤️ by [alekswilc](https://www.alekswilc.dev/) for SimRail Community
