@@ -24,7 +24,7 @@ import { useAuth } from "../../../hooks/useAuth.tsx";
 import { ConfirmModal } from "../../mini/modal/ConfirmModal.tsx";
 import { post } from "../../../util/fetcher.ts";
 import { toast } from "react-toastify";
-
+import dayjs from 'dayjs';
 
 export const ProfileCard = ({ data }: { data: TProfileData }) =>
 {
@@ -244,7 +244,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
             <div className="shadow-default dark:bg-boxdark items-center justify-center p-2.5 flex flex-col xl:p-5 gap-2">
                 <h1 className="text-sm text-black dark:text-white">
-                    {t("profile.info")}
+                    {t("profile.info", { date: dayjs(data.createdAt).format('DD/MM/YYYY') })}
                 </h1>
             </div>
 

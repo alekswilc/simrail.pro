@@ -100,7 +100,7 @@
         "description": "The player's profile could not be displayed due to active moderator actions."
       }
     },
-    "info": "Note: We have been collecting statistics since 13/12/2024."
+    "info": "Note: This user's statistics are collected since {{date}}."
   },
   "log": {
     "errors": {

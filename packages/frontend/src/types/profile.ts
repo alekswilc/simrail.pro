@@ -33,6 +33,7 @@ export interface TProfileSuccessResponse
 export interface TProfileData
 {
     player: TProfilePlayer;
+    createdAt: number
 }
 
 export interface TProfilePlayer

@@ -100,7 +100,7 @@
         "description": "Profil gracza nie mógł zostać wyświetlony ze względu na aktywne działania moderatora."
       }
     },
-    "info": "Uwaga: Gromadzimy statystyki od 13.12.2024 r."
+    "info": "Uwaga: Statystyki tego użytkownika gromadzone są od {{date}} r."
   },
   "log": {
     "errors": {
