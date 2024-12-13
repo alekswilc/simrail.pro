@@ -1,0 +1,174 @@
+{
+  "_": {
+    "title": "Simrail Stats",
+    "popup": {
+      "ranking": "Dane w rankingach zbierane są od 19.08.2024"
+    }
+  },
+  "preview": {
+    "title": "Wersja preview!",
+    "description": "Strona znajduje się w wersji V3-PREVIEW, może zawierać błędy. Będe wdzieczny za zgłaszanie wszystkich błędów na stronie projektu (git.alekswilc.dev) lub w wiadomości prywatnej na discordzie - alekswilc. Stay tuned!"
+  },
+  "home": {
+    "stats": {
+      "trains": "Pociągów",
+      "dispatchers": "Dyżurnych ruchu",
+      "profiles": "Profili"
+    },
+    "title": "Simrail Stats",
+    "description": "Najbardziej rozbudowana strona z logami i statystykami gry SimRail!",
+    "buttons": {
+      "project": "Strona projektu",
+      "forum": "Strona na forum"
+    },
+    "footer": {
+      "license": "Licencja:",
+      "powered": "Oparte na:",
+      "thanks": "Specjalne podziękowania dla <bahu>serwerowni BAHU.PRO</bahu>, <simrailelite>discorda Simrail ELITE</simrailelite>, społeczności Simrail i mojej dziewczyny",
+      "author": "Stworzone przez <anchor>{{author}}</anchor> z ❤️ dla społeczności Simrail"
+    }
+  },
+  "notfound": {
+    "title": "Nie znaleziono strony",
+    "description": "Wygląda na to, że się zgubiłeś.",
+    "button": "Wróć do strony głównej"
+  },
+  "leaderboard": {
+    "user": "Gracz",
+    "time": "Czas",
+    "distance": "Dystans",
+    "points": "Punkty",
+    "profile": "Profil",
+    "actions": "Akcje"
+  },
+  "active": {
+    "server": "Serwer",
+    "user": "Gracz",
+    "train": "Pociąg",
+    "station": "Stacja",
+    "profile": "Profil",
+    "actions": "Akcje"
+  },
+  "logs": {
+    "user": "Gracz",
+    "time": "Czas",
+    "distance": "Dystans",
+    "points": "Punkty",
+    "profile": "Profil",
+    "record": "Więcej",
+    "train": "Pociąg",
+    "actions": "Akcje",
+    "search": "Wpisz, aby wyszukać",
+    "station": "Stacja"
+  },
+  "content_loader": {
+    "error": {
+      "header": "Błąd ładowania strony",
+      "description": "Sprawdź swoje połączenie z internetem i odśwież stronę",
+      "report": "Zgłoś błąd",
+      "refresh": "Odśwież"
+    },
+    "notfound": {
+      "header": "Nie znaleziono danych",
+      "description": "Twoje wyszukiwanie nie zwróciło wyników."
+    }
+  },
+  "profile": {
+    "stats": {
+      "distance": "Staż maszynisty",
+      "time": "Staż dyżurnego ruchu"
+    },
+    "trains": {
+      "header": "Statystyki pociągów",
+      "train": "Pociąg",
+      "distance": "Dystans",
+      "points": "Punkty",
+      "time": "Czas"
+    },
+    "stations": {
+      "header": "Statystyki stacji",
+      "station": "Stacja",
+      "time": "Czas"
+    },
+    "errors": {
+      "notfound": {
+        "title": "Nie znaleziono profilu",
+        "description": "Profil gracza nie został znaleziony lub posiada on prywatny profil steam."
+      },
+      "blacklist": {
+        "title": "Nie można wyświetlić profilu",
+        "description": "Profil gracza nie mógł zostać wyświetlony ze względu na aktywne działania moderatora."
+      }
+    },
+    "info": "Uwaga: Statystyki tego użytkownika gromadzone są od {{date}} r."
+  },
+  "log": {
+    "errors": {
+      "notfound": {
+        "title": "Nie znaleziono rekordu",
+        "description": "Ten rekord nie został znaleziony."
+      },
+      "blacklist": {
+        "title": "Nie można wyświetlić rekordu",
+        "description": "Nie udało się wyświetlić tego rekordu ze względu na aktywne działania moderatora."
+      }
+    },
+    "station": {
+      "header": "Wyjście z posterunku",
+      "server": "Serwer: {{server}}",
+      "station": "Stacja: {{name}} - {{short}}",
+      "joined": "Data wejścia: {{date}}",
+      "left": "Data wyjścia: {{date}}",
+      "spent": "Spędzony czas: {{date}}"
+    },
+    "train": {
+      "header": "Wyjście z pociągu",
+      "server": "Serwer: {{server}}",
+      "train": "Pociąg: {{name}} {{number}}",
+      "joined": "Data wejścia: {{date}}",
+      "left": "Data wyjścia: {{date}}",
+      "spent": "Spędzony czas: {{date}}",
+      "distance": "Dystans: {{distance}}km",
+      "points": "Punkty: {{points}}"
+    },
+    "toasts": {
+      "copied": "Skopiowano link do schowka!",
+      "report": "Do schowka skopiowano dane wyjścia z posterunku, możesz ich użyć do wysłania na kanale #multiplayer-help-requests na oficjalnym serwerze Discord gry simrail. Nie zapomnij dodać powodu zgłoszenia!"
+    },
+    "buttons": {
+      "report": "Zgłoś",
+      "copy": "Kopiuj link",
+      "profile": "Profil"
+    }
+  },
+  "sidebar": {
+    "home": "Strona główna",
+    "logs": "Logi",
+    "stations": "Stacje",
+    "trains": "Pociągi",
+    "leaderboard": "Tablica wyników",
+    "active_players": "Aktywni gracze",
+    "info": "INFO",
+    "admin": "ADMIN",
+    "logged": "Zalogowano jako {{username}}",
+    "logout": "Wyloguj"
+  },
+  "admin": {
+    "clear": {
+      "modal": {
+        "title": "Czy jesteś pewien?",
+        "description": "Ta akcja permanentnie wyczyści wszystkie statystyki gracza."
+      },
+      "button": "Wyczyść profil",
+      "alert": "Wyczyszczono statystyki gracza."
+    },
+    "hide": {
+      "modal": {
+        "title": "Czy jesteś pewien?",
+        "description": "Ta akcja ukryje profil gracza."
+      },
+      "button": "Ukryj profil",
+      "alert": "Ukryto profil gracza."
+    }
+  }
+}

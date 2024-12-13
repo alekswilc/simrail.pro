@@ -1,33 +1,25 @@
 {
   "name": "simrail-logs",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "postbuild": "copyfiles --error --up 1 src/http/views/**/* src/http/views/* dist",
-    "dev": "npm run build && doppler run node dist",
-    "scripts:clear-redis": "doppler run node scripts/clear-redis.js",
-    "scripts:mongo-migration": "doppler run node scripts/mongo-migration.js"
+    "build": "yarn workspace backend build && yarn workspace frontend build",
+    "postbuild": "copyfiles --error ./LICENSE.txt ./dist && copyfiles --error ./LICENSE.txt ./dist/frontend/",
+    "start": "concurrently --kill-others-on-fail \"yarn workspace backend start\"  \"yarn workspace frontend dev\""
   },
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
   "author": "Aleksander <alekswilc> Wilczyński",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.0.0",
     "@types/uuid": "^10.0.0",
+    "concurrently": "^9.0.1",
     "copyfiles": "^2.4.1",
     "typescript": "^5.5.4"
   },
-  "type": "module",
-  "dependencies": {
-    "@simrail/types": "^0.0.4",
-    "@types/mongoose": "^5.11.97",
-    "dayjs": "^1.11.12",
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "mongoose": "^8.5.1",
-    "redis": "^4.6.15",
-    "uuid": "^10.0.0",
-    "wildcard-match": "^5.1.3"
-  },
-  "typings": "types/typings.d.ts"
+  "type": "module"
 }
