@@ -131,6 +131,6 @@ export interface IProfile
     steamTrainDistance: number;
     steamTrainScore: number;
 
-
+    createdAt: number
     flags: string[]
 }

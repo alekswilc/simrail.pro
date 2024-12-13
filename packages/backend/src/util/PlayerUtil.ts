@@ -20,7 +20,7 @@ import { assert } from "node:console";
 
 const STEAM_API_KEY = process.env.STEAM_APIKEY;
 
-const steamFetch = (url: string, maxRetries: number = 5) =>
+const steamFetch = (url: string) =>
 {
     let retries = 0;
 
@@ -28,10 +28,7 @@ const steamFetch = (url: string, maxRetries: number = 5) =>
     {
         const req = () =>
         {
-            if (retries > maxRetries)
-            {
-                throw new Error("request failed to api steam");
-            }
+
             fetch(url, { signal: AbortSignal.timeout(10000) }).then(x => x.json())
                 .then(x => res(x))
                 .catch(() =>
@@ -39,7 +36,7 @@ const steamFetch = (url: string, maxRetries: number = 5) =>
                     console.log("STEAM request failed! ", url.replace(STEAM_API_KEY!, "[XXX]"), retries);
 
                     retries++;
-                    setTimeout(() => req(), 1000);
+                    setTimeout(() => req(), retries * 1000);
                 });
         };
         req();
@@ -57,7 +54,7 @@ export class PlayerUtil
 
         if (!player)
         {
-            const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`, 20) as IPlayerPayload;
+            const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`) as IPlayerPayload;
 
             assert(data.response.players, "Expected data.response.players to be truthy");
 
@@ -68,7 +65,6 @@ export class PlayerUtil
             {
                 return player;
             }
-
 
             const trainStats: {
                 [ trainName: string ]: {
@@ -81,7 +77,6 @@ export class PlayerUtil
                 [ name: string ]: {
                     time: number
                 }
-
             } = {};
 
             let trainPoints = 0;
@@ -124,6 +119,8 @@ export class PlayerUtil
                 dispatcherTime,
 
                 flags: !stats ? [ "private" ] : [],
+
+                createdAt: Date.now(),
             }).catch(e => e);
 
             if (player instanceof Error)
@@ -152,7 +149,7 @@ export class PlayerUtil
 
     public static async getPlayerSteamData(steamId: string)
     {
-        const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`, 5) as IPlayerPayload;
+        const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`) as IPlayerPayload;
 
         if (!data?.response?.players?.length)
         {

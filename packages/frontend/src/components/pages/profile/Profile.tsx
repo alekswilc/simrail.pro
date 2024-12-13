@@ -244,7 +244,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
             <div className="shadow-default dark:bg-boxdark items-center justify-center p-2.5 flex flex-col xl:p-5 gap-2">
                 <h1 className="text-sm text-black dark:text-white">
-                    {t("profile.info", { date: dayjs(data.createdAt).format('DD/MM/YYYY') })}
+                    {t("profile.info", { date: dayjs(data.player.createdAt).format('DD/MM/YYYY') })}
                 </h1>
             </div>
 

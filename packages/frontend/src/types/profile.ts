@@ -33,7 +33,6 @@ export interface TProfileSuccessResponse
 export interface TProfileData
 {
     player: TProfilePlayer;
-    createdAt: number
 }
 
 export interface TProfilePlayer
@@ -49,6 +48,7 @@ export interface TProfilePlayer
     "steamTrainDistance": number,
     "steamTrainScore": number,
     "flags": string[]
+    createdAt: number;
 
     trainStats: Record<string, {
         time: number;

@@ -58,8 +58,7 @@ export class ProfilesRoute
                 new SuccessResponseBuilder()
                     .setCode(200)
                     .setData({
-                        player,
-                        createdAt: player._id.getTimestamp().getTime()
+                        player
                     })
                     .toJSON(),
             );
