@@ -21,7 +21,7 @@ export const raw_schema = {
     id: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     // USERNAME FROM STEAM
     username: {
@@ -90,15 +90,13 @@ export const raw_schema = {
         {
             type: String,
             required: false,
-            default: []
-        }
+            default: [],
+        },
     ],
-    createdAt: [
-        {
-            type: Number,
-            required: true
-        }
-    ]
+    createdAt: {
+        type: Number,
+        required: true,
+    },
 };
 
 const schema = new Schema<IProfile>(raw_schema);
@@ -136,6 +134,6 @@ export interface IProfile
     steamTrainDistance: number;
     steamTrainScore: number;
 
-    createdAt: number
-    flags: string[]
+    createdAt: number;
+    flags: string[];
 }
