@@ -133,7 +133,7 @@ export class TrainsModule
 
                 player.flags = player.flags.filter(x => x !== "private");
 
-                if (!player.createdAt) player.createdAt = new Date(parseInt(player._id.toString().substring(0, 8), 16) * 1000).getTime();
+                if (typeof player.createdAt !== 'number') player.createdAt = new Date(parseInt(player._id.toString().substring(0, 8), 16) * 1000).getTime();
             }
 
             const playerData = await PlayerUtil.getPlayerSteamData(player.id);
