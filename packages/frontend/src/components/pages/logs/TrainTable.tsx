@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TTrainRecord } from "../../../types/train.ts";
 import dayjs from "dayjs";
-import { FaCheck } from "react-icons/fa6";
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 // setSearchItem: Dispatch<SetStateAction<string>>
 export const TrainTable = ({ trains }: {
@@ -75,8 +75,7 @@ export const TrainTable = ({ trains }: {
                                 <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
                                         <Link to={ "/profile/" + (train.steam ?? train.player.id) }
-                                              className="color-orchid">{ train.username ?? train.player.username }</Link> { train.player.flags.includes("verified") &&
-                                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                                              className="color-orchid">{ train.username ?? train.player.username }</Link>  <UserIcons flags={train.player.flags} />
                                     </p>
                                 </div>
 

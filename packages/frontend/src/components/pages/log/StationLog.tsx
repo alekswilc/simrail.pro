@@ -19,7 +19,8 @@ import { TLogStationData } from "../../../types/log.ts";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FaCheck } from 'react-icons/fa6';
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
+
 
 export const StationLog = ({ data }: { data: TLogStationData }) =>
 {
@@ -50,7 +51,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.player.username }{ data.player.flags.includes('verified') && <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                    { data.player.username } <UserIcons flags={data.player.flags} />
                 </h3>
             </div>
         </div>

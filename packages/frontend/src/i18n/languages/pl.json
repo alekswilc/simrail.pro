@@ -154,13 +154,15 @@
     "logout": "Wyloguj"
   },
   "admin": {
-    "clear": {
+    "header": "Moderator actions",
+    "hideLeaderboard": {
       "modal": {
         "title": "Czy jesteś pewien?",
-        "description": "Ta akcja permanentnie wyczyści wszystkie statystyki gracza."
+        "description": "Ta akcja ukryje profil gracza w tablicy wyników."
       },
-      "button": "Wyczyść profil",
-      "alert": "Wyczyszczono statystyki gracza."
+      "button": "Ukryj profil w tablicy wyników",
+      "button2": "Pokaż profil w tablicy wyników",
+      "alert": "Ukryto profil gracza w tablicy wyników."
     },
     "hide": {
       "modal": {

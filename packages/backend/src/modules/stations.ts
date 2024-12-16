@@ -85,6 +85,23 @@ export class StationsModule
                 player.steamTrainScore = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
 
 
+                if ((player.steamTrainDistance > player.trainDistance) || (player.trainPoints > player.steamTrainScore))
+                {
+                    player.trainStats[ "N/A" ] = {
+                        time: 0, distance: player.steamTrainDistance > player.trainDistance ? player.steamTrainDistance - player.trainDistance : player.trainDistance,
+                        score: player.trainPoints > player.steamTrainScore ? player.steamTrainScore - player.trainPoints : player.trainPoints,
+                    };
+
+                    if (player.steamTrainDistance > player.trainDistance)
+                    {
+                        player.trainDistance = player.steamTrainDistance;
+                    }
+                    if (player.trainPoints > player.steamTrainScore)
+                    {
+                        player.trainPoints = player.steamTrainScore;
+                    }
+                }
+
                 player.flags = player.flags.filter(x => x !== "private");
             }
 

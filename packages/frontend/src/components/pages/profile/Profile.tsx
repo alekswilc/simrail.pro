@@ -19,12 +19,12 @@ import { TProfileData } from "../../../types/profile.ts";
 import { useTranslation } from "react-i18next";
 import { ArrowIcon, FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
 import { formatTime } from "../../../util/time.ts";
-import { FaCheck } from "react-icons/fa6";
 import { useAuth } from "../../../hooks/useAuth.tsx";
 import { ConfirmModal } from "../../mini/modal/ConfirmModal.tsx";
 import { post } from "../../../util/fetcher.ts";
 import { toast } from "react-toastify";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 export const ProfileCard = ({ data }: { data: TProfileData }) =>
 {
@@ -32,19 +32,19 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
     const [ showTrains, setShowTrains ] = useState(false);
     const [ showStations, setShowStations ] = useState(false);
     const [ sortTrainsBy, setSortTrainsBy ] = useState<"time" | "score" | "distance">("distance");
-    const [ clearStatsModal, setClearStatsModal ] = useState(false);
+    const [ hideLeaderboardStatsModal, setHideLeaderboardStatsModal ] = useState(false);
     const [ hideProfileModal, setHideProfileModal ] = useState(false);
 
     const { isAdmin, token } = useAuth();
 
-    const adminClearPlayerStats = () =>
+    const adminToggleHideLeaderboardPlayerProfile = () =>
     {
-        post(`/admin/profile/${ data.player.id }/clear`, {}, { "X-Auth-Token": token })
+        post(`/admin/profile/${ data.player.id }/${ data.player.flags.includes("leaderboard_hidden") ? "showLeaderboard" : "hideLeaderboard" }`, {}, { "X-Auth-Token": token })
                 .then((response) =>
                 {
                     if (response.code === 200)
                     {
-                        toast.success(t("admin.clear.alert"));
+                        toast.success(t("admin.hideLeaderboard.alert"));
                     }
                 });
     };
@@ -64,14 +64,12 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
     const { t } = useTranslation();
     return <>
-        <ConfirmModal showModal={ clearStatsModal } setShowModal={ setClearStatsModal }
-                      onConfirm={ adminClearPlayerStats } title={ t("admin.clear.modal.title") }
-                      description={ t("admin.clear.modal.description") }/>
-
+        <ConfirmModal showModal={ hideLeaderboardStatsModal } setShowModal={ setHideLeaderboardStatsModal }
+                      onConfirm={ adminToggleHideLeaderboardPlayerProfile } title={ t("admin.hideLeaderboard.modal.title") }
+                      description={ t("admin.hideLeaderboard.modal.description") }/>
         <ConfirmModal showModal={ hideProfileModal } setShowModal={ setHideProfileModal }
                       onConfirm={ adminHidePlayerProfile } title={ t("admin.hide.modal.title") }
                       description={ t("admin.hide.modal.description") }/>
-
         <div
                 className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="px-4 pt-6 text-center lg:pb-8 xl:pb-11.5">
@@ -83,8 +81,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                 </div>
                 <div className="mt-4">
                     <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                        { data.player.username } { data.player.flags.includes("verified") &&
-                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                        { data.player.username } <UserIcons flags={ data.player.flags }/>
                     </h3>
 
                     <div
@@ -223,20 +220,24 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
 
             { isAdmin && <>
-
-
                 <div className="shadow-default dark:bg-boxdark items-center justify-center p-2.5 flex flex-col xl:p-5 gap-2">
-                    <h1 className="text-xl text-black dark:text-white">Moderator actions</h1>
+                    <h1 className="text-xl text-black dark:text-white">{ t("admin.header") }</h1>
 
                     <div className="items-center justify-center p-2.5 flex xl:p-5 gap-2 flex-wrap sm:flex-nowrap">
-                        <button className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
-                                onClick={ () => setClearStatsModal(true) }>
-                            {t("admin.clear.button")}
-                        </button>
+
+                        { data.player.flags.includes("leaderboard_hidden") ?
+                                <button className={ "inline-flex items-center justify-center rounded-md py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 bg-success" }
+                                        onClick={ () => adminToggleHideLeaderboardPlayerProfile() }>
+                                    { t("admin.hideLeaderboard.button2") }
+                                </button> :
+                                <button className={ "inline-flex items-center justify-center rounded-md py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 bg-danger" }
+                                        onClick={ () => setHideLeaderboardStatsModal(true) }>
+                                    { t("admin.hideLeaderboard.button") }
+                                </button> }
 
                         <button className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                 onClick={ () => setHideProfileModal(true) }>
-                            {t("admin.hide.button")}
+                            { t("admin.hide.button") }
                         </button>
                     </div>
                 </div>
@@ -244,7 +245,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
             <div className="shadow-default dark:bg-boxdark items-center justify-center p-2.5 flex flex-col xl:p-5 gap-2">
                 <h1 className="text-sm text-black dark:text-white">
-                    {t("profile.info", { date: dayjs(data.player.createdAt).format('DD/MM/YYYY') })}
+                    { t("profile.info", { date: dayjs(data.player.createdAt).format("DD/MM/YYYY") }) }
                 </h1>
             </div>
 

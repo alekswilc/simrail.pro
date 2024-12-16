@@ -154,13 +154,15 @@
     "logout": "Log out"
   },
   "admin": {
-    "clear": {
+    "header": "Akcje moderacyjne",
+    "hideLeaderboard": {
       "modal": {
         "title": "Are you sure?",
-        "description": "This action will permanently clear user statistics."
+        "description": "This action will hide user profile from leaderboard."
       },
-      "button": "Clear profile",
-      "alert": "Player stats cleared."
+      "button": "Hide profile in leaderboard",
+      "button2": "Show profile in leaderboard",
+      "alert": "Player profile hidden."
     },
     "hide": {
       "modal": {
