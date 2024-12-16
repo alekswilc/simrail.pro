@@ -86,12 +86,17 @@ export const raw_schema = {
         required: false,
         default: 0,
     },
-
     flags: [
         {
             type: String,
             required: false,
             default: []
+        }
+    ],
+    createdAt: [
+        {
+            type: Number,
+            required: true
         }
     ]
 };
