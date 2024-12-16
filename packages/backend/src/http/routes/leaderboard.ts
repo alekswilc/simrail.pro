@@ -48,7 +48,7 @@ export class LeaderboardRoute
             const filter: PipelineStage[] = [
                 {
                     $match: {
-                        flags: { $nin: ["hidden"] }
+                        flags: { $nin: ["hidden", "leaderboard_hidden"] }
                     }
                 }
             ];
@@ -83,7 +83,7 @@ export class LeaderboardRoute
             const filter: PipelineStage[] = [
                 {
                     $match: {
-                        flags: { $nin: ["hidden"] }
+                        flags: { $nin: ["hidden", "leaderboard_hidden"] }
                     }
                 }
             ];

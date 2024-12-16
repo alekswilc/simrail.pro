@@ -16,8 +16,8 @@
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { FaCheck } from "react-icons/fa6";
 import { TActiveStationPlayersData } from "../../../types/active.ts";
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 export const ActiveStationTable = ({ stations }: { stations: TActiveStationPlayersData[] }) =>
 {
@@ -65,8 +65,8 @@ export const ActiveStationTable = ({ stations }: { stations: TActiveStationPlaye
                                 <div className="flex justify-center items-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
                                         <Link to={ "/profile/" + station.steam }
-                                              className="color-orchid">{ station.username }</Link> { station.player.flags.includes("verified") &&
-                                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                                              className="color-orchid">{ station.username }</Link> <UserIcons
+                                            flags={ station.player.flags }/>
                                     </p>
                                 </div>
 

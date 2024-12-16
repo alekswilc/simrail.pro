@@ -17,11 +17,8 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-
 import { TStationRecord } from "../../../types/station.ts";
-
-import { FaCheck } from "react-icons/fa6";
-
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 // setSearchItem: Dispatch<SetStateAction<string>>
 export const StationTable = ({ stations }: {
@@ -68,8 +65,7 @@ export const StationTable = ({ stations }: {
                                 <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
                                         <Link to={ "/profile/" + (station.steam ?? station.player.id) }
-                                              className="color-orchid">{ station.username ?? station.player.username }</Link> { station.player.flags.includes("verified") &&
-                                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                                              className="color-orchid">{ station.username ?? station.player.username }</Link> <UserIcons flags={station.player.flags} />
                                     </p>
                                 </div>
 

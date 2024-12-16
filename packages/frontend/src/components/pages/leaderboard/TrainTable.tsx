@@ -18,9 +18,9 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
 import { formatTime } from "../../../util/time.ts";
-import { FaCheck } from "react-icons/fa6";
 import { Dispatch, SetStateAction } from "react";
 import { FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 export const TrainTable = ({ trains, setSortBy, sortBy }: {
     trains: TLeaderboardRecord[],
@@ -80,8 +80,7 @@ export const TrainTable = ({ trains, setSortBy, sortBy }: {
                                 <div className="flex items-center justify-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
                                         <Link to={ "/profile/" + train.id }
-                                              className="color-orchid">{ train.username }</Link> { train.flags.includes("verified") &&
-                                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                                              className="color-orchid">{ train.username }</Link> <UserIcons flags={train.flags} />
                                     </p>
                                 </div>
 

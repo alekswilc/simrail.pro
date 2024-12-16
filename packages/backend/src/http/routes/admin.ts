@@ -59,9 +59,9 @@ export class AdminRoute
             );
         });
 
-        app.post("/profile/:playerId/clear", async (req, res) =>
+        app.post("/profile/:playerId/hideLeaderboard", async (req, res) =>
         {
-            const token = req.headers["x-auth-token"];
+            const token = req.headers[ "x-auth-token" ];
 
             if (!token)
             {
@@ -93,14 +93,58 @@ export class AdminRoute
                 return;
             }
 
-            await MProfile.updateOne({id: player.id}, {
-                dispatcherTime: 0,
-                trainTime: 0,
-                trainDistance: 0,
-                trainPoints: 0,
+            player.flags.push("leaderboard_hidden");
 
-                trainStats: {},
-                dispatcherStats: {},
+            await MProfile.updateOne({ id: player.id }, {
+                flags: player.flags,
+            });
+
+            res.json(
+                new SuccessResponseBuilder()
+                    .setCode(200)
+                    .setData({})
+                    .toJSON(),
+            );
+        });
+
+        app.post("/profile/:playerId/showLeaderboard", async (req, res) =>
+        {
+            const token = req.headers[ "x-auth-token" ];
+
+            if (!token)
+            {
+                res.status(400).json(new ErrorResponseBuilder()
+                    .setCode(400)
+                    .setData("Missing token query").toJSON());
+                return;
+            }
+
+            const admin = await MAdmin.findOne({ token });
+
+            if (!admin)
+            {
+                res.status(401).json(new ErrorResponseBuilder()
+                    .setCode(401)
+                    .setData("Invalid token").toJSON());
+                return;
+            }
+
+            const player = await MProfile.findOne({
+                id: req.params.playerId,
+            });
+
+            if (!player)
+            {
+                res.status(401).json(new ErrorResponseBuilder()
+                    .setCode(401)
+                    .setData("Invalid playerId").toJSON());
+                return;
+            }
+
+            player.flags = player.flags.filter(x => x !== "leaderboard_hidden");
+
+            await MProfile.updateOne({ id: player.id }, {
+                flags: player.flags,
             });
 
             res.json(
@@ -113,7 +157,7 @@ export class AdminRoute
 
         app.post("/profile/:playerId/hide", async (req, res) =>
         {
-            const token = req.headers["x-auth-token"];
+            const token = req.headers[ "x-auth-token" ];
 
             if (!token)
             {
@@ -147,7 +191,7 @@ export class AdminRoute
 
             player.flags.push("hidden");
 
-            await MProfile.updateOne({id: player.id}, {
+            await MProfile.updateOne({ id: player.id }, {
                 flags: player.flags,
             });
 

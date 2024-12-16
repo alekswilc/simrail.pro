@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
 import { formatTime } from "../../../util/time.ts";
-import { FaCheck } from "react-icons/fa6";
+import { UserIcons } from "../../mini/util/UserIcons.tsx";
 
 export const StationTable = ({ stations }: { stations: TLeaderboardRecord[] }) =>
 {
@@ -58,8 +58,8 @@ export const StationTable = ({ stations }: { stations: TLeaderboardRecord[] }) =
                                 <div className="flex justify-center items-center gap-3 p-5 lg:p-5">
                                     <p className="text-black dark:text-white sm:block break-all">
                                         <Link to={ "/profile/" + station.id }
-                                              className="color-orchid">{ station.username }</Link> { station.flags.includes("verified") &&
-                                            <FaCheck className={ "inline text-meta-3 ml-1" }/> }
+                                              className="color-orchid">{ station.username }</Link> <UserIcons flags={station.flags} />
+
                                     </p>
                                 </div>
 
