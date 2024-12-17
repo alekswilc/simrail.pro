@@ -20,16 +20,15 @@ import { TLeaderboardRecord } from "../../../types/leaderboard.ts";
 import { formatTime } from "../../../util/time.ts";
 import { Dispatch, SetStateAction } from "react";
 import { FlexArrowIcon } from "../../mini/icons/ArrowIcon.tsx";
-import { UserIcons } from "../../mini/util/UserIcons.tsx";
+import { UserIcons } from "../../mini/icons/UserIcons.tsx";
 
-export const TrainTable = ({ trains, setSortBy, sortBy }: {
+export const LeaderboardTrainTable = ({ trains, setSortBy, sortBy }: {
     trains: TLeaderboardRecord[],
     setSortBy: Dispatch<SetStateAction<string>>
     sortBy: string
 }) =>
 {
     const { t } = useTranslation();
-
 
     return (
             <div

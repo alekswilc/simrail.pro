@@ -67,7 +67,7 @@ export class TrainsRoute
                 new SuccessResponseBuilder<{ records: ITrainLog[] }>()
                     .setCode(200)
                     .setData({
-                        records
+                        records,
                     })
                     .toJSON(),
             );

@@ -24,7 +24,7 @@ import { ConfirmModal } from "../../mini/modal/ConfirmModal.tsx";
 import { post } from "../../../util/fetcher.ts";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import { UserIcons } from "../../mini/util/UserIcons.tsx";
+import { UserIcons } from "../../mini/icons/UserIcons.tsx";
 
 export const ProfileCard = ({ data }: { data: TProfileData }) =>
 {

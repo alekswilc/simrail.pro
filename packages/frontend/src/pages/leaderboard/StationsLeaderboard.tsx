@@ -16,12 +16,12 @@
 
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { StationTable } from "../../components/pages/leaderboard/StationTable.tsx";
+import { LeaderboardStationTable } from "../../components/pages/leaderboard/LeaderboardStationTable.tsx";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
 import { get } from "../../util/fetcher.ts";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,7 @@ export const StationLeaderboard = () =>
 {
     const [ params, setParams ] = useState(new URLSearchParams());
 
-    const { data, error, isLoading } = useSWR(`/leaderboard/station/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/leaderboard/station/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
 
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -66,14 +66,16 @@ export const StationLeaderboard = () =>
                 <div className="flex flex-col gap-10">
                     <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
                     <>
-                        { error && <LoadError /> }
+                        { error && <LoadError/> }
 
                         { isLoading && <ContentLoader/> }
 
-                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                       description={ t("content_loader.notfound.description") }/> }
+                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                                <WarningAlert title={ t("content_loader.notfound.header") }
+                                              description={ t("content_loader.notfound.description") }/> }
 
-                        { data && data.code === 200 && data.data && !!data?.data?.records?.length && <StationTable stations={ data.data.records } /> }
+                        { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
+                                <LeaderboardStationTable stations={ data.data.records }/> }
                     </>
 
                 </div>

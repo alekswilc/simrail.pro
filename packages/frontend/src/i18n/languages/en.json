@@ -9,6 +9,10 @@
     "title": "Preview version!",
     "description": "The site is in version V3-PREVIEW, may contain errors. I will be grateful for reporting all errors on the project page (git.alekswilc.dev) or in a private message on discord - alekswilc. Stay tuned!"
   },
+  "search": {
+    "placeholder": "Type to search.",
+    "tip": "You can search for multiple data using a comma, ex. pl2,alekswilc (server name, username)"
+  },
   "home": {
     "stats": {
       "trains": "Trains",
@@ -32,6 +36,11 @@
     "title": "Not Found",
     "description": "It seems you're lost.",
     "button": "Return to homepage."
+  },
+  "profiles": {
+    "user": "Player",
+    "profile": "Profile",
+    "actions": "Actions"
   },
   "leaderboard": {
     "user": "Player",
@@ -58,7 +67,6 @@
     "record": "Record",
     "train": "Train",
     "actions": "Actions",
-    "search": "Type to search",
     "station": "Station"
   },
   "content_loader": {
@@ -151,10 +159,16 @@
     "info": "INFO",
     "admin": "ADMIN",
     "logged": "Logged as {{username}}",
-    "logout": "Log out"
+    "logout": "Log out",
+    "profiles": "Profiles"
+  },
+  "icons": {
+    "admin": "Administrator",
+    "leaderboard_hidden": "Leaderboard hidden",
+    "hidden": "Profile hidden"
   },
   "admin": {
-    "header": "Akcje moderacyjne",
+    "header": "Moderator actions",
     "hideLeaderboard": {
       "modal": {
         "title": "Are you sure?",

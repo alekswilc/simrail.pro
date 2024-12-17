@@ -63,8 +63,8 @@ export const raw_schema = {
     },
     player: {
         type: Schema.Types.ObjectId,
-        ref: "profile"
-    }
+        ref: "profile",
+    },
 };
 
 const schema = new Schema<ITrainLog>(raw_schema);

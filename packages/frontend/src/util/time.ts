@@ -23,8 +23,8 @@ export const formatTime = (time: number) =>
 
     if (Math.floor(time / 60000) > 0)
     {
-        return `${ Math.floor(time / 60000) }m`
+        return `${ Math.floor(time / 60000) }m`;
     }
 
-    return '0h';
-}
+    return "0h";
+};

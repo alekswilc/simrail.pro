@@ -19,7 +19,7 @@ import { TLogStationData } from "../../../types/log.ts";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { UserIcons } from "../../mini/util/UserIcons.tsx";
+import { UserIcons } from "../../mini/icons/UserIcons.tsx";
 
 
 export const StationLog = ({ data }: { data: TLogStationData }) =>
@@ -51,7 +51,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.player.username } <UserIcons flags={data.player.flags} />
+                    { data.player.username } <UserIcons flags={ data.player.flags }/>
                 </h3>
             </div>
         </div>
@@ -85,7 +85,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
                         { t("log.buttons.copy") }
                     </a>
                     <Link
-                            to={"/profile/" + data.player.id}
+                            to={ "/profile/" + data.player.id }
                             className={ `inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10  ${ data.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
                             style={ data.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }>
 

@@ -71,7 +71,7 @@ export class ActivePlayersRoute
 
             if (s)
             {
-                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.trainName) || c.test(d.trainNumber) ).length === s.length);
+                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.trainName) || c.test(d.trainNumber)).length === s.length);
             }
 
             a = arrayGroupBy(a, d => d.server);
@@ -110,7 +110,7 @@ export class ActivePlayersRoute
 
             if (s)
             {
-                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.stationName) || c.test(d.stationShort) ).length === s.length);
+                a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.stationName) || c.test(d.stationShort)).length === s.length);
             }
 
 

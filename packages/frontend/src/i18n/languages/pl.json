@@ -9,6 +9,10 @@
     "title": "Wersja preview!",
     "description": "Strona znajduje się w wersji V3-PREVIEW, może zawierać błędy. Będe wdzieczny za zgłaszanie wszystkich błędów na stronie projektu (git.alekswilc.dev) lub w wiadomości prywatnej na discordzie - alekswilc. Stay tuned!"
   },
+  "search": {
+    "placeholder": "Wpisz, aby wyszukać",
+    "tip": "Możesz wyszukiwać wiele danych używając przecinka, np pl2,alekswilc (nazwa serwera, nazwa użytkownika)"
+  },
   "home": {
     "stats": {
       "trains": "Pociągów",
@@ -41,6 +45,11 @@
     "profile": "Profil",
     "actions": "Akcje"
   },
+  "profiles": {
+    "user": "Gracz",
+    "profile": "Profil",
+    "actions": "Akcje"
+  },
   "active": {
     "server": "Serwer",
     "user": "Gracz",
@@ -58,7 +67,6 @@
     "record": "Więcej",
     "train": "Pociąg",
     "actions": "Akcje",
-    "search": "Wpisz, aby wyszukać",
     "station": "Stacja"
   },
   "content_loader": {
@@ -141,6 +149,11 @@
       "profile": "Profil"
     }
   },
+  "icons": {
+    "admin": "Administrator",
+    "leaderboard_hidden": "Tablica wyników ukryta",
+    "hidden": "Profil ukryty"
+  },
   "sidebar": {
     "home": "Strona główna",
     "logs": "Logi",
@@ -151,10 +164,11 @@
     "info": "INFO",
     "admin": "ADMIN",
     "logged": "Zalogowano jako {{username}}",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "profiles": "Profile"
   },
   "admin": {
-    "header": "Moderator actions",
+    "header": "Akcje moderacyjne",
     "hideLeaderboard": {
       "modal": {
         "title": "Czy jesteś pewien?",

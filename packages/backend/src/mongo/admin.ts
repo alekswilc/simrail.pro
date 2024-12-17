@@ -35,6 +35,6 @@ export const MAdmin = model<IAdmin>("admin", schema);
 
 export interface IAdmin
 {
-    token: string
-    username: string
+    token: string;
+    username: string;
 }

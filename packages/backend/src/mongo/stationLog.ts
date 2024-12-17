@@ -55,8 +55,8 @@ export const raw_schema = {
 
     player: {
         type: Schema.Types.ObjectId,
-        ref: "profile"
-    }
+        ref: "profile",
+    },
 };
 
 const schema = new Schema<IStationLog>(raw_schema);

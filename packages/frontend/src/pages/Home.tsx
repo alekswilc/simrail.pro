@@ -19,7 +19,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { TStatsResponse } from "../types/stats.ts";
 import { CardDataStats } from "../components/mini/util/CardDataStats.tsx";
 import { get } from "../util/fetcher.ts";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { LoadError } from "../components/mini/loaders/ContentLoader.tsx";
 
 export const Home = () =>
@@ -28,10 +28,11 @@ export const Home = () =>
 
     const { data, error } = useSWR<TStatsResponse>("/stats/", get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [ searchParams, setSearchParams ] = useSearchParams();
 
-    if (searchParams.get('admin_token')) {
-        window.localStorage.setItem('auth_token', searchParams.get('admin_token')!);
+    if (searchParams.get("admin_token"))
+    {
+        window.localStorage.setItem("auth_token", searchParams.get("admin_token")!);
         setSearchParams(new URLSearchParams());
         setTimeout(() => window.location.reload(), 1000);
     }
@@ -39,13 +40,14 @@ export const Home = () =>
     return (
             <>
                 <div className="flex pb-5">
-                    { error && <LoadError /> }
+                    { error && <LoadError/> }
                 </div>
 
                 <div className="flex flex-col gap-10">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
                         <CardDataStats title={ t("home.stats.trains") } total={ data?.data?.stats?.trains ?? "-" }/>
-                        <CardDataStats title={ t("home.stats.dispatchers") } total={ data?.data?.stats?.dispatchers ?? "-" }/>
+                        <CardDataStats title={ t("home.stats.dispatchers") }
+                                       total={ data?.data?.stats?.dispatchers ?? "-" }/>
                         <CardDataStats title={ t("home.stats.profiles") } total={ data?.data?.stats?.profiles ?? "-" }/>
                     </div>
 
@@ -105,7 +107,7 @@ export const Home = () =>
                                 </p>
 
                                 <p>{ data?.data?.git?.version && <Link className="color-orchid"
-                                                      to={ `https://git.alekswilc.dev/simrail/simrail.pro/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
+                                                                       to={ `https://git.alekswilc.dev/simrail/simrail.pro/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
                                         <Link className="color-orchid"
                                               to={ `https://git.alekswilc.dev/simrail/simrail.pro/commit/${ data?.data?.git?.commit }` }>{ data?.data?.git?.commit }</Link> }</p>
 

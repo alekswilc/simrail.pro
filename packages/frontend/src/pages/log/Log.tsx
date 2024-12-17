@@ -33,8 +33,8 @@ export const Log = () =>
 
     return (
             <>
-                {/* ERROR */}
-                { error && <LoadError /> }
+                {/* ERROR */ }
+                { error && <LoadError/> }
                 {/* LOADING */ }
                 { isLoading && <ContentLoader/> }
                 {/* NOT FOUND */ }

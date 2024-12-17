@@ -61,10 +61,14 @@ export class TrainsModule
                 const vehicleName = getVehicle(vehicle) ?? vehicle;
 
                 if (!isTruthyAndGreaterThanZero(distance))
+                {
                     distance = 0;
+                }
 
                 if (!isTruthyAndGreaterThanZero(points))
+                {
                     points = 0;
+                }
 
 
                 if (!player.trainStats)
@@ -133,14 +137,17 @@ export class TrainsModule
 
                 player.flags = player.flags.filter(x => x !== "private");
 
-                if (typeof player.createdAt !== 'number') player.createdAt = new Date(parseInt(player._id.toString().substring(0, 8), 16) * 1000).getTime();
+                if (typeof player.createdAt !== "number")
+                {
+                    player.createdAt = new Date(parseInt(player._id.toString().substring(0, 8), 16) * 1000).getTime();
+                }
             }
 
             const playerData = await PlayerUtil.getPlayerSteamData(player.id);
 
-            !stats && !player.flags.includes('private') && player.flags.push("private");
+            !stats && !player.flags.includes("private") && player.flags.push("private");
 
-            player.flags = [...new Set(player.flags)];
+            player.flags = [ ...new Set(player.flags) ];
 
             player.username = playerData?.personaname ?? player.username;
             player.avatar = playerData?.avatarfull ?? player.avatar;

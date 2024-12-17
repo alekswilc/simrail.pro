@@ -28,11 +28,13 @@ function useLocalStorage<T>(
         try
         {
             const item = window.localStorage.getItem(key);
-            if (item) {
-                try {
+            if (item)
+            {
+                try
+                {
                     return item ? JSON.parse(item) : initialValue;
-                }
-                catch {
+                } catch
+                {
                     return item ? item : initialValue;
                 }
             }

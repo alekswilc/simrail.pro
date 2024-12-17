@@ -15,8 +15,21 @@
  */
 
 import { Router } from "express";
+import { PipelineStage } from "mongoose";
 import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
 import { PlayerUtil } from "../../util/PlayerUtil.js";
+import { IProfile, MProfile } from "../../mongo/profile.js";
+import { escapeRegexString, removeProperties } from "../../util/functions.js";
+
+const generateSearch = (regex: RegExp) => [
+    {
+        id: { $regex: regex },
+    },
+    {
+        username: { $regex: regex },
+    },
+];
+
 
 export class ProfilesRoute
 {
@@ -40,14 +53,14 @@ export class ProfilesRoute
                 return;
             }
 
-            if (player.flags.includes('hidden'))
+            if (player.flags.includes("hidden"))
             {
                 res.status(403).json(new ErrorResponseBuilder()
                     .setCode(403).setData("Profile blocked!"));
                 return;
             }
 
-            if (player.flags.includes('private'))
+            if (player.flags.includes("private"))
             {
                 res.status(404).json(new ErrorResponseBuilder()
                     .setCode(404).setData("Profile is private!"));
@@ -58,8 +71,39 @@ export class ProfilesRoute
                 new SuccessResponseBuilder()
                     .setCode(200)
                     .setData({
-                        player
+                        player,
                     })
+                    .toJSON(),
+            );
+        });
+
+        app.get("/", async (req, res) =>
+        {
+            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+
+            const filter: PipelineStage[] = [
+                {
+                    $match: {
+                        flags: { $nin: [ "hidden" ] },
+                    },
+                },
+            ];
+
+            s && filter.push({
+                $match: {
+                    $and: [
+                        ...s.map(x => ({ $or: generateSearch(x) })),
+                    ],
+                },
+            });
+
+            const records = await MProfile.aggregate(filter)
+                .limit(50);
+
+            res.json(
+                new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()
+                    .setCode(200)
+                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])) })
                     .toJSON(),
             );
         });
