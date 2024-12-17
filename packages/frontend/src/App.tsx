@@ -25,7 +25,7 @@ import { TrainLeaderboard } from "./pages/leaderboard/TrainLeaderboard.tsx";
 import { StationLeaderboard } from "./pages/leaderboard/StationsLeaderboard.tsx";
 import { TrainLogs } from "./pages/logs/TrainLogs.tsx";
 import { StationLogs } from "./pages/logs/StationLogs.tsx";
-import { Profile } from "./pages/profile/Profile.tsx";
+import { Profile } from "./pages/profiles/Profile.tsx";
 import { Log } from "./pages/log/Log.tsx";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -36,6 +36,7 @@ import { ActiveStationsPlayers } from "./pages/activePlayers/ActiveStationsPlaye
 import { ActiveTrainPlayers } from "./pages/activePlayers/ActiveTrainPlayers.tsx";
 import { AuthProvider } from "./hooks/useAuth.tsx";
 import { NotFoundError } from "./pages/errors/NotFound.tsx";
+import { Profiles } from "./pages/profiles/Profiles.tsx";
 
 function App()
 {
@@ -55,135 +56,147 @@ function App()
 
     return <HelmetProvider>
         <AuthProvider>
-        { loading ? (
-                <Loader/>
-        ) : (
-                <>
-                    <ToastContainer
-                            position="top-center"
-                            autoClose={ 1500 }
-                            hideProgressBar={ false }
-                            newestOnTop={ false }
-                            closeOnClick
-                            rtl={ false }
-                            pauseOnHover
-                            theme={ theme as "light" | "dark" }
-                    />
-                    <DefaultLayout>
-                        <Routes>
-                            <Route
-                                    index
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Home"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <Home/>
-                                        </>
-                                    }
-                            />
-                            <Route
-                                    path="/leaderboard/trains"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Train Leaderboard"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <TrainLeaderboard/>
-                                        </>
-                                    }
-                            />
+            { loading ? (
+                    <Loader/>
+            ) : (
+                    <>
+                        <ToastContainer
+                                position="top-center"
+                                autoClose={ 1500 }
+                                hideProgressBar={ false }
+                                newestOnTop={ false }
+                                closeOnClick
+                                rtl={ false }
+                                pauseOnHover
+                                theme={ theme as "light" | "dark" }
+                        />
+                        <DefaultLayout>
+                            <Routes>
+                                <Route
+                                        index
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Home"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <Home/>
+                                            </>
+                                        }
+                                />
+                                <Route
+                                        path="/leaderboard/trains"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Train Leaderboard"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <TrainLeaderboard/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/logs/trains"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Trains Logs"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <TrainLogs/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/logs/trains"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Trains Logs"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <TrainLogs/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/logs/stations"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Stations Logs"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <StationLogs/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/logs/stations"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Stations Logs"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <StationLogs/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/leaderboard/stations"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Station Leaderboard"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <StationLeaderboard/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/leaderboard/stations"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Station Leaderboard"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <StationLeaderboard/>
+                                            </>
+                                        }
+                                />
 
 
-                            <Route
-                                    path="/active/trains"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Active Trains"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <ActiveTrainPlayers/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/active/trains"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Active Trains"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <ActiveTrainPlayers/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/active/stations"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Active Station"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            <ActiveStationsPlayers/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/active/stations"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Active Station"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                <ActiveStationsPlayers/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/profile/:id"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Profile"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            {/* page meta is modified in component! */ }
-                                            <Profile/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/profile/:id"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Profile"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                {/* page meta is modified in component! */ }
+                                                <Profile/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="/log/:id"
-                                    element={
-                                        <>
-                                            <PageMeta title="simrail.pro | Log"
-                                                      description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                            {/* page title is modified after API response */ }
-                                            <Log/>
-                                        </>
-                                    }
-                            />
+                                <Route
+                                        path="/profiles/"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Profiles"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                {/* page meta is modified in component! */ }
+                                                <Profiles/>
+                                            </>
+                                        }
+                                />
 
-                            <Route
-                                    path="*"
-                                    element={
-                                        <>
-                                            <NotFoundError/>
-                                        </>
-                                    }
-                            />
-                        </Routes>
-                    </DefaultLayout>
-                </>
-        ) }
+                                <Route
+                                        path="/log/:id"
+                                        element={
+                                            <>
+                                                <PageMeta title="simrail.pro | Log"
+                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
+                                                {/* page title is modified after API response */ }
+                                                <Log/>
+                                            </>
+                                        }
+                                />
+
+                                <Route
+                                        path="*"
+                                        element={
+                                            <>
+                                                <NotFoundError/>
+                                            </>
+                                        }
+                                />
+                            </Routes>
+                        </DefaultLayout>
+                    </>
+            ) }
         </AuthProvider>
     </HelmetProvider>;
 }

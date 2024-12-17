@@ -19,16 +19,16 @@ import { StationTable } from "../../components/pages/logs/StationTable.tsx";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { get } from "../../util/fetcher.ts";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export const StationLogs = () =>
 {
-    const [params, setParams] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/stations/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const [ params, setParams ] = useState(new URLSearchParams());
+    const { data, error, isLoading } = useSWR(`/stations/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
@@ -40,7 +40,7 @@ export const StationLogs = () =>
         searchValue === "" ? searchParams.delete("q") : searchParams.set("q", searchValue);
 
         const params = new URLSearchParams();
-        searchValue && params.set('q', searchValue);
+        searchValue && params.set("q", searchValue);
 
         setSearchParams(params.toString());
         setParams(params);
@@ -63,14 +63,16 @@ export const StationLogs = () =>
                 <div className="flex flex-col gap-10">
                     <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
                     <>
-                        { error && <LoadError /> }
+                        { error && <LoadError/> }
 
-                        {isLoading && <ContentLoader/> }
+                        { isLoading && <ContentLoader/> }
 
-                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                       description={ t("content_loader.notfound.description") }/> }
+                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
+                                <WarningAlert title={ t("content_loader.notfound.header") }
+                                              description={ t("content_loader.notfound.description") }/> }
 
-                        {data && data.code === 200 && !!data?.data?.records?.length && <StationTable stations={data.data.records} /> }
+                        { data && data.code === 200 && !!data?.data?.records?.length &&
+                                <StationTable stations={ data.data.records }/> }
                     </>
                 </div>
             </>

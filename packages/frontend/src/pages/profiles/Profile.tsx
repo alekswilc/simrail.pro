@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
-import { ProfileCard } from "../../components/pages/profile/Profile.tsx";
+import { ProfileCard } from "../../components/pages/profiles/Profile.tsx";
 import { useTranslation } from "react-i18next";
 import { PageMeta } from "../../components/mini/util/PageMeta.tsx";
 import { formatTime } from "../../util/time.ts";

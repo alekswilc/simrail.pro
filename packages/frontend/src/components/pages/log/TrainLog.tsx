@@ -19,7 +19,7 @@ import { TLogTrainData } from "../../../types/log.ts";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { UserIcons } from "../../mini/util/UserIcons.tsx";
+import { UserIcons } from "../../mini/icons/UserIcons.tsx";
 
 
 export const TrainLog = ({ data }: { data: TLogTrainData }) =>
@@ -51,7 +51,7 @@ export const TrainLog = ({ data }: { data: TLogTrainData }) =>
             </div>
             <div className="mt-4">
                 <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                    { data.player.username } <UserIcons flags={data.player.flags} />
+                    { data.player.username } <UserIcons flags={ data.player.flags }/>
                 </h3>
             </div>
         </div>

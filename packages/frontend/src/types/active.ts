@@ -24,7 +24,8 @@ export interface TActiveTrainPlayersResponse
     code: number;
 }
 
-export interface TActiveTrainPlayersData {
+export interface TActiveTrainPlayersData
+{
     "server": string,
     "player": TProfilePlayer,
     "trainNumber": string,
@@ -40,7 +41,8 @@ export interface TActiveStationPlayersResponse
     code: number;
 }
 
-export interface TActiveStationPlayersData {
+export interface TActiveStationPlayersData
+{
     "server": string,
     "player": TProfilePlayer,
     "stationName": string,

@@ -14,28 +14,25 @@
  * See LICENSE for more.
  */
 
-
 import { ChangeEvent, useEffect, useState } from "react";
-import { LeaderboardTrainTable } from "../../components/pages/leaderboard/LeaderboardTrainTable.tsx";
 import { useDebounce } from "use-debounce";
 import { Search } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
+import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
+import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { useTranslation } from "react-i18next";
 import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
-import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
-import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
+import { ProfilesTable } from "../../components/pages/profiles/ProfilesTable.tsx";
 
-export const TrainLeaderboard = () =>
+export const Profiles = () =>
 {
     const [ params, setParams ] = useState(new URLSearchParams());
-
-    const { data, error, isLoading } = useSWR(`/leaderboard/train/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
-
+    const { data, error, isLoading } = useSWR(`/profiles/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-    const [ sortBy, setSortBy ] = useState(searchParams.get("s") ?? "distance");
+
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -44,17 +41,14 @@ export const TrainLeaderboard = () =>
 
         const params = new URLSearchParams();
         searchValue && params.set("q", searchValue);
-        sortBy && params.set("s", sortBy);
-
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, sortBy ]);
+    }, [ searchValue ]);
 
     useEffect(() =>
     {
         setSearchItem(searchParams.get("q") ?? "");
-        setSortBy(searchParams.get("s") ?? "distance");
     }, [ searchParams ]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -73,14 +67,12 @@ export const TrainLeaderboard = () =>
 
                         { isLoading && <ContentLoader/> }
 
-                        { (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
                                 <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/>
-                        }
+                                              description={ t("content_loader.notfound.description") }/> }
 
                         { data && data.code === 200 && !!data?.data?.records?.length &&
-                                <LeaderboardTrainTable trains={ data?.data?.records } setSortBy={ setSortBy }
-                                                       sortBy={ sortBy }/> }
+                                <ProfilesTable profiles={ data.data.records }/> }
                     </>
                 </div>
             </>

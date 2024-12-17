@@ -26,17 +26,23 @@ export const removeProperties = <T>(data: any, names: string[]) =>
 
 
 // https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-export const escapeRegexString = (str: string) => {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
+export const escapeRegexString = (str: string) =>
+{
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
 
-export const isTruthyAndGreaterThanZero = (data: number) => {
-    if (!data) return false;
+export const isTruthyAndGreaterThanZero = (data: number) =>
+{
+    if (!data)
+    {
+        return false;
+    }
     return data > 0;
-}
+};
 
 export const arrayGroupBy = <T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) =>
-    Object.values((array.reduce((acc, value, index, array) => {
-        (acc[predicate(value, index, array)] ||= []).push(value);
+    Object.values((array.reduce((acc, value, index, array) =>
+    {
+        (acc[ predicate(value, index, array) ] ||= []).push(value);
         return acc;
-    }, {} as { [key: string]: T[] }))).flat();
+    }, {} as { [ key: string ]: T[] }))).flat();

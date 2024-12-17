@@ -24,9 +24,7 @@ export const NotFoundError = () =>
 
     return (
             <>
-
                 <div className="flex flex-col gap-10">
-
                     <div
                             className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                         <div className="px-4 pb-6 text-center">

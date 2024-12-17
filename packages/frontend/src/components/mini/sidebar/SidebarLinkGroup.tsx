@@ -20,11 +20,12 @@ interface SidebarLinkGroupProps
 {
     children: (handleClick: () => void, open: boolean) => ReactNode;
     activeCondition: boolean;
+    isOpen: boolean;
 }
 
-const SidebarLinkGroup = ({ children, activeCondition }: SidebarLinkGroupProps) =>
+const SidebarLinkGroup = ({ children, activeCondition, isOpen }: SidebarLinkGroupProps) =>
 {
-    const [ open, setOpen ] = useState<boolean>(activeCondition);
+    const [ open, setOpen ] = useState<boolean>(isOpen ?? activeCondition);
 
     const handleClick = () =>
     {

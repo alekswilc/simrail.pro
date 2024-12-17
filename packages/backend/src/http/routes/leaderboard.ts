@@ -33,7 +33,7 @@ const sortyByMap: Record<string, any> = {
     time: { trainTime: -1 },
     points: { trainPoints: -1 },
     distance: { trainDistance: -1 },
-}
+};
 
 export class LeaderboardRoute
 {
@@ -48,9 +48,9 @@ export class LeaderboardRoute
             const filter: PipelineStage[] = [
                 {
                     $match: {
-                        flags: { $nin: ["hidden", "leaderboard_hidden"] }
-                    }
-                }
+                        flags: { $nin: [ "hidden", "leaderboard_hidden" ] },
+                    },
+                },
             ];
 
             s && filter.push({
@@ -61,11 +61,11 @@ export class LeaderboardRoute
                 },
             });
 
-            const sortBy = sortyByMap[req.query.s?.toString() ?? 'distance'] ?? sortyByMap.distance;
+            const sortBy = sortyByMap[ req.query.s?.toString() ?? "distance" ] ?? sortyByMap.distance;
 
             const records = await MProfile.aggregate(filter)
                 .sort(sortBy)
-                .limit(10);
+                .limit(50);
 
             res.json(
                 new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()
@@ -75,7 +75,6 @@ export class LeaderboardRoute
             );
         });
 
-
         app.get("/station", async (req, res) =>
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
@@ -83,9 +82,9 @@ export class LeaderboardRoute
             const filter: PipelineStage[] = [
                 {
                     $match: {
-                        flags: { $nin: ["hidden", "leaderboard_hidden"] }
-                    }
-                }
+                        flags: { $nin: [ "hidden", "leaderboard_hidden" ] },
+                    },
+                },
             ];
             s && filter.push({
                 $match: {
@@ -97,7 +96,7 @@ export class LeaderboardRoute
 
             const records = await MProfile.aggregate(filter)
                 .sort({ dispatcherTime: -1 })
-                .limit(10);
+                .limit(50);
 
             res.json(
                 new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()

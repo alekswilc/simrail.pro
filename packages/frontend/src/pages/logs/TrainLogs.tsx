@@ -67,10 +67,12 @@ export const TrainLogs = () =>
 
                         { isLoading && <ContentLoader/> }
 
-                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) && <WarningAlert title={ t("content_loader.notfound.header") }
-                                                                     description={ t("content_loader.notfound.description") }/> }
+                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
+                                <WarningAlert title={ t("content_loader.notfound.header") }
+                                              description={ t("content_loader.notfound.description") }/> }
 
-                        { data && data.code === 200 && !!data?.data?.records?.length && <TrainTable trains={ data.data.records }/> }
+                        { data && data.code === 200 && !!data?.data?.records?.length &&
+                                <TrainTable trains={ data.data.records }/> }
                     </>
                 </div>
             </>

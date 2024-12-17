@@ -17,7 +17,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TActiveStationPlayersData } from "../../../types/active.ts";
-import { UserIcons } from "../../mini/util/UserIcons.tsx";
+import { UserIcons } from "../../mini/icons/UserIcons.tsx";
 
 export const ActiveStationTable = ({ stations }: { stations: TActiveStationPlayersData[] }) =>
 {

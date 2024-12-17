@@ -85,14 +85,14 @@ export class PlayerUtil
 
             if (stats)
             {
-                trainStats['N/A'] = {
+                trainStats[ "N/A" ] = {
                     score: stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0,
                     distance: stats?.stats?.find(x => x.name === "DISTANCE_M")?.value ?? 0,
                     time: 0,
                 };
 
-                dispatcherStats['N/A'] = {
-                    time: (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60
+                dispatcherStats[ "N/A" ] = {
+                    time: (stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0) * 1000 * 60,
                 };
 
                 trainPoints = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
