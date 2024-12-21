@@ -118,22 +118,31 @@ export class TrainsModule
                 player.steamDispatcherTime = stats?.stats?.find(x => x.name === "DISPATCHER_TIME")?.value ?? 0;
                 player.steamTrainScore = stats?.stats?.find(x => x.name === "SCORE")?.value ?? 0;
 
-                if ((player.steamTrainDistance > player.trainDistance) || (player.steamTrainScore > player.trainPoints))
-                {
-                    player.trainStats[ "N/A" ] = {
-                        time: 0, distance: player.steamTrainDistance > player.trainDistance ? player.steamTrainDistance - player.trainDistance : player.trainDistance,
-                        score: player.steamTrainScore > player.trainPoints ? player.steamTrainScore - player.trainPoints : player.trainPoints,
-                    };
 
-                    if (player.steamTrainDistance > player.trainDistance)
-                    {
-                        player.trainDistance = player.steamTrainDistance;
-                    }
-                    if (player.steamTrainScore > player.trainPoints)
-                    {
-                        player.trainPoints = player.steamTrainScore;
-                    }
+                if (player.steamTrainDistance > player.trainDistance)
+                {
+                    player.trainDistance = player.steamTrainDistance;
                 }
+                if (player.steamTrainScore > player.trainPoints)
+                {
+                    player.trainPoints = player.steamTrainScore;
+                }
+
+                const sum = Object.keys(player.trainStats).filter(x => x !== "N/A").map(x => player.trainStats[ x ]).reduce((acc, obj) =>
+                {
+                    acc.time += obj.time;
+                    acc.distance += obj.distance;
+                    acc.score += obj.score;
+                    return acc;
+                }, { time: 0, distance: 0, score: 0 });
+
+
+                player.trainStats[ "N/A" ] = {
+                    time: 0,
+                    distance: player.trainDistance - sum.distance,
+                    score: player.trainPoints - sum.score,
+                };
+
 
                 player.flags = player.flags.filter(x => x !== "private");
 

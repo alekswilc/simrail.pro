@@ -189,6 +189,10 @@
       },
       "button": "Ukryj profil",
       "alert": "Ukryto profil gracza."
+    },
+    "update": {
+      "button": "Wymuś aktualizacje",
+      "alert": "Zaktualizowano profil!"
     }
   }
 }
