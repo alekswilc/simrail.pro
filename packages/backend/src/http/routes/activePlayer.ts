@@ -40,6 +40,16 @@ interface ActiveStation
     steam: string;
 }
 
+const sortFunction = (a: ActiveStation | ActiveTrain, b: ActiveStation | ActiveTrain) => {
+    if (a.server.includes('pl') && !b.server.includes('pl'))
+        return -1;
+
+    if (!a.server.includes('pl') && b.server.includes('pl'))
+        return 1;
+
+    return 0;
+};
+
 export class ActivePlayersRoute
 {
     static load()
@@ -74,7 +84,8 @@ export class ActivePlayersRoute
                 a = a.filter(d => s.filter(c => c.test(d.server) || c.test(d.username) || c.test(d.steam) || c.test(d.steam) || c.test(d.trainName) || c.test(d.trainNumber)).length === s.length);
             }
 
-            a = arrayGroupBy(a, d => d.server);
+            a = arrayGroupBy(a, d => d.server)
+                .sort(sortFunction);
 
             res.json(
                 new SuccessResponseBuilder()
@@ -95,6 +106,7 @@ export class ActivePlayersRoute
             {
                 for (const d of client.stations[ server ].filter(d => d.DispatchedBy.length && d.DispatchedBy[ 0 ]?.SteamId))
                 {
+                    // todo: optimize
                     const p = await PlayerUtil.getPlayer(d.DispatchedBy[ 0 ].SteamId!);
                     p && a.push({
                         server: server,
@@ -114,7 +126,9 @@ export class ActivePlayersRoute
             }
 
 
-            a = arrayGroupBy(a, d => d.server);
+
+            a = arrayGroupBy(a, d => d.server)
+                .sort(sortFunction);
 
             res.json(
                 new SuccessResponseBuilder()

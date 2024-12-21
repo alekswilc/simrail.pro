@@ -37,7 +37,7 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
         toast.info(t("log.toasts.report"), {
             autoClose: 5000,
         });
-        void navigator.clipboard.writeText(`;user: \`${ data.player.username }\`\n;steam: \`${ data.player.avatar }\`\n;left: <t:${ Math.floor(data.leftDate / 1000) }>${ data.joinedDate ? `\n;joined: <t:${ Math.floor(data.joinedDate / 1000) }>` : "" }\n;station: \`${ data.stationName }\`\n;link: ${ location.href }\n\n`);
+        void navigator.clipboard.writeText(`;user: \`${ data.player.username }\`\n;steam: \`https://steamcommunity.com/profiles/${ data.player.id }\`\n;server: \`${ data.server.toUpperCase() }\`\n;left: <t:${ Math.floor(data.leftDate / 1000) }>${ data.joinedDate ? `\n;joined: <t:${ Math.floor(data.joinedDate / 1000) }>` : "" }\n;station: \`${ data.stationName }\`\n;link: ${ location.href }\n\n`);
     };
 
     return <div

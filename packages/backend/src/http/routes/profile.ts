@@ -30,6 +30,19 @@ const generateSearch = (regex: RegExp) => [
     },
 ];
 
+type ActiveTrain = {
+    type: "train"
+    trainNumber: string
+    trainName: string
+    server: string
+}
+
+type ActiveStation = {
+    type: "station",
+    stationName: string
+    stationShort: string
+    server: string
+}
 
 export class ProfilesRoute
 {
@@ -67,11 +80,44 @@ export class ProfilesRoute
                 return;
             }
 
+            let active: ActiveStation | ActiveTrain = undefined!;
+
+            for (const x of Object.keys(client.trains))
+            {
+                const data = client.trains[ x ].find(x => x.TrainData.ControlledBySteamID === player.id);
+                if (data)
+                {
+                    active = {
+                        type: "train",
+                        trainNumber: data.TrainNoLocal,
+                        trainName: data.TrainName,
+                        server: x,
+                    };
+                }
+            }
+
+            for (const x of Object.keys(client.stations))
+            {
+                const data = client.stations[ x ].find(x => x.DispatchedBy[ 0 ]?.SteamId === player.id);
+                if (data)
+                {
+                    active = {
+                        type: "station",
+                        stationName: data.Name,
+                        stationShort: data.Prefix,
+                        server: x,
+                    };
+                }
+            }
+
+
             res.json(
                 new SuccessResponseBuilder()
                     .setCode(200)
                     .setData({
                         player,
+                        active,
+
                     })
                     .toJSON(),
             );

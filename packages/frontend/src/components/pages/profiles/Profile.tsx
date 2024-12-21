@@ -75,13 +75,15 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                 className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="px-4 pt-6 text-center lg:pb-8 xl:pb-11.5">
                 <div
-                        className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-                    <div className="relative drop-shadow-2">
+                        className="mx-auto w-full max-w-30 rounded-full p-1 sm:h-44 sm:max-w-44">
+                    <div className="relative rounded-full">
                         <img className="rounded-full" src={ data.player.avatar } alt="profile"/>
+                        { data.active &&
+                                <span className="absolute w-full rounded-full border-white bg-[#219653] dark:border-black max-w-5.5 right-0 top-0 h-5.5 border-[3px]"></span> }
                     </div>
                 </div>
                 <div className="mt-4">
-                    <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+                    <h3 className="text-2xl font-semibold text-black dark:text-white">
                         { data.player.username } <UserIcons flags={ data.player.flags }/>
                     </h3>
 
@@ -103,7 +105,18 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                         </div>
                     </div>
                 </div>
+
+                { data.active && data.active.type === "train" &&
+                        <div className="mx-auto text-center">
+                            <h4 className="font-semibold text-black dark:text-white">{ t("profile.active.train", { train: `${ data.active.trainName } - ${ data.active.trainNumber }`, server: data.active.server.toUpperCase() }) }</h4>
+                        </div> }
+
+                { data.active && data.active.type === "station" &&
+                        <div className="mx-auto text-center">
+                            <h4 className="font-semibold text-black dark:text-white">{ t("profile.active.station", { station: `${ data.active.stationName } - ${ data.active.stationShort }`, server: data.active.server.toUpperCase() }) }</h4>
+                        </div> }
             </div>
+
 
             { Object.keys(data.player.trainStats || {}).length > 0 &&
                     <div className="bg-white px-5 pt-6 pb-5 shadow-default dark:bg-boxdark sm:px-7.5">
@@ -114,7 +127,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
 
                         { showTrains &&
                                 <div className="flex flex-col rounded-sm border border-stroke dark:border-strokedark">
-                                    <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+                                    <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3">
                                         <div className="p-2.5 text-center xl:p-5">
                                             <h5 className="text-sm font-medium uppercase xsm:text-base">
                                                 { t("profile.trains.train") }
@@ -134,13 +147,13 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                             </h5>
                                             <FlexArrowIcon rotated={ sortTrainsBy === "score" }/>
                                         </div>
-                                        <div className="hidden sm:flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"
-                                             onClick={ () => setSortTrainsBy("time") }>
-                                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                                { t("profile.trains.time") }
-                                            </h5>
-                                            <FlexArrowIcon rotated={ sortTrainsBy === "time" }/>
-                                        </div>
+                                        {/*<div className="hidden sm:flex flex-row align-center justify-center gap-2 p-2.5 text-center xl:p-5 cursor-pointer"*/ }
+                                        {/*     onClick={ () => setSortTrainsBy("time") }>*/ }
+                                        {/*    <h5 className="text-sm font-medium uppercase xsm:text-base">*/ }
+                                        {/*        { t("profile.trains.time") }*/ }
+                                        {/*    </h5>*/ }
+                                        {/*    <FlexArrowIcon rotated={ sortTrainsBy === "time" }/>*/ }
+                                        {/*</div>*/ }
                                     </div>
 
                                     { Object.keys(data.player.trainStats).sort((a, b) => data.player.trainStats[ b ][ sortTrainsBy ] - data.player.trainStats[ a ][ sortTrainsBy ]).map(trainName =>
@@ -148,7 +161,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                         const train = data.player.trainStats[ trainName ];
 
                                         return <div
-                                                className={ `grid grid-cols-3 sm:grid-cols-4 border-t border-t-stroke dark:border-t-strokedark` }
+                                                className={ `grid grid-cols-3 sm:grid-cols-3 border-t border-t-stroke dark:border-t-strokedark` }
                                                 key={ trainName }
                                         >
                                             <div className="flex items-center justify-center gap-3 p-2.5 lg:p-5">
@@ -165,9 +178,9 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                                                 <p className="text-meta-3">{ train.score }</p>
                                             </div>
 
-                                            <div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">
-                                                <p className="text-meta-3">{ formatTime(train.time) }</p>
-                                            </div>
+                                            {/*<div className="hidden sm:flex items-center justify-center p-2.5 lg:p-5">*/ }
+                                            {/*    <p className="text-meta-3">{ formatTime(train.time) }</p>*/ }
+                                            {/*</div>*/ }
                                         </div>;
                                     }) }
 
