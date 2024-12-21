@@ -20,7 +20,6 @@ import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder
 import { PlayerUtil } from "../../util/PlayerUtil.js";
 import { IProfile, MProfile } from "../../mongo/profile.js";
 import { escapeRegexString, removeProperties } from "../../util/functions.js";
-import { MTrainLog } from "../../mongo/trainLog.js";
 
 const generateSearch = (regex: RegExp) => [
     {
