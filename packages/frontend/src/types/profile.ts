@@ -33,6 +33,7 @@ export interface TProfileSuccessResponse
 export interface TProfileData
 {
     player: TProfilePlayer;
+    active: ActiveTrain | ActiveStation | undefined
 }
 
 export interface TProfilePlayer
@@ -59,4 +60,18 @@ export interface TProfilePlayer
     dispatcherStats: Record<string, {
         time: number;
     }>
+}
+
+export type ActiveTrain = {
+    type: "train"
+    trainNumber: string
+    trainName: string
+    server: string
+}
+
+export type ActiveStation = {
+    type: "station",
+    stationName: string
+    stationShort: string
+    server: string
 }

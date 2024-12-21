@@ -95,6 +95,7 @@ export class ActivePlayersRoute
             {
                 for (const d of client.stations[ server ].filter(d => d.DispatchedBy.length && d.DispatchedBy[ 0 ]?.SteamId))
                 {
+                    // todo: optimize
                     const p = await PlayerUtil.getPlayer(d.DispatchedBy[ 0 ].SteamId!);
                     p && a.push({
                         server: server,
