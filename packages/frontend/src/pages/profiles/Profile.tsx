@@ -30,7 +30,7 @@ import { get } from "../../util/fetcher.ts";
 export const Profile = () =>
 {
     const { id } = useParams();
-    const { data, error, isLoading } = useSWR(`/profiles/${ id }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/profiles/${ id }`, get, { refreshInterval: 5_000, errorRetryCount: 5 });
 
     const { t } = useTranslation();
 

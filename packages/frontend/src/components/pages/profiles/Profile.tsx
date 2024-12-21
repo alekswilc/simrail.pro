@@ -61,6 +61,18 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                 });
     };
 
+    const adminForceUpdate = () =>
+    {
+        post(`/admin/profile/${ data.player.id }/forceUpdate`, {}, { "X-Auth-Token": token })
+                .then((response) =>
+                {
+                    if (response.code === 200)
+                    {
+                        toast.success(t("admin.update.alert"));
+                    }
+                });
+    };
+
 
     const { t } = useTranslation();
     return <>
@@ -252,6 +264,11 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                         <button className="inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                                 onClick={ () => setHideProfileModal(true) }>
                             { t("admin.hide.button") }
+                        </button>
+
+                        <button className="inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
+                                onClick={ () => adminForceUpdate() }>
+                            { t("admin.update.button") }
                         </button>
                     </div>
                 </div>

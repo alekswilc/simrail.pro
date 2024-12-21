@@ -189,6 +189,10 @@
       },
       "button": "Hide profile",
       "alert": "Player profile hidden."
+    },
+    "update": {
+      "button": "Force update",
+      "alert": "Profile updated!"
     }
   }
 }
