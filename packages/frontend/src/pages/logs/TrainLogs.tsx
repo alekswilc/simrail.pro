@@ -17,13 +17,14 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { TrainTable } from "../../components/pages/logs/TrainTable.tsx";
 import { useDebounce } from "use-debounce";
-import { Search } from "../../components/mini/util/Search.tsx";
+import { SearchWithServerSelector } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
 import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { useTranslation } from "react-i18next";
 import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
+import { Paginator } from "../../components/mini/util/Paginator.tsx";
 
 export const TrainLogs = () =>
 {
@@ -31,25 +32,27 @@ export const TrainLogs = () =>
     const { data, error, isLoading } = useSWR(`/trains/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-
+    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
+    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
+    const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
     {
-        searchValue === "" ? searchParams.delete("q") : searchParams.set("q", searchValue);
-
         const params = new URLSearchParams();
-        searchValue && params.set("q", searchValue);
+        searchValue && params.set("query", searchValue);
+        server && params.set("server", server);
+        page && params.set("page", page.toString());
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue ]);
+    }, [ searchValue, server, page ]);
 
     useEffect(() =>
     {
-        setSearchItem(searchParams.get("q") ?? "");
-    }, [ searchParams ]);
+        setSearchItem(searchParams.get("query") ?? "");
+        setServer(searchParams.get("server") ?? "");
+    }, []);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
     {
@@ -61,7 +64,10 @@ export const TrainLogs = () =>
     return (
             <>
                 <div className="flex flex-col gap-10">
-                    <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
+                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
+                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
+                                              server={ server } setServer={ setServer }
+                    />
                     <>
                         { error && <LoadError/> }
 
@@ -72,7 +78,10 @@ export const TrainLogs = () =>
                                               description={ t("content_loader.notfound.description") }/> }
 
                         { data && data.code === 200 && !!data?.data?.records?.length &&
-                                <TrainTable trains={ data.data.records }/> }
+                               <>
+                                   <TrainTable trains={ data.data.records }/>
+                                   <Paginator page={ page } pages={ data.data.pages } setPage={ setPage }/>
+                               </> }
                     </>
                 </div>
             </>

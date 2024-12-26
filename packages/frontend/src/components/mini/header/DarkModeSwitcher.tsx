@@ -45,10 +45,10 @@ const DarkModeSwitcher = () =>
                             }` }
                     >
                         <span className="dark:hidden">
-                            <LightIcon/>
+                            <LightIcon />
                         </span>
                         <span className="hidden dark:inline-block">
-                            <DarkIcon/>
+                            <DarkIcon />
                         </span>
                     </span>
                 </label>

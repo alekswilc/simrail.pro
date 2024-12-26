@@ -20,7 +20,10 @@ import { TProfilePlayer } from "./profile.ts";
 export interface TActiveTrainPlayersResponse
 {
     success: boolean;
-    data: TActiveTrainPlayersData;
+    data: {
+        records: TActiveTrainPlayersData[];
+        servers: string[]
+    };
     code: number;
 }
 
@@ -37,7 +40,10 @@ export interface TActiveTrainPlayersData
 export interface TActiveStationPlayersResponse
 {
     success: boolean;
-    data: TActiveStationPlayersData;
+    data: {
+        records: TActiveStationPlayersData[];
+        servers: string[]
+    };
     code: number;
 }
 

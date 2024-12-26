@@ -1,17 +1,8 @@
 {
-  "_": {
-    "title": "Simrail Stats",
-    "popup": {
-      "ranking": "Data in the rankings are collected from 19.08.2024"
-    }
-  },
-  "preview": {
-    "title": "Preview version!",
-    "description": "The site is in version V3-PREVIEW, may contain errors. I will be grateful for reporting all errors on the project page (git.alekswilc.dev) or in a private message on discord - alekswilc. Stay tuned!"
-  },
   "search": {
-    "placeholder": "Type to search.",
-    "tip": "You can search for multiple data using a comma, ex. pl2,alekswilc (server name, username)"
+    "placeholder": "ex. alekswilc",
+    "placeholder_with_station": "ex. alekswilc,Katowice",
+    "none": "None"
   },
   "home": {
     "stats": {
@@ -23,7 +14,8 @@
     "description": "Simrail Stats - The best SimRail logs and statistics site!",
     "buttons": {
       "project": "Project page",
-      "forum": "Forum Page"
+      "forum": "Forum page",
+      "discord": "Discord server"
     },
     "footer": {
       "license": "License:",
@@ -37,37 +29,19 @@
     "description": "It seems you're lost.",
     "button": "Return to homepage."
   },
-  "profiles": {
-    "user": "Player",
-    "profile": "Profile",
-    "actions": "Actions"
-  },
   "leaderboard": {
-    "user": "Player",
-    "time": "Time",
-    "distance": "Distance",
-    "points": "Points",
-    "profile": "Profile",
-    "actions": "Actions"
-  },
-  "active": {
-    "server": "Server",
-    "user": "Player",
-    "train": "Train",
-    "station": "Station",
-    "profile": "Profile",
-    "actions": "Actions"
-  },
-  "logs": {
-    "user": "Player",
-    "time": "Time",
-    "distance": "Distance",
-    "points": "Points",
-    "profile": "Profile",
-    "record": "Record",
-    "train": "Train",
-    "actions": "Actions",
-    "station": "Station"
+    "train": {
+      "distance": "Driven distance: {{distance}}km",
+      "points": "Earned points: {{points}}"
+    },
+    "station": {
+      "time": "Time spent as a dispatcher: {{time}}"
+    },
+    "buttons": {
+      "trainDistance": "Longest distance traveled",
+      "trainPoints": "Most points",
+      "dispatcherTime": "Most hours as dispatcher"
+    }
   },
   "content_loader": {
     "error": {
@@ -145,12 +119,13 @@
     },
     "toasts": {
       "copied": "Link copied to clipboard!",
-      "report": "The outpost exit data has been copied to your clipboard, you can use it to submit to the #multiplayer-help-requests channel on the official simrail Discord server. Don't forget to add a reason for the report!"
+      "report": "The data has been copied to your clipboard, you can use it to submit to the #multiplayer-help-requests channel on the official simrail Discord server. Don't forget to add a reason for the report!"
     },
     "buttons": {
       "report": "Report",
       "copy": "Copy link",
-      "profile": "Profile"
+      "profile": "Profile",
+      "record": "Record"
     }
   },
   "sidebar": {
@@ -164,7 +139,7 @@
     "admin": "ADMIN",
     "logged": "Logged as {{username}}",
     "logout": "Log out",
-    "profiles": "Profiles"
+    "profiles": "Players"
   },
   "icons": {
     "admin": "Administrator",

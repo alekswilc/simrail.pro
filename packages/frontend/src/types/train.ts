@@ -26,6 +26,7 @@ export interface TTrainResponse
 export interface TTrainData
 {
     records: TTrainRecord[];
+    servers: string[];
 }
 
 export interface TTrainRecord

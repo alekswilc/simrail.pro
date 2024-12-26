@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { TActiveTrainPlayersData } from "../../../types/active.ts";
 import { UserIcons } from "../../mini/icons/UserIcons.tsx";
+import { toast } from "react-toastify";
 
 export const ActiveTrainTable = ({ trains }: {
     trains: TActiveTrainPlayersData[],
@@ -25,74 +26,48 @@ export const ActiveTrainTable = ({ trains }: {
 {
     const { t } = useTranslation();
 
+    const report = (data: TActiveTrainPlayersData) =>
+    {
+        toast.info(t("log.toasts.report"), {
+            autoClose: 5000,
+        });
+        void navigator.clipboard.writeText(`;user: \`${ data.player.username }\`\n;steam: \`https://steamcommunity.com/profiles/${ data.player.id }\`\n;server: \`${ data.server.toUpperCase() }\`\n;train: \`${ data.trainNumber }\`\n;link: https://${ location.hostname }/profile/${ data.player.id }\n\n`);
+    };
 
     return (
-            <div
-                    className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-                <div className="flex flex-col">
-                    <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("active.server") }
-                            </h5>
+            <div className="grid grid-cols-1 gap-7.5 sm:grid-cols-3 xl:grid-cols-4">
+                { trains.map((train) =>
+                {
+                    return <div
+                            key={ train.server + train.trainNumber }
+                            className="flex flex-col align-center items-center rounded-sm border border-stroke bg-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
+                        <div className="p-4">
+                            <img className="rounded-full"
+                                 src={ train.player.avatar }
+                                 alt="Player"/>
+                        </div>
+                        <div className="flex flex-col p-2 align-center items-center">
+                            <h4 className="mb-3 text-xl font-semibold text-black dark:text-white">
+                                { train.player.username }
+                                <UserIcons flags={ train.player.flags }/>
+                            </h4>
+                            <p>{ t("log.train.train", { name: train.trainName, number: train.trainNumber }) }</p>
+                            <p>{ t("log.train.server", { server: train.server.toUpperCase() }) }</p>
                         </div>
 
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("active.user") }
-                            </h5>
-                        </div>
-
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("active.train") }
-                            </h5>
-                        </div>
-
-                        <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">
-                                { t("active.actions") }
-                            </h5>
-                        </div>
-                    </div>
-
-                    { trains.map((train, key) => (
-                            <div
-                                    className={ `grid grid-cols-3 sm:grid-cols-4 ${ trains.length === (key + 1)
-                                            ? ""
-                                            : "border-b border-stroke dark:border-strokedark"
-                                    }` }
-                                    key={ train.steam }
+                        <div className="items-center justify-center p-2.5 flex xl:p-5 gap-2 flex-wrap mt-auto mb-2">
+                            <Link to={ "/profile/" + (train.steam ?? train.player.id) }
+                                  className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ train.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
+                                  style={ train.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }>{ t("log.buttons.profile") }</Link>
+                            <a
+                                    onClick={ () => report(train) }
+                                    className="cursor-pointer inline-flex items-center justify-center rounded-md bg-danger py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5"
                             >
-                                <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-6">{ train.server.toUpperCase() }</p>
-                                </div>
-
-                                <div className="flex items-center justify-center gap-3 p-5 lg:p-5">
-                                    <p className="text-black dark:text-white sm:block break-all">
-                                        <Link to={ "/profile/" + train.steam }
-                                              className="color-orchid">{ train.username }</Link> <UserIcons
-                                            flags={ train.player.flags }/>
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-center p-2.5 lg:p-5">
-                                    <p className="text-meta-5">{ train.trainName } { train.trainNumber }</p>
-                                </div>
-
-                                <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                                    <Link
-                                            to={ "/profile/" + train.steam }
-                                            className={ `inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 ${ train.player.flags.includes("private") ? "bg-opacity-50" : "" }` }
-                                            style={ train.player.flags.includes("private") ? { pointerEvents: "none" } : undefined }
-                                    >
-                                        { t("active.profile") }
-                                    </Link>
-                                </div>
-                            </div>
-                    )) }
-                </div>
+                                { t("log.buttons.report") }
+                            </a>
+                        </div>
+                    </div>;
+                }) }
             </div>
-    )
-            ;
+    );
 };

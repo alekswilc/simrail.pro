@@ -21,8 +21,7 @@ import { Loader } from "./components/mini/loaders/PageLoader.tsx";
 import { Home } from "./pages/Home";
 import DefaultLayout from "./layout/DefaultLayout";
 import "./i18n";
-import { TrainLeaderboard } from "./pages/leaderboard/TrainLeaderboard.tsx";
-import { StationLeaderboard } from "./pages/leaderboard/StationsLeaderboard.tsx";
+import { Leaderboard } from "./pages/leaderboard/Leaderboard.tsx";
 import { TrainLogs } from "./pages/logs/TrainLogs.tsx";
 import { StationLogs } from "./pages/logs/StationLogs.tsx";
 import { Profile } from "./pages/profiles/Profile.tsx";
@@ -83,12 +82,12 @@ function App()
                                         }
                                 />
                                 <Route
-                                        path="/leaderboard/trains"
+                                        path="/leaderboard/"
                                         element={
                                             <>
                                                 <PageMeta title="simrail.pro | Train Leaderboard"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                                <TrainLeaderboard/>
+                                                <Leaderboard/>
                                             </>
                                         }
                                 />
@@ -114,18 +113,6 @@ function App()
                                             </>
                                         }
                                 />
-
-                                <Route
-                                        path="/leaderboard/stations"
-                                        element={
-                                            <>
-                                                <PageMeta title="simrail.pro | Station Leaderboard"
-                                                          description="Simrail Stats - The best SimRail logs and statistics site!"/>
-                                                <StationLeaderboard/>
-                                            </>
-                                        }
-                                />
-
 
                                 <Route
                                         path="/active/trains"

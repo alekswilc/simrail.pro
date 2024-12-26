@@ -18,8 +18,9 @@ import { Router } from "express";
 import { IStationLog, MStationLog } from "../../mongo/stationLog.js";
 import { PipelineStage } from "mongoose";
 import { escapeRegexString } from "../../util/functions.js";
-import { SuccessResponseBuilder } from "../responseBuilder.js";
-import { MProfile } from "../../mongo/profile.js";
+import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
+import { IProfile, MProfile } from "../../mongo/profile.js";
+import { generateUrl } from "../../util/imgproxy.js";
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -47,7 +48,19 @@ export class StationsRoute
 
         app.get("/", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x.trim()), "i"));
+            const server = req.query.server?.toString();
+
+            const limit = parseInt(req.query.limit as string) || 12;
+            const page = parseInt(req.query.page as string) || 1;
+
+            if (page < 0 || limit < 0)
+            {
+                res.status(400).json(new ErrorResponseBuilder()
+                    .setCode(400).setData("Invalid page and/or limit"));
+                return;
+            }
+
             const filter: PipelineStage[] = [];
 
             s && filter.push({
@@ -58,16 +71,56 @@ export class StationsRoute
                 },
             });
 
-            const records = await MStationLog.aggregate(filter)
-                .sort({ leftDate: -1 })
-                .limit(30);
+            server && filter.push({
+                $match: {
+                    server: {
+                        $regex: new RegExp(escapeRegexString(server), "i"),
+                    },
+                },
+            });
 
-            await MProfile.populate(records, { path: "player" });
+            filter.push({
+                $sort: {
+                    leftDate: -1,
+                },
+            });
+
+            filter.push({
+                $facet: {
+                    data: [
+                        { $match: {} },
+                        { $skip: (page - 1) * limit },
+                        { $limit: limit },
+                    ],
+                    count: [
+                        { $count: "count" },
+                    ],
+                },
+            });
+
+            const records = await MStationLog.aggregate(filter);
+
+            await MProfile.populate(records, { path: "data.player" });
+
+            process.env.IMGPROXY_KEY && records[ 0 ].data && records[ 0 ].data.forEach((p: IStationLog & {
+                player: IProfile
+            }) =>
+            {
+                if (p.player.avatar.includes("imgproxy.alekswilc.dev"))
+                {
+                    return;
+                }
+                p.player.avatar = generateUrl(p.player.avatar);
+            });
 
             res.json(
-                new SuccessResponseBuilder<{ records: IStationLog[] }>()
+                new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records })
+                    .setData({
+                        records: records[ 0 ].data,
+                        pages: Math.floor((records[ 0 ]?.count?.[ 0 ]?.count ?? 0) / limit),
+                        servers: Object.keys(client.stations),
+                    })
                     .toJSON(),
             );
         });

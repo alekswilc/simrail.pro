@@ -19,6 +19,7 @@ import { MTrainLog } from "../../mongo/trainLog.js";
 import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
 import { MStationLog } from "../../mongo/stationLog.js";
 import { IProfile } from "../../mongo/profile.js";
+import { generateUrl } from "../../util/imgproxy.js";
 
 
 export class LogRoute
@@ -58,6 +59,12 @@ export class LogRoute
                     .setCode(403)
                     .setData("Log blocked!").toJSON());
                 return;
+            }
+
+
+            if (process.env.IMGPROXY_KEY)
+            {
+                log.player.avatar = generateUrl(log.player.avatar);
             }
 
             res.status(200).json(new SuccessResponseBuilder().setCode(200).setData(log.toJSON()));

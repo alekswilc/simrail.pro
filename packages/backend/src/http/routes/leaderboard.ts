@@ -17,8 +17,9 @@
 import { Router } from "express";
 import { PipelineStage } from "mongoose";
 import { IProfile, MProfile } from "../../mongo/profile.js";
-import { SuccessResponseBuilder } from "../responseBuilder.js";
+import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
 import { escapeRegexString, removeProperties } from "../../util/functions.js";
+import { generateUrl } from "../../util/imgproxy.js";
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -43,7 +44,17 @@ export class LeaderboardRoute
 
         app.get("/train", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+
+            const limit = parseInt(req.query.limit as string) || 12;
+            const page = parseInt(req.query.page as string) || 1;
+
+            if (page < 0 || limit < 0)
+            {
+                res.status(400).json(new ErrorResponseBuilder()
+                    .setCode(400).setData("Invalid page and/or limit"));
+                return;
+            }
 
             const filter: PipelineStage[] = [
                 {
@@ -61,23 +72,61 @@ export class LeaderboardRoute
                 },
             });
 
-            const sortBy = sortyByMap[ req.query.s?.toString() ?? "distance" ] ?? sortyByMap.distance;
+            const sortBy = sortyByMap[ req.query.sort_by?.toString() ?? "distance" ] ?? sortyByMap.distance;
 
-            const records = await MProfile.aggregate(filter)
-                .sort(sortBy)
-                .limit(50);
+            filter.push({
+                $sort: sortBy,
+            });
+
+            filter.push({
+                $facet: {
+                    data: [
+                        { $match: {} },
+                        { $skip: (page - 1) * limit },
+                        { $limit: limit },
+                    ],
+                    count: [
+                        { $count: "count" },
+                    ],
+                },
+            });
+
+            const records = await MProfile.aggregate(filter);
+
+
+            process.env.IMGPROXY_KEY && records[ 0 ].data && records[ 0 ].data.forEach((p: IProfile) =>
+            {
+                if (p.avatar.includes("imgproxy.alekswilc.dev"))
+                {
+                    return;
+                }
+                p.avatar = generateUrl(p.avatar);
+            });
 
             res.json(
-                new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()
+                new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])) })
+                    .setData({
+                        records: records[ 0 ].data.map((x: IProfile) => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])),
+                        pages: Math.floor((records[ 0 ]?.count?.[ 0 ]?.count ?? 0) / limit),
+                    })
                     .toJSON(),
             );
         });
 
         app.get("/station", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+
+            const limit = parseInt(req.query.limit as string) || 12;
+            const page = parseInt(req.query.page as string) || 1;
+
+            if (page < 0 || limit < 0)
+            {
+                res.status(400).json(new ErrorResponseBuilder()
+                    .setCode(400).setData("Invalid page and/or limit"));
+                return;
+            }
 
             const filter: PipelineStage[] = [
                 {
@@ -94,14 +143,43 @@ export class LeaderboardRoute
                 },
             });
 
-            const records = await MProfile.aggregate(filter)
-                .sort({ dispatcherTime: -1 })
-                .limit(50);
+            filter.push({
+                $sort: {
+                    dispatcherTime: -1,
+                },
+            });
+
+            filter.push({
+                $facet: {
+                    data: [
+                        { $match: {} },
+                        { $skip: (page - 1) * limit },
+                        { $limit: limit },
+                    ],
+                    count: [
+                        { $count: "count" },
+                    ],
+                },
+            });
+
+            const records = await MProfile.aggregate(filter);
+
+            process.env.IMGPROXY_KEY && records[ 0 ].data && records[ 0 ].data.forEach((p: IProfile) =>
+            {
+                if (p.avatar.includes("imgproxy.alekswilc.dev"))
+                {
+                    return;
+                }
+                p.avatar = generateUrl(p.avatar);
+            });
 
             res.json(
-                new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()
+                new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])) })
+                    .setData({
+                        records: records[ 0 ].data.map((x: IProfile) => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])),
+                        pages: Math.floor((records[ 0 ]?.count?.[ 0 ]?.count ?? 0) / limit),
+                    })
                     .toJSON(),
             );
         });
