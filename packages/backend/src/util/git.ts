@@ -47,7 +47,7 @@ export class GitUtil
 
     public static getData()
     {
-        if (this.cache && (this.cache.lastUpdated - Date.now()) < 30_000)
+        if (this.cache)
         {
             return this.cache;
         }

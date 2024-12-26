@@ -33,8 +33,8 @@ export const generateUrl = (url: string, options: string = "preset:simrailpro") 
     if (process.env.NODE_ENV === "development")
     {
         options += "/cb:" + randomBytes(4).toString('hex');
-    } else if (GitUtil.getLatestCommit()) {
-        options += "/cb:" + GitUtil.getLatestCommit()
+    } else if (GitUtil.getData().version) {
+        options += "/cb:" + GitUtil.getData().version;
     }
 
     const signature = imgProxySign(`/${ options }/plain/${ url }`);
