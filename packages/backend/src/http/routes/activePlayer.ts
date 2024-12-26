@@ -40,12 +40,20 @@ interface ActiveStation
     steam: string;
 }
 
-const sortFunction = (a: ActiveStation | ActiveTrain, b: ActiveStation | ActiveTrain) => {
-    if (a.server.includes('pl') && !b.server.includes('pl'))
-        return -1;
+import { Server } from "@simrail/types";
+import { generateUrl } from "../../util/imgproxy.js";
 
-    if (!a.server.includes('pl') && b.server.includes('pl'))
+const sortFunction = (a: ActiveStation | ActiveTrain, b: ActiveStation | ActiveTrain) =>
+{
+    if (a.server.includes("pl") && !b.server.includes("pl"))
+    {
+        return -1;
+    }
+
+    if (!a.server.includes("pl") && b.server.includes("pl"))
+    {
         return 1;
+    }
 
     return 0;
 };
@@ -59,14 +67,22 @@ export class ActivePlayersRoute
         app.get("/train", async (req, res) =>
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const sserver = req.query.server?.toString();
+
 
             let a: ActiveTrain[] = [];
 
-            for (const data of Object.values(client.trains))
+            for (const data of sserver ? [ client.trains[ sserver as Server["ServerCode"] ] ] : Object.values(client.trains))
             {
                 for (const d of data.filter(d => d.TrainData.ControlledBySteamID))
                 {
                     const p = await PlayerUtil.getPlayer(d.TrainData.ControlledBySteamID!);
+
+                    if (p && process.env.IMGPROXY_KEY)
+                    {
+                        p.avatar = generateUrl(p.avatar);
+                    }
+
                     p && a.push({
                         server: d.ServerCode,
                         player: p,
@@ -90,24 +106,33 @@ export class ActivePlayersRoute
             res.json(
                 new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records: a })
+                    .setData({
+                        records: a,
+                        servers: Object.keys(client.stations),
+                    })
                     .toJSON(),
             );
         });
 
-
         app.get("/station", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const sserver = req.query.server?.toString();
 
             let a: ActiveStation[] = [];
 
-            for (const server of Object.keys(client.stations))
+            for (const server of sserver ? [ sserver ] : Object.keys(client.stations))
             {
                 for (const d of client.stations[ server ].filter(d => d.DispatchedBy.length && d.DispatchedBy[ 0 ]?.SteamId))
                 {
                     // todo: optimize
                     const p = await PlayerUtil.getPlayer(d.DispatchedBy[ 0 ].SteamId!);
+
+                    if (p && process.env.IMGPROXY_KEY)
+                    {
+                        p.avatar = generateUrl(p.avatar);
+                    }
+
                     p && a.push({
                         server: server,
                         player: p,
@@ -126,14 +151,16 @@ export class ActivePlayersRoute
             }
 
 
-
             a = arrayGroupBy(a, d => d.server)
                 .sort(sortFunction);
 
             res.json(
                 new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records: a })
+                    .setData({
+                        records: a,
+                        servers: Object.keys(client.stations),
+                    })
                     .toJSON(),
             );
         });

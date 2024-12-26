@@ -46,7 +46,9 @@ export const StationLog = ({ data }: { data: TLogStationData }) =>
             <div
                     className="mx-auto w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                 <div className="relative drop-shadow-2">
-                    <img className="rounded-full" src={ data.player.avatar } alt="profile"/>
+                    <img className="rounded-full"
+                         src={ data.player.avatar }
+                         alt="Player"/>
                 </div>
             </div>
             <div className="mt-4">

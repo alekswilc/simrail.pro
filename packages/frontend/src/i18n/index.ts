@@ -19,6 +19,7 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import translationsInEng from "./languages/en.json";
 import translationsInPl from "./languages/pl.json";
+// import translationsInCz from "./languages/cs.json";
 
 const resources = {
     en: {
@@ -27,6 +28,9 @@ const resources = {
     pl: {
         translation: translationsInPl,
     },
+    // cs: {
+    //     translation: translationsInCz,
+    // }
 };
 
 void i18n
@@ -35,10 +39,11 @@ void i18n
     .init({
         resources,
         debug: false,
-        fallbackLng: {
-            "pl-PL": [ "pl" ],
+        fallbackLng: (code: string) => {
+            if (code.includes('pl')) return 'pl'; // Polish
+            if (resources as any['cs'] && code.includes('cs')) return 'cs'; // Czech
 
-            default: [ "en" ],
+            return 'en'; // English
         },
         interpolation: {
             escapeValue: false,

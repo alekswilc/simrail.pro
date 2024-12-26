@@ -17,7 +17,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { Search } from "../../components/mini/util/Search.tsx";
+import { SearchWithServerSelector } from "../../components/mini/util/Search.tsx";
 import { useSearchParams } from "react-router-dom";
 import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
@@ -33,51 +33,55 @@ export const ActiveStationsPlayers = () =>
     const { data, error, isLoading } = useSWR(`/active/station/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
+    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
+    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
 
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
     {
-        searchValue === "" ? searchParams.delete("q") : searchParams.set("q", searchValue);
-
         const params = new URLSearchParams();
-        searchValue && params.set("q", searchValue);
+        searchValue && params.set("query", searchValue);
+        server && params.set("server", server);
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue ]);
+    }, [ searchValue, server ]);
 
     useEffect(() =>
     {
-        setSearchItem(searchParams.get("q") ?? "");
-    }, [ searchParams ]);
+        setSearchItem(searchParams.get("query") ?? "");
+        setServer(searchParams.get("server") ?? "");
+    }, []);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
     {
         setSearchItem(e.target.value);
     };
 
+
     const { t } = useTranslation();
 
     return (
             <>
                 <div className="flex flex-col gap-10">
-                    <Search handleInputChange={ handleInputChange } searchItem={ searchItem }/>
-                    <>
-                        { error && <LoadError/> }
+                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
+                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
+                                              server={ server } setServer={ setServer }/>
+                    { error && <LoadError/> }
 
-                        { isLoading && <ContentLoader/> }
+                    { isLoading && <ContentLoader/> }
 
-                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
-                                <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/> }
+                    { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                            <WarningAlert title={ t("content_loader.notfound.header") }
+                                          description={ t("content_loader.notfound.description") }/> }
 
-                        { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
-                                <ActiveStationTable stations={ data.data.records }/> }
-                    </>
+                    { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
+                            <ActiveStationTable stations={ data.data.records }/> }
+
 
                 </div>
             </>
-    );
+    )
+            ;
 };

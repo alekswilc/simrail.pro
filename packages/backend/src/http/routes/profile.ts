@@ -19,7 +19,8 @@ import { PipelineStage } from "mongoose";
 import { ErrorResponseBuilder, SuccessResponseBuilder } from "../responseBuilder.js";
 import { PlayerUtil } from "../../util/PlayerUtil.js";
 import { IProfile, MProfile } from "../../mongo/profile.js";
-import { escapeRegexString, removeProperties } from "../../util/functions.js";
+import { escapeRegexString } from "../../util/functions.js";
+import { generateUrl } from "../../util/imgproxy.js";
 
 const generateSearch = (regex: RegExp) => [
     {
@@ -111,6 +112,11 @@ export class ProfilesRoute
             }
 
 
+            if (process.env.IMGPROXY_KEY)
+            {
+                player.avatar = generateUrl(player.avatar);
+            }
+
             res.json(
                 new SuccessResponseBuilder()
                     .setCode(200)
@@ -126,6 +132,16 @@ export class ProfilesRoute
         app.get("/", async (req, res) =>
         {
             const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+
+            const limit = parseInt(req.query.limit as string) || 12;
+            const page = parseInt(req.query.page as string) || 1;
+
+            if (page < 0 || limit < 0)
+            {
+                res.status(400).json(new ErrorResponseBuilder()
+                    .setCode(400).setData("Invalid page and/or limit"));
+                return;
+            }
 
             const filter: PipelineStage[] = [
                 {
@@ -143,13 +159,38 @@ export class ProfilesRoute
                 },
             });
 
-            const records = await MProfile.aggregate(filter)
-                .limit(50);
+            filter.push({
+                $facet: {
+                    data: [
+                        { $match: {} },
+                        { $skip: (page - 1) * limit },
+                        { $limit: limit },
+                    ],
+                    count: [
+                        { $count: "count" },
+                    ],
+                },
+            });
+
+            const records = await MProfile.aggregate(filter);
+
+
+            process.env.IMGPROXY_KEY && records[ 0 ].data && records[ 0 ].data.forEach((p: IProfile) =>
+            {
+                if (p.avatar.includes("imgproxy.alekswilc.dev"))
+                {
+                    return;
+                }
+                p.avatar = generateUrl(p.avatar);
+            });
 
             res.json(
-                new SuccessResponseBuilder<{ records: Omit<IProfile, "_id" | "__v">[] }>()
+                new SuccessResponseBuilder()
                     .setCode(200)
-                    .setData({ records: records.map(x => removeProperties<Omit<IProfile, "_id" | "__v">>(x, [ "_id", "__v" ])) })
+                    .setData({
+                        records: records[ 0 ].data,
+                        pages: Math.floor((records[ 0 ]?.count?.[ 0 ]?.count ?? 0) / limit),
+                    })
                     .toJSON(),
             );
         });

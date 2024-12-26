@@ -28,6 +28,7 @@ module.exports = {
             "2xsm": "375px",
             xsm: "425px",
             "3xl": "2000px",
+            'xl': '1280px',
             ...defaultTheme.screens,
         },
         extend: {
@@ -67,6 +68,9 @@ module.exports = {
                 success: "#219653",
                 danger: "#D34053",
                 warning: "#FFA70B",
+                'gold': '#FFD700',
+                'silver': '#C0C0C0',
+                'bronze': '#CD7F32'
             },
             fontSize: {
                 "title-xxl": [ "44px", "55px" ],

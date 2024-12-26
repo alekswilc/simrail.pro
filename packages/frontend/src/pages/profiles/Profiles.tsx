@@ -24,6 +24,7 @@ import { useTranslation } from "react-i18next";
 import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
 import { ProfilesTable } from "../../components/pages/profiles/ProfilesTable.tsx";
+import { Paginator } from "../../components/mini/util/Paginator.tsx";
 
 export const Profiles = () =>
 {
@@ -32,7 +33,7 @@ export const Profiles = () =>
 
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchItem, setSearchItem ] = useState(searchParams.get("q") ?? "");
-
+    const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     useEffect(() =>
@@ -41,14 +42,16 @@ export const Profiles = () =>
 
         const params = new URLSearchParams();
         searchValue && params.set("q", searchValue);
+        page && params.set("page", page.toString());
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue ]);
+    }, [ searchValue, page ]);
 
     useEffect(() =>
     {
         setSearchItem(searchParams.get("q") ?? "");
+        setPage(parseInt(searchParams.get("page") as string) || 1);
     }, [ searchParams ]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -72,7 +75,11 @@ export const Profiles = () =>
                                               description={ t("content_loader.notfound.description") }/> }
 
                         { data && data.code === 200 && !!data?.data?.records?.length &&
-                                <ProfilesTable profiles={ data.data.records }/> }
+                                <>
+                                    <ProfilesTable profiles={ data.data.records }/>
+                                    <Paginator page={ page } pages={ data.data.pages } setPage={ setPage }/>
+                                </>
+                        }
                     </>
                 </div>
             </>

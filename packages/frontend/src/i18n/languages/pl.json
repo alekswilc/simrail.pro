@@ -1,17 +1,8 @@
 {
-  "_": {
-    "title": "Simrail Stats",
-    "popup": {
-      "ranking": "Dane w rankingach zbierane są od 19.08.2024"
-    }
-  },
-  "preview": {
-    "title": "Wersja preview!",
-    "description": "Strona znajduje się w wersji V3-PREVIEW, może zawierać błędy. Będe wdzieczny za zgłaszanie wszystkich błędów na stronie projektu (git.alekswilc.dev) lub w wiadomości prywatnej na discordzie - alekswilc. Stay tuned!"
-  },
   "search": {
-    "placeholder": "Wpisz, aby wyszukać",
-    "tip": "Możesz wyszukiwać wiele danych używając przecinka, np pl2,alekswilc (nazwa serwera, nazwa użytkownika)"
+    "placeholder": "np. alekswilc",
+    "placeholder_with_station": "np. alekswilc,Katowice",
+    "none": "Brak"
   },
   "home": {
     "stats": {
@@ -23,7 +14,8 @@
     "description": "Najbardziej rozbudowana strona z logami i statystykami gry SimRail!",
     "buttons": {
       "project": "Strona projektu",
-      "forum": "Strona na forum"
+      "forum": "Strona na forum",
+      "discord": "Serwer discord"
     },
     "footer": {
       "license": "Licencja:",
@@ -38,36 +30,18 @@
     "button": "Wróć do strony głównej"
   },
   "leaderboard": {
-    "user": "Gracz",
-    "time": "Czas",
-    "distance": "Dystans",
-    "points": "Punkty",
-    "profile": "Profil",
-    "actions": "Akcje"
-  },
-  "profiles": {
-    "user": "Gracz",
-    "profile": "Profil",
-    "actions": "Akcje"
-  },
-  "active": {
-    "server": "Serwer",
-    "user": "Gracz",
-    "train": "Pociąg",
-    "station": "Stacja",
-    "profile": "Profil",
-    "actions": "Akcje"
-  },
-  "logs": {
-    "user": "Gracz",
-    "time": "Czas",
-    "distance": "Dystans",
-    "points": "Punkty",
-    "profile": "Profil",
-    "record": "Więcej",
-    "train": "Pociąg",
-    "actions": "Akcje",
-    "station": "Stacja"
+    "train": {
+      "distance": "Przejechany dystans: {{distance}}km",
+      "points": "Zdobyte punkty: {{points}}"
+    },
+    "station": {
+      "time": "Spędzony czas jako dyżurny ruchu: {{time}}"
+    },
+    "buttons": {
+      "trainDistance": "Największy przejechany dystans",
+      "trainPoints": "Najwięcej punktów",
+      "dispatcherTime": "Najwięcej godzin na nastawni"
+    }
   },
   "content_loader": {
     "error": {
@@ -145,18 +119,14 @@
     },
     "toasts": {
       "copied": "Skopiowano link do schowka!",
-      "report": "Do schowka skopiowano dane wyjścia z posterunku, możesz ich użyć do wysłania na kanale #multiplayer-help-requests na oficjalnym serwerze Discord gry simrail. Nie zapomnij dodać powodu zgłoszenia!"
+      "report": "Do schowka skopiowano dane, możesz ich użyć do wysłania na kanale #multiplayer-help-requests na oficjalnym serwerze Discord gry simrail. Nie zapomnij dodać powodu zgłoszenia!"
     },
     "buttons": {
       "report": "Zgłoś",
       "copy": "Kopiuj link",
-      "profile": "Profil"
+      "profile": "Profil",
+      "record": "Rekord"
     }
-  },
-  "icons": {
-    "admin": "Administrator",
-    "leaderboard_hidden": "Tablica wyników ukryta",
-    "hidden": "Profil ukryty"
   },
   "sidebar": {
     "home": "Strona główna",
@@ -169,7 +139,12 @@
     "admin": "ADMIN",
     "logged": "Zalogowano jako {{username}}",
     "logout": "Wyloguj",
-    "profiles": "Profile"
+    "profiles": "Gracze"
+  },
+  "icons": {
+    "admin": "Administrator",
+    "leaderboard_hidden": "Tablica wyników ukryta",
+    "hidden": "Profil ukryty"
   },
   "admin": {
     "header": "Akcje moderacyjne",

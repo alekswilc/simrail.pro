@@ -26,6 +26,8 @@ export interface TStationResponse
 export interface TStationData
 {
     records: TStationRecord[];
+    servers: string[];
+
 }
 
 export interface TStationRecord
