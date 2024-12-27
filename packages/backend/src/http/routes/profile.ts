@@ -114,7 +114,7 @@ export class ProfilesRoute
 
             if (process.env.IMGPROXY_KEY)
             {
-                player.avatar = generateUrl(player.avatar);
+                player.avatar = generateUrl(player.avatar, "rs:auto:256:256:1/f:png");
             }
 
             res.json(

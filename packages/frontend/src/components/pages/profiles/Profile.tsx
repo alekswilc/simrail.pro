@@ -87,7 +87,7 @@ export const ProfileCard = ({ data }: { data: TProfileData }) =>
                 className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="px-4 pt-6 text-center lg:pb-8 xl:pb-11.5">
                 <div
-                        className="mx-auto max-w-30 rounded-full p-1">
+                        className="mx-auto max-w-44 rounded-full">
                     <div className="relative rounded-full">
                         <img className="rounded-full" src={ data.player.avatar } alt="profile"/>
                         { data.active &&
