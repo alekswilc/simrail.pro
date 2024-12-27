@@ -36,7 +36,7 @@ export const Leaderboard = () =>
     const { data, error, isLoading } = useSWR(`/leaderboard/${ queryType }/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
     const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ sortBy, setSortBy ] = useState(searchParams.get("sort_by") ?? "");
+    const [ sortBy, setSortBy ] = useState(searchParams.get("sort_by") ?? "distance");
     const [ searchValue ] = useDebounce(searchItem, 500);
 
     const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
@@ -44,7 +44,7 @@ export const Leaderboard = () =>
     useEffect(() =>
     {
         setSearchItem(searchParams.get("query") ?? "");
-        setSortBy(searchParams.get("sort_by") ?? "");
+        setSortBy(searchParams.get("sort_by") ?? "distance");
         setPage(parseInt(searchParams.get("page") as string) || 1);
     }, []);
 
