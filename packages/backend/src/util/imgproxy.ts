@@ -26,7 +26,7 @@ export const imgProxySign = (target: string) =>
     return hmac.digest("base64url");
 };
 
-export const generateUrl = (url: string, options: string = "preset:simrailpro") =>
+export const generateUrl = (url: string, options: string = "rs:auto:128:128:1/f:png") =>
 {
     if (url.includes('https://imgproxy.alekswilc.dev/')) return url;
 

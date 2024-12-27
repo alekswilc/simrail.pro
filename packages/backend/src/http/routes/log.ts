@@ -64,7 +64,7 @@ export class LogRoute
 
             if (process.env.IMGPROXY_KEY)
             {
-                log.player.avatar = generateUrl(log.player.avatar);
+                log.player.avatar = generateUrl(log.player.avatar, "rs:auto:256:256:1/f:png");
             }
 
             res.status(200).json(new SuccessResponseBuilder().setCode(200).setData(log.toJSON()));

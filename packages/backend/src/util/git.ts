@@ -18,9 +18,9 @@ import { execSync } from "child_process";
 
 export class GitUtil
 {
-    private static cache: { lastUpdated: number, version?: string, commit?: string } = undefined!;
+    private static cache: { version?: string, commit?: string } = undefined!;
 
-    public static getLatestVersion()
+    private static getLatestVersion()
     {
         try
         {
@@ -32,7 +32,7 @@ export class GitUtil
         }
     }
 
-    public static getLatestCommit()
+    private static getLatestCommit()
     {
         try
         {
@@ -55,7 +55,6 @@ export class GitUtil
         const data = {
             version: this.getLatestVersion(),
             commit: this.getLatestCommit(),
-            lastUpdated: Date.now(),
         };
 
         this.cache = data;

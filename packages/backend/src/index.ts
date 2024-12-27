@@ -24,6 +24,7 @@ import { TrainsModule } from "./modules/trains.js";
 import { Server, Station, Train } from "@simrail/types";
 import dayjs from "dayjs";
 import { TMProfile } from "./mongo/profile.js";
+import { GitUtil } from "./util/git.js";
 
 ;(async () =>
 {
@@ -47,6 +48,7 @@ import { TMProfile } from "./mongo/profile.js";
     }
 
     ApiModule.load(); // TODO: use fastify
+    GitUtil.getData();
 
     if (process.env.NODE_ENV === "development")
     {
