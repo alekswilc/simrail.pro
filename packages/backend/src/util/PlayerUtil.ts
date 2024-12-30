@@ -18,7 +18,7 @@ import { IPlayerPayload, IPlayerStatsPayload } from "../types/player.js";
 import { MProfile } from "../mongo/profile.js";
 import { assert } from "node:console";
 
-const STEAM_API_KEY = process.env.STEAM_APIKEY;
+const steamKeys: string[] = JSON.parse(process.env.STEAM_APIKEY!);
 
 const steamFetch = (url: string) =>
 {
@@ -28,12 +28,13 @@ const steamFetch = (url: string) =>
     {
         const req = () =>
         {
+            const steamKey = steamKeys[ Math.floor(Math.random() * steamKeys.length) ];
 
-            fetch(url, { signal: AbortSignal.timeout(10000) }).then(x => x.json())
+            fetch(url.replace("[STEAMKEY]", steamKey), { signal: AbortSignal.timeout(10000) }).then(x => x.json())
                 .then(x => res(x))
                 .catch(() =>
                 {
-                    console.log("STEAM request failed! ", url.replace(STEAM_API_KEY!, "[XXX]"), retries);
+                    console.log("STEAM request failed! ", url.replace("[STEAMKEY]", steamKey), retries);
 
                     retries++;
                     setTimeout(() => req(), retries * 1000);
@@ -54,7 +55,7 @@ export class PlayerUtil
 
         if (!player)
         {
-            const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`) as IPlayerPayload;
+            const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=[STEAMKEY]&format=json&steamids=${ steamId }`) as IPlayerPayload;
 
             assert(data.response.players, "Expected data.response.players to be truthy");
 
@@ -149,7 +150,7 @@ export class PlayerUtil
 
     public static async getPlayerSteamData(steamId: string)
     {
-        const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${ STEAM_API_KEY }&format=json&steamids=${ steamId }`) as IPlayerPayload;
+        const data = await steamFetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=[STEAMKEY]&format=json&steamids=${ steamId }`) as IPlayerPayload;
 
         if (!data?.response?.players?.length)
         {
@@ -161,7 +162,7 @@ export class PlayerUtil
 
     public static async getPlayerStats(steamId: string)
     {
-        const data = await steamFetch(`https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=1422130&key=${ STEAM_API_KEY }&steamid=${ steamId }`) as IPlayerStatsPayload;
+        const data = await steamFetch(`https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=1422130&key=[STEAMKEY]&steamid=${ steamId }`) as IPlayerStatsPayload;
 
         if (!data.playerstats?.stats)
         {
