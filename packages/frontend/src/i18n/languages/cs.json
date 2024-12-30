@@ -1,0 +1,173 @@
+{
+  "search": {
+    "placeholder": "například alekswilc",
+    "placeholder_with_station": "například alekswilc,Katowice",
+    "none": "Žádné"
+  },
+  "home": {
+    "stats": {
+      "trains": "vlaků",
+      "dispatchers": "výpravčích",
+      "profiles": "profilů"
+    },
+    "title": "Simrail Stats",
+    "description": "Nejlepší stránka se záznamy a statistikami hráčů SimRail!",
+    "buttons": {
+      "project": "Stránka projektu",
+      "forum": "Stránka na fóru SimRail",
+      "discord": "Discord server"
+    },
+    "footer": {
+      "license": "Licence:",
+      "powered": "Založeno na:",
+      "thanks": "Speciální poděkování: <bahu>BAHU.PRO hosting</bahu>, <simrailelite>Simrail ELITE discord</simrailelite>, komunita SimRail a moje přítelkyně",
+      "author": "Pro komunitu SimRail vytvořeno s ❤️ uživatelem <anchor>{{author}}</anchor> "
+    }
+  },
+  "notfound": {
+    "title": "Stránka nenalezena",
+    "description": "Vypadá to, že ses ztratil...",
+    "button": "Vrátit se na hlavní stránku"
+  },
+  "leaderboard": {
+    "train": {
+      "distance": "Ujetá vzdálenost: {{distance}} km",
+      "points": "Získané body: {{points}}"
+    },
+    "station": {
+      "time": "Čas strávený v režimu výpravčího: {{time}}"
+    },
+    "buttons": {
+      "trainDistance": "Největší ujetá vzdálenost",
+      "trainPoints": "Nejvyšší počet body",
+      "dispatcherTime": "Nejvíce hodin nahráno v režimu výpravčího"
+    }
+  },
+  "content_loader": {
+    "error": {
+      "header": "Chyba načtení stránky",
+      "description": "Zkontrolujte vaše internetové připojení a načtěte stránku znovu",
+      "report": "Nahlásit chybu",
+      "refresh": "Načíst znovu"
+    },
+    "notfound": {
+      "header": "Nebyla nalezena žádná data",
+      "description": "Vaše vyhledávání nevrátilo žádné výsledky."
+    }
+  },
+  "profile": {
+    "stats": {
+      "distance": "Strojvedoucí",
+      "time": "Výpravčí"
+    },
+    "trains": {
+      "header": "Statistiky vlaků",
+      "train": "Vlak",
+      "distance": "Vzdálenost",
+      "points": "Body",
+      "time": "Čas"
+    },
+    "stations": {
+      "header": "Statistiky stanic",
+      "station": "Stanice",
+      "time": "Čas"
+    },
+    "errors": {
+      "notfound": {
+        "title": "Profil nebyl nalezen",
+        "description": "Profil tohoto hráče nemohl být nalezen, nebo si hráč nastavil soukromý Steam účet."
+      },
+      "blacklist": {
+        "title": "Profil není možné zobrazit",
+        "description": "Profil hráče nemohl být zobrazen kvůli aktivním činnostem moderátorů."
+      }
+    },
+    "info": "Tyto statistiky jsou shromažďovány od {{date}}.",
+    "active": {
+      "train": "Řídí vlak {{train}} na serveru {{server}}",
+      "station": "Výpravčí ve stanici {{station}} na serveru {{server}}"
+    }
+  },
+  "log": {
+    "errors": {
+      "notfound": {
+        "title": "Podrobnosti nebyly nalezeny",
+        "description": "Podrobnosti tohoto uživatele nebyly nalezeny."
+      },
+      "blacklist": {
+        "title": "Tyto podrobnosti není možné zobrazit",
+        "description": "Podrobnosti hráče nemohly být zobrazeny kvůli aktivním činnostem moderátorů."
+      }
+    },
+    "station": {
+      "header": "Opouští stanici",
+      "server": "Server: {{server}}",
+      "station": "Stanice: {{name}} - {{short}}",
+      "joined": "Čas připojení do stanice: {{date}}",
+      "left": "Čas odpojení ze stanice: {{date}}",
+      "spent": "Čas strávený ve stanici: {{date}}"
+    },
+    "train": {
+      "header": "Opouští vlak",
+      "server": "Server: {{server}}",
+      "train": "Vlak: {{name}} {{number}}",
+      "joined": "Čas připojení do vlaku: {{date}}",
+      "left": "Čas odpojení z vlaku: {{date}}",
+      "spent": "Čas strávený ve vlaku: {{date}}",
+      "distance": "Vzdálenost: {{distance}} km",
+      "points": "Body: {{points}}"
+    },
+    "toasts": {
+      "copied": "Odkaz byl zkopírován!",
+      "report": "Údaje byly zkopírovány do schránky. Můžete je použít v kanálu #multiplayer-help-requests na oficiálním Discord serveru SimRailu. Nezapomeňte připsat důvod nahlášení!"
+    },
+    "buttons": {
+      "report": "Nahlásit",
+      "copy": "Zkopírovat odkaz",
+      "profile": "Profil",
+      "record": "Zobrazit"
+    }
+  },
+  "sidebar": {
+    "home": "Hlavní stránka",
+    "logs": "Záznamy",
+    "stations": "Stanice",
+    "trains": "Vlaky",
+    "leaderboard": "Žebříčky hráčů",
+    "active_players": "Aktivní hráči",
+    "info": "INFO",
+    "admin": "ADMIN",
+    "logged": "Přihlášen jako {{username}}",
+    "logout": "Odhlásit se",
+    "profiles": "Profily"
+  },
+  "icons": {
+    "admin": "Administrátor",
+    "leaderboard_hidden": "Žebříček je skrytý",
+    "hidden": "Profil je skrytý"
+  },
+  "admin": {
+    "header": "Akce moderátora",
+    "hideLeaderboard": {
+      "modal": {
+        "title": "Jste si jisti?",
+        "description": "Tato akce skryje profil uživatele z žebříčků."
+      },
+      "button": "Skrýt profil v žebříčku",
+      "button2": "Zobrazit profil v žebříčku",
+      "alert": "Profil hráče je skrytý."
+    },
+    "hide": {
+      "modal": {
+        "title": "Jste si jisti?",
+        "description": "Tato akce skryje profil uživatele ze zobrazování v žebříčku."
+      },
+      "button": "Skrýt profil",
+      "alert": "Profil hráče je skrytý."
+    },
+    "update": {
+      "button": "Vynutit aktualizaci",
+      "alert": "Profil je aktualizován!"
+    }
+  }
+}
