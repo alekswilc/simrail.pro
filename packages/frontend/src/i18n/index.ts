@@ -19,7 +19,7 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import translationsInEng from "./languages/en.json";
 import translationsInPl from "./languages/pl.json";
-// import translationsInCz from "./languages/cs.json";
+import translationsInCs from "./languages/cs.json";
 
 const resources = {
     en: {
@@ -28,9 +28,9 @@ const resources = {
     pl: {
         translation: translationsInPl,
     },
-    // cs: {
-    //     translation: translationsInCz,
-    // }
+    cs: {
+        translation: translationsInCs,
+    }
 };
 
 void i18n

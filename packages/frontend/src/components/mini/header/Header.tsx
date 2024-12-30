@@ -76,10 +76,13 @@ export const Header = (props: {
                     <div className="flex items-center gap-3 2xsm:gap-7">
                         <ul className="flex items-center gap-2 2xsm:gap-4">
                             <a className="cursor-pointer" onClick={ () => i18n.changeLanguage("pl") }>
-                                <ReactCountryFlag countryCode={ "PL" } svg alt={'PL'} />
+                                <ReactCountryFlag countryCode={ "PL" } svg alt={ "PL" }/>
                             </a>
                             <a className="cursor-pointer" onClick={ () => i18n.changeLanguage("en") }>
-                                <ReactCountryFlag countryCode={ "US" } svg alt={'EN'}/>
+                                <ReactCountryFlag countryCode={ "US" } svg alt={ "EN" }/>
+                            </a>
+                            <a className="cursor-pointer" onClick={ () => i18n.changeLanguage("cs") }>
+                                <ReactCountryFlag countryCode={ "CZ" } svg alt={ "CZ" }/>
                             </a>
                         </ul>
                         <ul className="flex items-center gap-2 2xsm:gap-4">
