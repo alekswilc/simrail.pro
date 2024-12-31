@@ -4,9 +4,6 @@ on: [push, pull_request]
 jobs:
     build:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [22.x]
                    
         steps:
             - name: Repository checkout
@@ -14,8 +11,9 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: 'yarn'
+                  node-version: '20.x'
+            - name: Setup yarn
+              run: npm i yarn -g
                   
             - name: Install dependencies
               run: yarn
