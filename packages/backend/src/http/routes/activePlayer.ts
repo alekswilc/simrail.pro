@@ -66,7 +66,7 @@ export class ActivePlayersRoute
 
         app.get("/train", async (req, res) =>
         {
-            const s = req.query.q?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
+            const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
             const sserver = req.query.server?.toString();
 
 
