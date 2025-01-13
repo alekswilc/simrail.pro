@@ -69,7 +69,6 @@ export class ActivePlayersRoute
             const s = req.query.query?.toString().split(",").map(x => new RegExp(escapeRegexString(x), "i"));
             const sserver = req.query.server?.toString();
 
-
             let a: ActiveTrain[] = [];
 
             for (const data of sserver ? [ client.trains[ sserver as Server["ServerCode"] ] ] : Object.values(client.trains))
