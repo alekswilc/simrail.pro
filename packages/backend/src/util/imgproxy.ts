@@ -28,7 +28,7 @@ export const imgProxySign = (target: string) =>
 
 export const generateUrl = (url: string, options: string = "rs:auto:128:128:1/f:png") =>
 {
-    if (url.includes('https://imgproxy.alekswilc.dev/')) return url;
+    if (url.includes('https://proxy.cdn.alekswilc.dev/')) return url;
 
     if (process.env.NODE_ENV === "development")
     {
@@ -38,5 +38,5 @@ export const generateUrl = (url: string, options: string = "rs:auto:128:128:1/f:
     }
 
     const signature = imgProxySign(`/${ options }/plain/${ url }`);
-    return `https://imgproxy.alekswilc.dev/${ signature }/${ options }/plain/${ url }`;
+    return `https://proxy.cdn.alekswilc.dev/${ signature }/${ options }/plain/${ url }`;
 }
