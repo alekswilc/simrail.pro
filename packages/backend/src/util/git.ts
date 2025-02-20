@@ -22,26 +22,28 @@ export class GitUtil
 
     private static getLatestVersion()
     {
-        try
-        {
-            const data = execSync("git describe --tags --exact-match").toString();
-            return data.replace("\n", "");
-        } catch
-        {
-            return undefined;
-        }
+        return process.env.CURRENT_VERSION;
+        // try
+        // {
+        //     const data = execSync("git describe --tags --exact-match").toString();
+        //     return data.replace("\n", "");
+        // } catch
+        // {
+        //     return undefined;
+        // }
     }
 
     private static getLatestCommit()
     {
-        try
-        {
-            const data = execSync("git rev-parse --short HEAD").toString();
-            return data.replace("\n", "");
-        } catch
-        {
-            return undefined;
-        }
+        return process.env.CURRENT_COMMIT;
+        // try
+        // {
+        //     const data = execSync("git rev-parse --short HEAD").toString();
+        //     return data.replace("\n", "");
+        // } catch
+        // {
+        //     return undefined;
+        // }
     }
 
 
