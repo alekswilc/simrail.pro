@@ -35,7 +35,7 @@ function useLocalStorage<T>(
                     return item ? JSON.parse(item) : initialValue;
                 } catch
                 {
-                    return item ? item : initialValue;
+                    return (item && item !== "undefined") ? item : initialValue;
                 }
             }
         } catch (error)

@@ -67,7 +67,7 @@ export class LogRoute
                 log.player.avatar = generateUrl(log.player.avatar, "rs:auto:256:256:1/f:png");
             }
 
-            res.status(200).json(new SuccessResponseBuilder().setCode(200).setData(log.toJSON()));
+            res.status(200).json(new SuccessResponseBuilder().setCode(200).setData(log.toJSON()).toJSON());
         });
 
         return app;

@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "rawbuild": "vite build",
+    "preview": "vite preview",
+    "build": "docker build --progress=plain -t simrailpro:frontend ."
   },
   "dependencies": {
     "dayjs": "^1.11.13",
