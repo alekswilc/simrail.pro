@@ -7,7 +7,7 @@ RUN yarn add -D vite
 RUN yarn rawbuild
 
 FROM nginx:stable-alpine AS production
-ADD ./conf/ /etc/nginx/
+
 COPY --from=build /app/dist/ /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
