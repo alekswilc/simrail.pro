@@ -4,10 +4,9 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 RUN yarn add -D vite
+RUN yarn add -g live-server
 RUN yarn rawbuild
 
-FROM nginx:stable-alpine AS production
-
-COPY --from=build /app/dist/ /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /app/dist
+CMD ["live-server --port=2010 --entry-file=./index.html"]
