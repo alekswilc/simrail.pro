@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
+RUN npm install -D --force vite 
 RUN npm install -g live-server
 
 RUN npm run rawbuild
