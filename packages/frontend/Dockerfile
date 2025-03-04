@@ -1,12 +1,17 @@
-FROM node:22-alpine
+FROM node:18-alpine
+ 
 WORKDIR /app
+ 
 COPY package*.json ./
-RUN yarn
-COPY . .
-RUN yarn add -D vite
-RUN yarn global add live-server
-RUN yarn rawbuild
+ 
+RUN npm install
+RUN npm install --dev vite
+RUN npm install -g live-server
 
+RUN npm run rawbuild
+
+COPY . .
+ 
 EXPOSE 80
-WORKDIR /app/dist
-CMD ["yarn", "start"]
+ 
+CMD ["npm", "start"]
