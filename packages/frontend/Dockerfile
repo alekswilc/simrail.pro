@@ -9,4 +9,4 @@ RUN yarn rawbuild
 
 EXPOSE 80
 WORKDIR /app/dist
-CMD ["live-server", "--port=80", " --entry-file=./index.html"]
+CMD ["yarn", "live-server", "--port=80", " --entry-file=./index.html"]
