@@ -13,6 +13,8 @@ RUN npm install -g live-server
 
 RUN npm run rawbuild
 
+WORKDIR /app/dist
+
 EXPOSE 80
  
 CMD ["npm", "start"]
