@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
  
 RUN npm install
-RUN npm install --dev vite
+RUN npm install -D vite
 RUN npm install -g live-server
 
 RUN npm run rawbuild
