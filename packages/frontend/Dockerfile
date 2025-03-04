@@ -13,7 +13,7 @@ RUN npm install -g live-server
 
 RUN npm run rawbuild
 
-WORKDIR /app/dist
+COPY 
 
 EXPOSE 80
  
