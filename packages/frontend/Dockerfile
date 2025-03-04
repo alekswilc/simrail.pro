@@ -12,9 +12,6 @@ RUN npm install -D vite
 RUN npm install -g live-server
 
 RUN npm run rawbuild
-
-COPY 
-
 EXPOSE 80
  
 CMD ["npm", "start"]
