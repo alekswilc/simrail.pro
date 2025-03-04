@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 RUN yarn add -D vite
-RUN yarn add -g live-server
+RUN yarn global add live-server
 RUN yarn rawbuild
 
 EXPOSE 80
