@@ -1,17 +1,17 @@
 FROM node:18-alpine
- 
+
 WORKDIR /app
- 
-COPY package*.json ./
- 
+
+COPY package.json .
+
 RUN npm install
+
+RUN npm i -g serve vite
 
 COPY . .
 
-RUN npm install -D --force vite 
-RUN npm install -g live-server
-
 RUN npm run rawbuild
-EXPOSE 80
- 
-CMD ["npm", "start"]
+
+EXPOSE 3000
+
+CMD [ "serve", "-s", "dist" ]
