@@ -11,6 +11,7 @@ steps:
     repo: 10.5.0.103:1222/simrail-backend
     registry: 10.5.0.103:1222
     context: './packages/backend'
+    dockerfile: './packages/backend/Dockerfile'
     tags:
       - latest
 
@@ -21,6 +22,7 @@ steps:
     repo: 10.5.0.103:1222/simrail-frontend
     registry: 10.5.0.103:1222
     context: './packages/frontend'
+    dockerfile: './packages/frontend/Dockerfile'
     tags:
       - latest
 
