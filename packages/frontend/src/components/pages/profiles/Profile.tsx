@@ -38,8 +38,8 @@ const sortTrainsByList: Record<number, string> = {
 
 export const ProfileCard = ({ data, images }: { data: TProfileData, images: TImagesData }) => {
     const [sortTrainsBy, setSortTrainsBy] = useState(0);
-    const [sortTrainsBy2, setSortTrainsBy2] = useState(2);
-    const [sortStationsBy, setSortStationsBy] = useState(0);
+    const [sortTrainsBy2, setSortTrainsBy2] = useState(0);
+    const [sortStationsBy, setSortStationsBy] = useState(2);
     const [hideLeaderboardStatsModal, setHideLeaderboardStatsModal] = useState(false);
     const [hideProfileModal, setHideProfileModal] = useState(false);
 
