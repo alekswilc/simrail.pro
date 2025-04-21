@@ -26,8 +26,10 @@ export const imgProxySign = (target: string) =>
     return hmac.digest("base64url");
 };
 
-export const generateUrl = (url: string, options: string = "rs:auto:128:128:1/f:png") =>
+export const generateUrl = (url: string, options?: string) =>
 {
+    if (!options) options = "rs:auto:128:128:1/f:png";
+
     if (url.includes('https://proxy.cdn.alekswilc.dev/')) return url;
 
     if (process.env.NODE_ENV === "development")

@@ -63,14 +63,27 @@
     "trains": {
       "header": "Statystyki pociągów",
       "train": "Pociąg",
-      "distance": "Dystans",
-      "points": "Punkty",
-      "time": "Czas"
+      "distance": "Dystans: {{distance}}km",
+      "score": "Punkty: {{score}}",
+      "time": "Czas: {{time}}",
+      "sortby": {
+        "title": "Sortowanie: ",
+        "min": "Od najniższej",
+        "max": "Od najwyższej",
+        "time": "Czas",
+        "distance": "Dystans",
+        "score": "Punkty"
+      }
     },
     "stations": {
       "header": "Statystyki stacji",
       "station": "Stacja",
-      "time": "Czas"
+      "time": "Czas: {{time}}",
+      "sortby": {
+        "title": "Sortowanie: ",
+        "min": "Od najniższej",
+        "max": "Od najwyższej"
+      }
     },
     "errors": {
       "notfound": {

@@ -14,6 +14,6 @@
  * See LICENSE for more.
  */
 
-export const get = (url: string) => fetch(`${ import.meta.env.VITE_API_URL }${ url }`, { signal: AbortSignal.timeout(2500) }).then((res) => res.json());
+export const get = (url: string) => fetch(`${ import.meta.env.VITE_API_URL }${ url }`, { signal: AbortSignal.timeout(10000) }).then((res) => res.json());
 
-export const post = (url: string, body?: any, headers: Record<string, string> = {}) => fetch(`${ import.meta.env.VITE_API_URL }${ url }`, { signal: AbortSignal.timeout(2500), method: "POST", body: JSON.stringify(body), headers: Object.assign(headers, { "Content-Type": "application/json" }) }).then((res) => res.json());
+export const post = (url: string, body?: any, headers: Record<string, string> = {}) => fetch(`${ import.meta.env.VITE_API_URL }${ url }`, { signal: AbortSignal.timeout(10000), method: "POST", body: JSON.stringify(body), headers: Object.assign(headers, { "Content-Type": "application/json" }) }).then((res) => res.json());
