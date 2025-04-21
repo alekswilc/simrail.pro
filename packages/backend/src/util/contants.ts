@@ -137,10 +137,80 @@ export const trainsList = [
             "4E/EU07-*",
         ],
     },
+    {
+        train: 'Ty2',
+        pattern: [
+            'Ty2/*'
+        ]
+    }
 ];
+
+export const stationsMap: Record<string, string> = {
+    "Grodzisk Mazowiecki": "https://api.simrail.eu:8083/Thumbnails/Stations/gr1m.jpg",
+    "Korytów": "https://api.simrail.eu:8083/Thumbnails/Stations/kr1m.jpg",
+    "Szeligi": "https://api.simrail.eu:8083/Thumbnails/Stations/sz1m.jpg",
+    "Włoszczowa Północ": "https://api.simrail.eu:8083/Thumbnails/Stations/wp1m.jpg",
+    "Knapówka": "https://api.simrail.eu:8083/Thumbnails/Stations/kn1m.jpg",
+    "Psary": "https://api.simrail.eu:8083/Thumbnails/Stations/ps1m.jpg",
+    "Góra Włodowska": "https://api.simrail.eu:8083/Thumbnails/Stations/gw1m.jpg",
+    "Idzikowice": "https://api.simrail.eu:8083/Thumbnails/Stations/id1m.jpg",
+    "Katowice Zawodzie": "https://api.simrail.eu:8083/Thumbnails/Stations/kz1m.jpg",
+    "Sosnowiec Główny": "https://api.simrail.eu:8083/Thumbnails/Stations/sg1m.jpg",
+    "Dąbrowa Górnicza": "https://api.simrail.eu:8083/Thumbnails/Stations/dg1m.jpg",
+    "Zawiercie": "https://api.simrail.eu:8083/Thumbnails/Stations/zw1m.jpg",
+    "Będzin": "https://api.simrail.eu:8083/Thumbnails/Stations/b1m.jpg",
+    "Sosnowiec Południowy": "https://api.simrail.eu:8083/Thumbnails/Stations/spl1m.jpg",
+    "Opoczno Południe": "https://api.simrail.eu:8083/Thumbnails/Stations/op1m.jpg",
+    "Dąbrowa Górnicza Wschodnia": "https://api.simrail.eu:8083/Thumbnails/Stations/dws1m.jpg",
+    "Dorota": "https://api.simrail.eu:8083/Thumbnails/Stations/dra1m.jpg",
+    "Łazy Ła": "https://api.simrail.eu:8083/Thumbnails/Stations/la1m.jpg",
+    "Łazy": "https://api.simrail.eu:8083/Thumbnails/Stations/lb1m.jpg",
+    "Juliusz": "https://api.simrail.eu:8083/Thumbnails/Stations/ju1m.jpg",
+    "Łazy Łc": "https://api.simrail.eu:8083/Thumbnails/Stations/lc1m.jpg",
+    "Katowice": "https://api.simrail.eu:8083/Thumbnails/Stations/ko1m.jpg",
+    "Dąbrowa Górnicza Ząbkowice": "https://api.simrail.eu:8083/Thumbnails/Stations/dz1m.jpg",
+    "Sławków": "https://api.simrail.eu:8083/Thumbnails/Stations/sl1m.jpg",
+    "Starzyny": "https://api.simrail.eu:8083/Thumbnails/Stations/str1m.jpg",
+    "Bukowno": "https://api.simrail.eu:8083/Thumbnails/Stations/bo1m.jpg",
+    "Tunel": "https://api.simrail.eu:8083/Thumbnails/Stations/tl1m.jpg",
+    "Dąbrowa Górnicza Huta Katowice": "https://api.simrail.eu:8083/Thumbnails/Stations/dghk1m.jpg",
+    "Sosnowiec Kazimierz": "https://api.simrail.eu:8083/Thumbnails/Stations/skz1m.jpg",
+    "Pruszków": "https://api.simrail.eu:8083/Thumbnails/Stations/pr1m.jpg",
+    "Strzałki": "https://api.simrail.eu:8083/Thumbnails/Stations/st1m.jpg",
+    "Olszamowice": "https://api.simrail.eu:8083/Thumbnails/Stations/ol1m.jpg",
+    "Miechów": "https://api.simrail.eu:8083/Thumbnails/Stations/mi1m.jpg",
+    "Kraków Przedmieście": "https://api.simrail.eu:8083/Thumbnails/Stations/kpm1m.jpg",
+    "Kraków Batowice": "https://api.simrail.eu:8083/Thumbnails/Stations/kb1m.jpg",
+    "Raciborowice": "https://api.simrail.eu:8083/Thumbnails/Stations/ra1m.jpg",
+    "Zastów": "https://api.simrail.eu:8083/Thumbnails/Stations/zs1m.jpg",
+    "Niedźwiedź": "https://api.simrail.eu:8083/Thumbnails/Stations/nd1m.jpg",
+    "Słomniki": "https://api.simrail.eu:8083/Thumbnails/Stations/sm1m.jpg",
+    "Kozłów": "https://api.simrail.eu:8083/Thumbnails/Stations/koz1m.jpg",
+    "N/A": 'https://shared.steamstatic.com/store_item_assets/steam/apps/1422130/header.jpg'
+};
+
+
+
+export const trainsMap: Record<string, string> = {
+    "Traxx (E186)": "https://wiki.simrail.eu/vehicle/poland/trains/elec-loco/traxx/20241029163359_1.jpg",
+    "Dragon2 (E6ACTa, E6ACTadb)": "https://wiki.simrail.eu/vehicle/e6acta-016.jpg",
+    "Dragon2 (ET25)": "https://wiki.simrail.eu/vehicle/et25-002.jpg",
+    "Pendolino (ED250)": "https://wiki.simrail.eu/vehicle/ed250-001.png",
+    "EN57": "https://wiki.simrail.eu/vehicle/en57-009.png",
+    "EN71": "https://wiki.simrail.eu/vehicle/en71-002.png",
+    "EN76": "https://wiki.simrail.eu/vehicle/en76-006.jpg",
+    "EN96": "https://wiki.simrail.eu/vehicle/en96-001.jpg",
+    "EP07": "https://wiki.simrail.eu/vehicle/ep07-174.jpg",
+    "EP08": "https://wiki.simrail.eu/vehicle/poland/trains/elec-loco/ep08/20241106002003_1.jpg",
+    "ET22": "https://wiki.simrail.eu/vehicle/et22-243.png",
+    "EU07": "https://wiki.simrail.eu/vehicle/eu07-005.jpg",
+    "Ty2": "https://wiki.simrail.eu/vehicle/ty2-70.png",
+    "N/A": 'https://shared.steamstatic.com/store_item_assets/steam/apps/1422130/header.jpg'
+};
 
 
 export const getVehicle = (name: string) =>
 {
     return trainsList.find(x => wcmatch(x.pattern)(name))?.train;
 };
+

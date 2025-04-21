@@ -27,37 +27,37 @@ import useSWR from "swr";
 import { get } from "../../util/fetcher.ts";
 
 
-export const Profile = () =>
-{
+export const Profile = () => {
     const { id } = useParams();
-    const { data, error, isLoading } = useSWR(`/profiles/${ id }`, get, { refreshInterval: 5_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/profiles/${id}`, get, { refreshInterval: 5_000, errorRetryCount: 5 });
+    const images = useSWR(`/images/`, get);
 
     const { t } = useTranslation();
 
     return (
-            <>
-                {/* LOADING */ }
-                { isLoading && <ContentLoader/> }
-                {/* ERROR */ }
-                { error && <LoadError/> }
-                {/* BLACKLISTED */ }
-                { data && data.code === 403 && <PageMeta title="simrail.pro | Profile hidden"
-                                                         description="The player's profile could not be displayed due to active moderator actions."/> }
-                { data && data.code === 403 && <WarningAlert title={ t("profile.errors.blacklist.title") }
-                                                             description={ t("profile.errors.blacklist.description") }/> }
-                {/* NOT FOUND */ }
-                { data && data.code === 404 && <PageMeta title="simrail.pro | Profile not found"
-                                                         description="Player's profile could not be found or the player has a private Steam profile."/> }
-                { data && data.code === 404 && <WarningAlert title={ t("profile.errors.notfound.title") }
-                                                             description={ t("profile.errors.notfound.description") }/> }
+        <>
+            {/* LOADING */}
+            {(isLoading || images.isLoading) && <ContentLoader />}
+            {/* ERROR */}
+            {(error || images.error) && <LoadError />}
+            {/* BLACKLISTED */}
+            {data && data.code === 403 && <PageMeta title="simrail.pro | Profile hidden"
+                description="The player's profile could not be displayed due to active moderator actions." />}
+            {data && data.code === 403 && <WarningAlert title={t("profile.errors.blacklist.title")}
+                description={t("profile.errors.blacklist.description")} />}
+            {/* NOT FOUND */}
+            {data && data.code === 404 && <PageMeta title="simrail.pro | Profile not found"
+                description="Player's profile could not be found or the player has a private Steam profile." />}
+            {data && data.code === 404 && <WarningAlert title={t("profile.errors.notfound.title")}
+                description={t("profile.errors.notfound.description")} />}
 
-                {/* SUCCESS */ }
-                { data && data.code === 200 && <PageMeta image={ data.data.player.username }
-                                                         title={ `simrail.pro | ${ data.data.player.username }'s profile` }
-                                                         description={ `${ data.data.player.trainDistance ? 0 : ((data.data.player.trainDistance / 1000).toFixed(2)) } driving experience |
-${ data.data.player.dispatcherTime ? 0 : formatTime(data.data.player.dispatcherTime) } dispatcher experience` }/> }
-                { data && data.code === 200 && <ProfileCard data={ data.data }/> }
-            </>
+            {/* SUCCESS */}
+            {data && data.code === 200 && images.data && images.data.code === 200 && <PageMeta image={data.data.player.username}
+                title={`simrail.pro | ${data.data.player.username}'s profile`}
+                description={`${data.data.player.trainDistance ? 0 : ((data.data.player.trainDistance / 1000).toFixed(2))} driving experience |
+${data.data.player.dispatcherTime ? 0 : formatTime(data.data.player.dispatcherTime)} dispatcher experience`} />}
+            {data && data.code === 200 && images.data && images.data.code === 200 && <ProfileCard data={data.data} images={images.data.data} />}
+        </>
     );
 };
 

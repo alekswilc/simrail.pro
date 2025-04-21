@@ -63,14 +63,27 @@
     "trains": {
       "header": "Train Statistics",
       "train": "Train",
-      "distance": "Distance",
-      "points": "Points",
-      "time": "Time"
+      "distance": "Distance: {{distance}}km",
+      "score": "Points: {{score}}",
+      "time": "Time: {{time}}",
+      "sortby": {
+        "title": "Sort: ",
+        "min": "Lowest",
+        "max": "Highest",
+        "time": "Time",
+        "distance": "Distance",
+        "score": "Points"
+      }
     },
     "stations": {
       "header": "Station Statistics",
       "station": "Station",
-      "time": "Time"
+      "time": "Time: {{time}}",
+      "sortby": {
+        "title": "Sort: ",
+        "min": "Lowest",
+        "max": "Highest"
+      }
     },
     "errors": {
       "notfound": {

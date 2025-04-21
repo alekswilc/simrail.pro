@@ -24,6 +24,7 @@ import { StatsRoute } from "./routes/stats.js";
 import { LogRoute } from "./routes/log.js";
 import { ActivePlayersRoute } from "./routes/activePlayer.js";
 import { AdminRoute } from "./routes/admin.js";
+import { ImagesRoute } from './routes/images.js';
 
 export class ApiModule
 {
@@ -39,6 +40,8 @@ export class ApiModule
         router.use("/leaderboard/", LeaderboardRoute.load());
         router.use("/active/", ActivePlayersRoute.load());
         router.use("/admin/", AdminRoute.load());
+        router.use("/images/", ImagesRoute.load());
+
 
         router.use("/stats/", StatsRoute.load());
         router.use("/log/", LogRoute.load());

@@ -63,14 +63,27 @@
     "trains": {
       "header": "Statistiky vlaků",
       "train": "Vlak",
-      "distance": "Vzdálenost",
-      "points": "Body",
-      "time": "Čas"
+      "distance": "Vzdálenost: {{distance}}km",
+      "score": "Body: {{score}",
+      "time": "Čas: {{time}}",
+      "sortby": {
+        "title": "Řadit podle: ",
+        "min": "Nejnižší",
+        "max": "Nejvyšší",
+        "time": "Čas",
+        "distance": "Vzdálenost",
+        "score": "Body"
+      }
     },
     "stations": {
       "header": "Statistiky stanic",
       "station": "Stanice",
-      "time": "Čas"
+      "time": "Čas: {{time}}",
+      "sortby": {
+        "title": "Řadit podle: ",
+        "min": "Nejnižší",
+        "max": "Nejvyšší"
+      }
     },
     "errors": {
       "notfound": {

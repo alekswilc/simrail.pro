@@ -6,7 +6,7 @@
   "scripts": {
     "build": "docker build --progress=plain -t simrailpro:backend .",
     "rawbuild": "yarn tsc",
-    "start": "yarn build && doppler run node ../../dist/backend/index.js"
+    "start": "yarn rawbuild && node --env-file=.env dist/index.js"
   },
   "author": "Aleksander <alekswilc> Wilczyński",
   "license": "AGPL-3.0-only",
