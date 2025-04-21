@@ -18,9 +18,9 @@ steps:
 - name: build-frontend
   image: plugins/docker
   environment:
-    - VITE_API_URL:
+    VITE_API_URL:
       from_secret: VITE_API_URL
-    - VITE_STATS_KEY:
+    VITE_STATS_KEY:
       from_secret: VITE_STATS_KEY
   settings:
     insecure: true
