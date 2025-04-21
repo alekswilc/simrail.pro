@@ -17,17 +17,17 @@ steps:
 
 - name: build-frontend
   image: plugins/docker
+  environment:
+    - VITE_API_URL:
+      from_secret: VITE_API_URL
+    - VITE_STATS_KEY:
+      from_secret: VITE_STATS_KEY
   settings:
     insecure: true
     repo: 10.5.0.103:1222/simrail-frontend
     registry: 10.5.0.103:1222
     context: './packages/frontend'
     dockerfile: './packages/frontend/Dockerfile'
-    environment:
-      - VITE_API_URL:
-          from_secret: VITE_API_URL
-      - VITE_STATS_KEY:
-          from_secret: VITE_STATS_KEY
     build_args_from_env:
         - VITE_API_URL
         - VITE_STATS_KEY
