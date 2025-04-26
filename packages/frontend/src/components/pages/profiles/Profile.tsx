@@ -95,10 +95,10 @@ export const ProfileCard = ({ data, images }: { data: TProfileData, images: TIma
         return data.player.trainStats[b][(sortTrainsByList[sortTrainsBy] ?? 'distance') as 'distance'] - data.player.trainStats[a][(sortTrainsByList[sortTrainsBy] ?? 'distance') as 'distance'];
     }
 
-    const dispatcherStats = [...chunk(Object.keys(data.player.dispatcherStats), 8)];
+    const dispatcherStats = [...chunk(Object.keys(data.player.dispatcherStats).sort(sortStations), 8)];
     const [dispatcherPage, setDispatcherPage] = useState(1);
 
-    const trainStats = [...chunk(Object.keys(data.player.trainStats), 8)];
+    const trainStats = [...chunk(Object.keys(data.player.trainStats).sort(sortTrains), 8)];
     const [trainPage, setTrainPage] = useState(1);
 
     const { t } = useTranslation();
@@ -166,7 +166,7 @@ export const ProfileCard = ({ data, images }: { data: TProfileData, images: TIma
                     </p></a>
                 </div>
                 <div className="grid grid-cols-1 gap-7.5 sm:grid-cols-3 xl:grid-cols-4 pt-4">
-                    {dispatcherStats[dispatcherPage - 1].sort(sortStations).map(stationName => {
+                    {dispatcherStats[dispatcherPage - 1].map(stationName => {
                         const station = data.player.dispatcherStats[stationName];
 
                         return <StationStat stationName={stationName} time={station.time} image={images.stations[stationName]} />
@@ -192,7 +192,7 @@ export const ProfileCard = ({ data, images }: { data: TProfileData, images: TIma
                         </p></a>
                 </div>
                 <div className="grid grid-cols-1 gap-7.5 sm:grid-cols-3 xl:grid-cols-4 pt-4">
-                    {trainStats[trainPage - 1].sort(sortTrains).map(trainName => {
+                    {trainStats[trainPage - 1].map(trainName => {
                         const train = data.player.trainStats[trainName];
                         return <TrainStat trainName={trainName} time={train.time} distance={train.distance} score={train.score} image={images.trains[trainName]} />
                     })}
