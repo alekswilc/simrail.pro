@@ -6,14 +6,23 @@ name: build
 steps: 
 - name: build-backend
   image: plugins/docker
+  environment:
+    TAG:
+      ${DRONE_TAG}
+    COMMIT:
+      ${DRONE_COMMIT}
   settings:
     insecure: true
     repo: 10.5.0.103:1222/simrail-backend
     registry: 10.5.0.103:1222
     context: './packages/backend'
     dockerfile: './packages/backend/Dockerfile'
+    build_args_from_env:
+      - TAG
+      - COMMIT
     tags:
       - latest
+      - ${DRONE_TAG}
 
 - name: build-frontend
   image: plugins/docker
@@ -33,7 +42,8 @@ steps:
         - VITE_STATS_KEY
     tags:
       - latest
+      - ${DRONE_TAG##v}
 
 trigger:
-  branch:
-  - main
+  event:
+    - tag

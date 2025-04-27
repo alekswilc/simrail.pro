@@ -14,36 +14,11 @@
  * See LICENSE for more.
  */
 
-import gitInfo from '../../git.json' with { type: "json" };
+import fs from 'node:fs/promises';
 
-export class GitUtil
-{
-    private static cache: { version?: string, commit?: string } = undefined!;
-
-    private static getLatestVersion()
-    {
-        return gitInfo.tag;
-    }
-
-    private static getLatestCommit()
-    {
-        return gitInfo.commit;
-    }
-
-
-    public static getData()
-    {
-        if (this.cache)
-        {
-            return this.cache;
-        }
-
-        const data = {
-            version: this.getLatestVersion(),
-            commit: this.getLatestCommit(),
-        };
-
-        this.cache = data;
-        return data;
-    }
-}
+(async () => {
+    await fs.writeFile('dist/git.json', JSON.stringify({
+        tag: process.env.TAG ?? "",
+        commit: process.env.COMMIT?.substring(0, 7) ?? "",
+    }))
+})();

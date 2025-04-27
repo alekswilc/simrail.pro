@@ -169,7 +169,7 @@ export const ProfileCard = ({ data, images }: { data: TProfileData, images: TIma
                     {dispatcherStats[dispatcherPage - 1].map(stationName => {
                         const station = data.player.dispatcherStats[stationName];
 
-                        return <StationStat stationName={stationName} time={station.time} image={images.stations[stationName]} />
+                        return <StationStat stationName={stationName} time={station.time} image={images.stations[stationName] ?? images.stations['N/A']} />
                     })}
                 </div>
                 <div className="flex flex-col pt-4">
@@ -194,7 +194,7 @@ export const ProfileCard = ({ data, images }: { data: TProfileData, images: TIma
                 <div className="grid grid-cols-1 gap-7.5 sm:grid-cols-3 xl:grid-cols-4 pt-4">
                     {trainStats[trainPage - 1].map(trainName => {
                         const train = data.player.trainStats[trainName];
-                        return <TrainStat trainName={trainName} time={train.time} distance={train.distance} score={train.score} image={images.trains[trainName]} />
+                        return <TrainStat trainName={trainName} time={train.time} distance={train.distance} score={train.score} image={images.trains[trainName] ?? images.trains['N/A']} />
                     })}
                 </div>
                 <div className="flex flex-col pt-4">
