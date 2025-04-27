@@ -42,7 +42,7 @@ steps:
         - VITE_STATS_KEY
     tags:
       - latest
-      - ${DRONE_TAG##v}
+      - ${DRONE_TAG}
 
 trigger:
   event:
