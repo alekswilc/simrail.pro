@@ -18,7 +18,7 @@ import fs from 'node:fs/promises';
 
 (async () => {
     await fs.writeFile('dist/git.json', JSON.stringify({
-        tag: process.env.TAG,
-        commit: process.env.COMMIT,
+        tag: process.env.TAG ?? "",
+        commit: process.env.COMMIT?.substring(0, 7) ?? "",
     }))
 })();
