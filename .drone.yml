@@ -22,7 +22,7 @@ steps:
       - COMMIT
     tags:
       - latest
-      - ${DRONE_TAG}
+      - ${DRONE_TAG##v}
 
 - name: build-frontend
   image: plugins/docker
@@ -46,4 +46,4 @@ steps:
 
 trigger:
   event:
-    - tag
+  - tag
