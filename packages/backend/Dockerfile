@@ -6,8 +6,13 @@ COPY . .
 RUN yarn add -D typescript
 RUN yarn rawbuild
 
-RUN ls
+ARG COMMIT
+ENV COMMIT $COMMIT
 
+ARG TAG
+ENV TAG $TAG
+
+RUN yarn make-git-info
 
 # Install Doppler CLI
 RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \

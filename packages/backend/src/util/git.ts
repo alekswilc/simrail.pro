@@ -14,7 +14,7 @@
  * See LICENSE for more.
  */
 
-import { execSync } from "child_process";
+import gitInfo from '../../git.json' with { type: "json" };
 
 export class GitUtil
 {
@@ -22,28 +22,12 @@ export class GitUtil
 
     private static getLatestVersion()
     {
-        return process.env.CURRENT_VERSION;
-        // try
-        // {
-        //     const data = execSync("git describe --tags --exact-match").toString();
-        //     return data.replace("\n", "");
-        // } catch
-        // {
-        //     return undefined;
-        // }
+        return gitInfo.tag;
     }
 
     private static getLatestCommit()
     {
-        return process.env.CURRENT_COMMIT;
-        // try
-        // {
-        //     const data = execSync("git rev-parse --short HEAD").toString();
-        //     return data.replace("\n", "");
-        // } catch
-        // {
-        //     return undefined;
-        // }
+        return gitInfo.commit;
     }
 
 
