@@ -8,7 +8,6 @@ RUN yarn rawbuild
 
 ARG COMMIT
 ENV COMMIT $COMMIT
-
 ARG TAG
 ENV TAG $TAG
 
@@ -22,4 +21,4 @@ RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.ke
 
 
 ENTRYPOINT ["doppler", "run", "--"]
-CMD ["node", "/app/dist"]
+CMD ["node", "/app/dist/src"]
