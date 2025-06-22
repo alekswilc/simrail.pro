@@ -13,8 +13,8 @@ steps:
       ${DRONE_COMMIT}
   settings:
     insecure: true
-    repo: 10.5.0.103:1222/simrail-backend
-    registry: 10.5.0.103:1222
+    repo: 10.5.0.101:1222/simrail-backend
+    registry: 10.5.0.101:1222
     context: './packages/backend'
     dockerfile: './packages/backend/Dockerfile'
     build_args_from_env:
@@ -33,8 +33,8 @@ steps:
       from_secret: VITE_STATS_KEY
   settings:
     insecure: true
-    repo: 10.5.0.103:1222/simrail-frontend
-    registry: 10.5.0.103:1222
+    repo: 10.5.0.101:1222/simrail-frontend
+    registry: 10.5.0.101:1222
     context: './packages/frontend'
     dockerfile: './packages/frontend/Dockerfile'
     build_args_from_env:
