@@ -25,15 +25,40 @@ import { LogRoute } from "./routes/log.js";
 import { ActivePlayersRoute } from "./routes/activePlayer.js";
 import { AdminRoute } from "./routes/admin.js";
 import { ImagesRoute } from './routes/images.js';
+import { ErrorResponseBuilder } from "./responseBuilder.js";
 
-export class ApiModule
-{
-    public static load()
-    {
+export class ApiModule {
+    public static load() {
         const app = express();
         app.use(cors());
 
         const router = Router();
+        
+        // fix some unwanted behavior
+        // see https://nodejs.org/api/querystring.html#querystringparsestr-sep-eq-options
+        router.use((req, res, next) => {
+            const queryString = req.url.split('?')[1];
+            if (!queryString) return next();
+            const seen = new Set();
+
+            for (const pair of queryString.split('&')) {
+                const [key] = pair.split('=');
+                const decodedKey = decodeURIComponent(key);
+                if (seen.has(decodedKey)) {
+                    res.status(400).json(
+                        new ErrorResponseBuilder()
+                            .setCode(400)
+                            .setData("Duplicate query found.")
+                            .toJSON()
+                    );
+                    return;
+                }
+                seen.add(decodedKey);
+            }
+
+            next();
+        });
+
         router.use("/stations/", StationsRoute.load());
         router.use("/trains/", TrainsRoute.load());
         router.use("/profiles/", ProfilesRoute.load());
