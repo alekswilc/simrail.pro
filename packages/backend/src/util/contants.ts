@@ -186,10 +186,16 @@ export const stationsMap: Record<string, string> = {
     "Niedźwiedź": "https://api.simrail.eu:8083/Thumbnails/Stations/nd1m.jpg",
     "Słomniki": "https://api.simrail.eu:8083/Thumbnails/Stations/sm1m.jpg",
     "Kozłów": "https://api.simrail.eu:8083/Thumbnails/Stations/koz1m.jpg",
+    "Warszawa Włochy": "https://api.simrail.eu:8083/Thumbnails/Stations/wl1m.jpg",
+    "Żyrardów": "https://api.simrail.eu:8083/Thumbnails/Stations/zy1m.jpg",
+    "Skierniewice": "https://api.simrail.eu:8083/Thumbnails/Stations/sk1m.jpg",
+    "Płyćwia": "https://api.simrail.eu:8083/Thumbnails/Stations/pl1m.jpg",
+    "Koluszki": "https://api.simrail.eu:8083/Thumbnails/Stations/kol1m.jpg",
+    "Żakowice Południowe": "https://api.simrail.eu:8083/Thumbnails/Stations/zp1m.jpg",
+    "Gałkówek": "https://api.simrail.eu:8083/Thumbnails/Stations/ga1m.jpg",
+    "Łódź Widzew": "https://api.simrail.eu:8083/Thumbnails/Stations/lw1m.jpg",
     "N/A": 'https://shared.steamstatic.com/store_item_assets/steam/apps/1422130/header.jpg'
 };
-
-
 
 export const trainsMap: Record<string, string> = {
     "Traxx (E186)": "https://wiki.simrail.eu/vehicle/poland/trains/elec-loco/traxx/20241029163359_1.jpg",
