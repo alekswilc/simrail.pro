@@ -28,10 +28,5 @@ export const formatTime = (time: number) =>
         return `${minutes}m`;
     }
 
-    if (minutes > 0)
-    {
-        return `${minutes}m`;
-    }
-
     return "0h";
 };
