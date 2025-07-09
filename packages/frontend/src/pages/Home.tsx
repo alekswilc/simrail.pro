@@ -94,7 +94,6 @@ export const Home = () =>
                                 <p><Trans
                                         i18nKey={ t("home.footer.thanks") }
                                         components={ {
-                                            bahu: <Link className="color-orchid" to={ "https://bahu.pro/" }/>,
                                             simrailelite: <Link className="color-orchid"
                                                                 to={ "https://discord.gg/yDhy3pDrVr" }/>,
                                         } }
