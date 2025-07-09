@@ -64,7 +64,7 @@
       "header": "Statistiky vlaků",
       "train": "Vlak",
       "distance": "Vzdálenost: {{distance}}km",
-      "score": "Body: {{score}",
+      "score": "Body: {{score}}",
       "time": "Čas: {{time}}",
       "sortby": {
         "title": "Řadit podle: ",
