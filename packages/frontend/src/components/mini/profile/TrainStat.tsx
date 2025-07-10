@@ -35,7 +35,7 @@ export const TrainStat = ({ trainName, time, distance, score, image }: { trainNa
                 {trainName}
             </h4>
             <p className={'break-words'}>{t('profile.trains.time', { time: formatTime(time) })}</p>
-            <p className={'break-words'}>{t('profile.trains.distance', { distance: Math.floor(distance / 1000) })}m</p>
+            <p className={'break-words'}>{t('profile.trains.distance', { distance: Math.floor(distance / 1000) })}</p>
             <p className={'break-words pb-4'}>{t('profile.trains.score', { score: score })}</p>
 
         </div>

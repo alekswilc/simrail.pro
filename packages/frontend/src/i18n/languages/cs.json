@@ -20,7 +20,7 @@
     "footer": {
       "license": "Licence:",
       "powered": "Založeno na:",
-      "thanks": "Speciální poděkování: <bahu>BAHU.PRO hosting</bahu>, <simrailelite>Simrail ELITE discord</simrailelite>, komunita SimRail",
+      "thanks": "Speciální poděkování: <simrailelite>Simrail ELITE discord</simrailelite>, komunita SimRail",
       "author": "Pro komunitu SimRail vytvořeno s ❤️ uživatelem <anchor>{{author}}</anchor> "
     }
   },
@@ -64,7 +64,7 @@
       "header": "Statistiky vlaků",
       "train": "Vlak",
       "distance": "Vzdálenost: {{distance}}km",
-      "score": "Body: {{score}",
+      "score": "Body: {{score}}",
       "time": "Čas: {{time}}",
       "sortby": {
         "title": "Řadit podle: ",
