@@ -16,14 +16,16 @@
 
 export const formatTime = (time: number) =>
 {
-    if (Math.floor(time / 3600000) > 0)
-    {
-        return `${ Math.floor(time / 3600000) }h`;
+    
+    const hours = Math.floor(time / 3600000);
+    const minutes = Math.floor((time % 3600000) / 60000);
+
+    if (hours > 0) {
+        return `${hours}h ${minutes}m`;
     }
 
-    if (Math.floor(time / 60000) > 0)
-    {
-        return `${ Math.floor(time / 60000) }m`;
+    if (minutes > 0) {
+        return `${minutes}m`;
     }
 
     return "0h";
