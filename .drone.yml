@@ -12,7 +12,6 @@ steps:
     COMMIT:
       ${DRONE_COMMIT}
   settings:
-    insecure: true
     repo: registry.internal.aw/simrail-backend
     registry: registry.internal.aw
     context: './packages/backend'
@@ -32,7 +31,6 @@ steps:
     VITE_STATS_KEY:
       from_secret: VITE_STATS_KEY
   settings:
-    insecure: true
     repo: registry.internal.aw/simrail-frontend
     registry: registry.internal.aw
     context: './packages/frontend'
