@@ -27,29 +27,26 @@ import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentL
 import { useTranslation } from "react-i18next";
 import { Paginator } from "../../components/mini/util/Paginator.tsx";
 
-export const Leaderboard = () =>
-{
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ params, setParams ] = useState(new URLSearchParams());
-    const [ queryType, setQueryType ] = useState(searchParams.get("type") ?? "train");
+export const Leaderboard = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [params, setParams] = useState(new URLSearchParams());
+    const [queryType, setQueryType] = useState(searchParams.get("type") ?? "train");
 
-    const { data, error, isLoading } = useSWR(`/leaderboard/${ queryType }/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/leaderboard/${queryType}/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ sortBy, setSortBy ] = useState(searchParams.get("sort_by") ?? "distance");
-    const [ searchValue ] = useDebounce(searchItem, 500);
+    const [searchItem, setSearchItem] = useState(searchParams.get("query") ?? "");
+    const [sortBy, setSortBy] = useState(searchParams.get("sort_by") ?? "distance");
+    const [searchValue] = useDebounce(searchItem, 500);
 
-    const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
+    const [page, setPage] = useState(parseInt(searchParams.get("page") as string) || 1);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setSearchItem(searchParams.get("query") ?? "");
         setSortBy(searchParams.get("sort_by") ?? "distance");
         setPage(parseInt(searchParams.get("page") as string) || 1);
     }, []);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const params = new URLSearchParams();
         searchValue && params.set("query", searchValue);
         sortBy && params.set("sort_by", sortBy);
@@ -58,70 +55,68 @@ export const Leaderboard = () =>
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, sortBy, page ]);
+    }, [searchValue, sortBy, page]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setPage(1);
-    }, [ searchValue, sortBy ]);
+    }, [searchValue, sortBy]);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchItem(e.target.value);
     };
 
     const { t } = useTranslation();
 
     return (
-            <>
-                <div className="flex flex-col gap-10">
-                    <SearchWithChild handleInputChange={ handleInputChange } searchItem={ searchItem }>
-                        <div className="items-center justify-center flex gap-2 flex-wrap sm:flex-nowrap">
-                            <a
-                                    onClick={ () =>
-                                    {
-                                        setSortBy("distance");
-                                        setQueryType("train");
-                                    } }
-                                    className={ `cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 grow ${ (queryType === "train" && sortBy === "distance") ? "bg-opacity-70" : "" }` }>{ t("leaderboard.buttons.trainDistance") }</a>
+        <>
+            <div className="flex pb-5">
+                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+            </div>
+            <div className="flex flex-col gap-10">
+                <SearchWithChild handleInputChange={handleInputChange} searchItem={searchItem}>
+                    <div className="items-center justify-center flex gap-2 flex-wrap sm:flex-nowrap">
+                        <a
+                            onClick={() => {
+                                setSortBy("distance");
+                                setQueryType("train");
+                            }}
+                            className={`cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 grow ${(queryType === "train" && sortBy === "distance") ? "bg-opacity-70" : ""}`}>{t("leaderboard.buttons.trainDistance")}</a>
 
-                            <a
-                                    onClick={ () =>
-                                    {
-                                        setSortBy("points");
-                                        setQueryType("train");
-                                    } }
-                                    className={ `cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 grow ${ (queryType === "train" && sortBy === "points") ? "bg-opacity-70" : "" }` }>{ t("leaderboard.buttons.trainPoints") }</a>
+                        <a
+                            onClick={() => {
+                                setSortBy("points");
+                                setQueryType("train");
+                            }}
+                            className={`cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-50 lg:px-4 xl:px-5 grow ${(queryType === "train" && sortBy === "points") ? "bg-opacity-70" : ""}`}>{t("leaderboard.buttons.trainPoints")}</a>
 
-                            <a
-                                    onClick={ () =>
-                                    {
-                                        setSortBy(undefined!);
-                                        setQueryType("station");
-                                    } }
-                                    className={ `cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-70 lg:px-4 xl:px-5 grow ${ queryType === "station" ? "bg-opacity-50" : "" }` }>{ t("leaderboard.buttons.dispatcherTime") }</a>
+                        <a
+                            onClick={() => {
+                                setSortBy(undefined!);
+                                setQueryType("station");
+                            }}
+                            className={`cursor-pointer inline-flex items-center justify-center rounded-md bg-primary py-2 px-5 text-center font-medium text-white hover:bg-opacity-70 lg:px-4 xl:px-5 grow ${queryType === "station" ? "bg-opacity-50" : ""}`}>{t("leaderboard.buttons.dispatcherTime")}</a>
 
-                        </div>
-                    </SearchWithChild>
-                    <>
-                        { error && <LoadError/> }
+                    </div>
+                </SearchWithChild>
+                <>
+                    {error && <LoadError />}
 
-                        { isLoading && <ContentLoader/> }
+                    {isLoading && <ContentLoader />}
 
-                        { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
-                                <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/> }
+                    {data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                        <WarningAlert title={t("content_loader.notfound.header")}
+                            description={t("content_loader.notfound.description")} />}
 
-                        { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
-                                <>
-                                    <LeaderboardTable list={ data.data.records } queryType={ queryType }
-                                                      isUnmodified={ page === 1 && !searchValue }/>
-                                    <Paginator page={ page } pages={ data.data.pages } setPage={ setPage }/>
-                                </>
-                        }
-                    </>
+                    {data && data.code === 200 && data.data && !!data?.data?.records?.length &&
+                        <>
+                            <LeaderboardTable list={data.data.records} queryType={queryType}
+                                isUnmodified={page === 1 && !searchValue} />
+                            <Paginator page={page} pages={data.data.pages} setPage={setPage} />
+                        </>
+                    }
+                </>
 
-                </div>
-            </>
+            </div>
+        </>
     );
 };

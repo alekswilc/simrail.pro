@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /api/
 Disallow: /cgi-bin/
-Sitemap: https://simrail.pro/sitemap.xml
+Sitemap: https://simrail.alekswilc.dev/sitemap.xml

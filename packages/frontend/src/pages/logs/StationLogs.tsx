@@ -26,19 +26,17 @@ import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentL
 import { useTranslation } from "react-i18next";
 import { Paginator } from "../../components/mini/util/Paginator.tsx";
 
-export const StationLogs = () =>
-{
-    const [ params, setParams ] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/stations/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+export const StationLogs = () => {
+    const [params, setParams] = useState(new URLSearchParams());
+    const { data, error, isLoading } = useSWR(`/stations/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
-    const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
-    const [ searchValue ] = useDebounce(searchItem, 500);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchItem, setSearchItem] = useState(searchParams.get("query") ?? "");
+    const [server, setServer] = useState(searchParams.get("server") ?? "");
+    const [page, setPage] = useState(parseInt(searchParams.get("page") as string) || 1);
+    const [searchValue] = useDebounce(searchItem, 500);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const params = new URLSearchParams();
         searchValue && params.set("query", searchValue);
         server && params.set("server", server);
@@ -46,46 +44,47 @@ export const StationLogs = () =>
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, server, page ]);
+    }, [searchValue, server, page]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setSearchItem(searchParams.get("query") ?? "");
         setServer(searchParams.get("server") ?? "");
         setPage(parseInt(searchParams.get("page") as string) || 1);
     }, []);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchItem(e.target.value);
     };
 
     const { t } = useTranslation();
 
     return (
-            <>
-                <div className="flex flex-col gap-10">
-                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
-                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
-                                              server={ server } setServer={ setServer }
-                    />
-                    <>
-                        { error && <LoadError/> }
+        <>
+            <div className="flex pb-5">
+                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+            </div>
+            <div className="flex flex-col gap-10">
+                <SearchWithServerSelector handleInputChange={handleInputChange} searchItem={searchItem}
+                    servers={data?.code === 200 ? data?.data?.servers : []}
+                    server={server} setServer={setServer}
+                />
+                <>
+                    {error && <LoadError />}
 
-                        { isLoading && <ContentLoader/> }
+                    {isLoading && <ContentLoader />}
 
-                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
-                                <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/> }
+                    {(data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
+                        <WarningAlert title={t("content_loader.notfound.header")}
+                            description={t("content_loader.notfound.description")} />}
 
-                        { data && data.code === 200 && !!data?.data?.records?.length &&
-                                <>
-                                    <StationTable stations={ data.data.records }/>
-                                    <Paginator page={ page } pages={ data.data.pages } setPage={ setPage }/>
-                                </>
-                        }
-                    </>
-                </div>
-            </>
+                    {data && data.code === 200 && !!data?.data?.records?.length &&
+                        <>
+                            <StationTable stations={data.data.records} />
+                            <Paginator page={page} pages={data.data.pages} setPage={setPage} />
+                        </>
+                    }
+                </>
+            </div>
+        </>
     );
 };

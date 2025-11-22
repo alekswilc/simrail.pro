@@ -21,6 +21,7 @@ import { CardDataStats } from "../components/mini/util/CardDataStats.tsx";
 import { get } from "../util/fetcher.ts";
 import useSWR from "swr";
 import { LoadError } from "../components/mini/loaders/ContentLoader.tsx";
+import { WarningAlert } from "../components/mini/alerts/Warning.tsx";
 
 export const Home = () =>
 {
@@ -39,6 +40,10 @@ export const Home = () =>
 
     return (
             <>
+                <div className="flex pb-5">
+                    <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+                </div>
+
                 <div className="flex pb-5">
                     { error && <LoadError/> }
                 </div>
