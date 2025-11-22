@@ -5,37 +5,37 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>https://simrail.pro/</loc>
+        <loc>https://simrail.alekswilc.dev/</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/profiles</loc>
+        <loc>https://simrail.alekswilc.dev/profiles</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.90</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/leaderboard</loc>
+        <loc>https://simrail.alekswilc.dev/leaderboard</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/logs/stations</loc>
+        <loc>https://simrail.alekswilc.dev/logs/stations</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.70</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/logs/trains</loc>
+        <loc>https://simrail.alekswilc.dev/logs/trains</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.70</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/active/stations</loc>
+        <loc>https://simrail.alekswilc.dev/active/stations</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.60</priority>
     </url>
     <url>
-        <loc>https://simrail.pro/active/trains</loc>
+        <loc>https://simrail.alekswilc.dev/active/trains</loc>
         <lastmod>2024-12-24T23:09:07+00:00</lastmod>
         <priority>0.60</priority>
     </url>

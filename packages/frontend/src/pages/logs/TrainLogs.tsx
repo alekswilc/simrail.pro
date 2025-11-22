@@ -26,19 +26,17 @@ import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
 import { Paginator } from "../../components/mini/util/Paginator.tsx";
 
-export const TrainLogs = () =>
-{
-    const [ params, setParams ] = useState(new URLSearchParams());
-    const { data, error, isLoading } = useSWR(`/trains/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+export const TrainLogs = () => {
+    const [params, setParams] = useState(new URLSearchParams());
+    const { data, error, isLoading } = useSWR(`/trains/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
-    const [ page, setPage ] = useState(parseInt(searchParams.get("page") as string) || 1);
-    const [ searchValue ] = useDebounce(searchItem, 500);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchItem, setSearchItem] = useState(searchParams.get("query") ?? "");
+    const [server, setServer] = useState(searchParams.get("server") ?? "");
+    const [page, setPage] = useState(parseInt(searchParams.get("page") as string) || 1);
+    const [searchValue] = useDebounce(searchItem, 500);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const params = new URLSearchParams();
         searchValue && params.set("query", searchValue);
         server && params.set("server", server);
@@ -46,44 +44,45 @@ export const TrainLogs = () =>
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, server, page ]);
+    }, [searchValue, server, page]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setSearchItem(searchParams.get("query") ?? "");
         setServer(searchParams.get("server") ?? "");
     }, []);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchItem(e.target.value);
     };
 
     const { t } = useTranslation();
 
     return (
-            <>
-                <div className="flex flex-col gap-10">
-                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
-                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
-                                              server={ server } setServer={ setServer }
-                    />
-                    <>
-                        { error && <LoadError/> }
+        <>
+            <div className="flex pb-5">
+                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+            </div>
+            <div className="flex flex-col gap-10">
+                <SearchWithServerSelector handleInputChange={handleInputChange} searchItem={searchItem}
+                    servers={data?.code === 200 ? data?.data?.servers : []}
+                    server={server} setServer={setServer}
+                />
+                <>
+                    {error && <LoadError />}
 
-                        { isLoading && <ContentLoader/> }
+                    {isLoading && <ContentLoader />}
 
-                        { (data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
-                                <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/> }
+                    {(data && data.code === 404) || (data && data.code === 200 && !data?.data?.records?.length) &&
+                        <WarningAlert title={t("content_loader.notfound.header")}
+                            description={t("content_loader.notfound.description")} />}
 
-                        { data && data.code === 200 && !!data?.data?.records?.length &&
-                               <>
-                                   <TrainTable trains={ data.data.records }/>
-                                   <Paginator page={ page } pages={ data.data.pages } setPage={ setPage }/>
-                               </> }
-                    </>
-                </div>
-            </>
+                    {data && data.code === 200 && !!data?.data?.records?.length &&
+                        <>
+                            <TrainTable trains={data.data.records} />
+                            <Paginator page={page} pages={data.data.pages} setPage={setPage} />
+                        </>}
+                </>
+            </div>
+        </>
     );
 };

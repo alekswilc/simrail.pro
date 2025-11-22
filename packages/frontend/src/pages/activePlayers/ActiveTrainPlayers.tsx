@@ -26,61 +26,60 @@ import { WarningAlert } from "../../components/mini/alerts/Warning.tsx";
 import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentLoader.tsx";
 import { ActiveTrainTable } from "../../components/pages/active/ActiveTrainTable.tsx";
 
-export const ActiveTrainPlayers = () =>
-{
-    const [ params, setParams ] = useState(new URLSearchParams());
+export const ActiveTrainPlayers = () => {
+    const [params, setParams] = useState(new URLSearchParams());
 
-    const { data, error, isLoading } = useSWR(`/active/train/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/active/train/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchItem, setSearchItem] = useState(searchParams.get("query") ?? "");
+    const [server, setServer] = useState(searchParams.get("server") ?? "");
 
-    const [ searchValue ] = useDebounce(searchItem, 500);
+    const [searchValue] = useDebounce(searchItem, 500);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const params = new URLSearchParams();
         searchValue && params.set("query", searchValue);
         server && params.set("server", server);
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, server ]);
+    }, [searchValue, server]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setSearchItem(searchParams.get("query") ?? "");
         setServer(searchParams.get("server") ?? "");
     }, []);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchItem(e.target.value);
     };
 
     const { t } = useTranslation();
 
     return (
-            <>
-                <div className="flex flex-col gap-10">
-                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
-                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
-                                              server={ server } setServer={ setServer }/>
-                    <>
-                        { error && <LoadError/> }
+        <>
+            <div className="flex pb-5">
+                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+            </div>
+            <div className="flex flex-col gap-10">
+                <SearchWithServerSelector handleInputChange={handleInputChange} searchItem={searchItem}
+                    servers={data?.code === 200 ? data?.data?.servers : []}
+                    server={server} setServer={setServer} />
+                <>
+                    {error && <LoadError />}
 
-                        { isLoading && <ContentLoader/> }
+                    {isLoading && <ContentLoader />}
 
-                        { (data && data.code === 404) || (data && !data?.data?.records?.length) &&
-                                <WarningAlert title={ t("content_loader.notfound.header") }
-                                              description={ t("content_loader.notfound.description") }/>
-                        }
+                    {(data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                        <WarningAlert title={t("content_loader.notfound.header")}
+                            description={t("content_loader.notfound.description")} />
+                    }
 
-                        { data && data.code === 200 && !!data?.data?.records?.length &&
-                                <ActiveTrainTable trains={ data?.data?.records }/> }
-                    </>
-                </div>
-            </>
+                    {data && data.code === 200 && !!data?.data?.records?.length &&
+                        <ActiveTrainTable trains={data?.data?.records} />}
+                </>
+            </div>
+        </>
     );
 };

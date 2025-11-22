@@ -26,36 +26,32 @@ import { ContentLoader, LoadError } from "../../components/mini/loaders/ContentL
 import { useTranslation } from "react-i18next";
 import { ActiveStationTable } from "../../components/pages/active/ActiveStationTable.tsx";
 
-export const ActiveStationsPlayers = () =>
-{
-    const [ params, setParams ] = useState(new URLSearchParams());
+export const ActiveStationsPlayers = () => {
+    const [params, setParams] = useState(new URLSearchParams());
 
-    const { data, error, isLoading } = useSWR(`/active/station/?${ params.toString() }`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
+    const { data, error, isLoading } = useSWR(`/active/station/?${params.toString()}`, get, { refreshInterval: 10_000, errorRetryCount: 5 });
 
-    const [ searchParams, setSearchParams ] = useSearchParams();
-    const [ searchItem, setSearchItem ] = useState(searchParams.get("query") ?? "");
-    const [ server, setServer ] = useState(searchParams.get("server") ?? "");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchItem, setSearchItem] = useState(searchParams.get("query") ?? "");
+    const [server, setServer] = useState(searchParams.get("server") ?? "");
 
-    const [ searchValue ] = useDebounce(searchItem, 500);
+    const [searchValue] = useDebounce(searchItem, 500);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const params = new URLSearchParams();
         searchValue && params.set("query", searchValue);
         server && params.set("server", server);
 
         setSearchParams(params.toString());
         setParams(params);
-    }, [ searchValue, server ]);
+    }, [searchValue, server]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setSearchItem(searchParams.get("query") ?? "");
         setServer(searchParams.get("server") ?? "");
     }, []);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchItem(e.target.value);
     };
 
@@ -63,25 +59,28 @@ export const ActiveStationsPlayers = () =>
     const { t } = useTranslation();
 
     return (
-            <>
-                <div className="flex flex-col gap-10">
-                    <SearchWithServerSelector handleInputChange={ handleInputChange } searchItem={ searchItem }
-                                              servers={ data?.code === 200 ? data?.data?.servers : [] }
-                                              server={ server } setServer={ setServer }/>
-                    { error && <LoadError/> }
+        <>
+            <div className="flex pb-5">
+                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+            </div>
+            <div className="flex flex-col gap-10">
+                <SearchWithServerSelector handleInputChange={handleInputChange} searchItem={searchItem}
+                    servers={data?.code === 200 ? data?.data?.servers : []}
+                    server={server} setServer={setServer} />
+                {error && <LoadError />}
 
-                    { isLoading && <ContentLoader/> }
+                {isLoading && <ContentLoader />}
 
-                    { data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
-                            <WarningAlert title={ t("content_loader.notfound.header") }
-                                          description={ t("content_loader.notfound.description") }/> }
+                {data && (data && data.code === 404) || (data && !data?.data?.records?.length) &&
+                    <WarningAlert title={t("content_loader.notfound.header")}
+                        description={t("content_loader.notfound.description")} />}
 
-                    { data && data.code === 200 && data.data && !!data?.data?.records?.length &&
-                            <ActiveStationTable stations={ data.data.records }/> }
+                {data && data.code === 200 && data.data && !!data?.data?.records?.length &&
+                    <ActiveStationTable stations={data.data.records} />}
 
 
-                </div>
-            </>
+            </div>
+        </>
     )
-            ;
+        ;
 };

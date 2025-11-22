@@ -24,43 +24,45 @@ import { PageMeta } from "../../components/mini/util/PageMeta.tsx";
 import { get } from "../../util/fetcher.ts";
 import useSWR from "swr";
 
-export const Log = () =>
-{
-    const { id } = useParams();
-    const { data, error, isLoading } = useSWR(`/log/${ id }`, get, { refreshInterval: 30_000, errorRetryCount: 5 });
+export const Log = () => {
+        const { id } = useParams();
+        const { data, error, isLoading } = useSWR(`/log/${id}`, get, { refreshInterval: 30_000, errorRetryCount: 5 });
 
-    const { t } = useTranslation();
+        const { t } = useTranslation();
 
-    return (
-            <>
-                {/* ERROR */ }
-                { error && <LoadError/> }
-                {/* LOADING */ }
-                { isLoading && <ContentLoader/> }
-                {/* NOT FOUND */ }
-                { data && data.code === 404 && <PageMeta title="simrail.pro | Record not found"
-                                                         description="This record could not be found."/> }
-                { data && data.code === 404 && <WarningAlert title={ t("log.errors.notfound.title") }
-                                                             description={ t("log.errors.notfound.description") }/> }
-                {/* BLACKLISTED LOG */ }
-                { data && data.code === 403 && <PageMeta title="simrail.pro | Blacklisted record"
-                                                         description="The record has been blocked."/> }
-                { data && data.code === 403 && <WarningAlert title={ t("log.errors.blacklist.title") }
-                                                             description={ t("log.errors.blacklist.description") }/> }
-                {/* SUCCESS */ }
-                { data && data.code === 200 && !("trainNumber" in data.data) && <PageMeta
-                        title={ `simrail.pro | ${ data.data.player.username }` }
-                        image={ data.data.player.avatar }
-                        description={ `${ data.data.stationName } - ${ data.data.stationShort }` }/> }
-                { data && data.code === 200 && !("trainNumber" in data.data) && data.data &&
-                        < StationLog data={ data.data }/> }
+        return (
+                <>
+                        <div className="flex pb-5">
+                                <WarningAlert title={"We're changing our domain!"} description="Due to simrail.pro being end of life (EOL), we're changing domain to simrail.alekswilc.dev. We're looking for a new maintainer! Z powodu zakończenia wsparcia dla simrail.pro, zmieniamy domene na simrail.alekswilc.dev. Szukamy nowego maintainera!" />
+                        </div>
+                        {/* ERROR */}
+                        {error && <LoadError />}
+                        {/* LOADING */}
+                        {isLoading && <ContentLoader />}
+                        {/* NOT FOUND */}
+                        {data && data.code === 404 && <PageMeta title="simrail.alekswilc.dev | Record not found"
+                                description="This record could not be found." />}
+                        {data && data.code === 404 && <WarningAlert title={t("log.errors.notfound.title")}
+                                description={t("log.errors.notfound.description")} />}
+                        {/* BLACKLISTED LOG */}
+                        {data && data.code === 403 && <PageMeta title="simrail.alekswilc.dev | Blacklisted record"
+                                description="The record has been blocked." />}
+                        {data && data.code === 403 && <WarningAlert title={t("log.errors.blacklist.title")}
+                                description={t("log.errors.blacklist.description")} />}
+                        {/* SUCCESS */}
+                        {data && data.code === 200 && !("trainNumber" in data.data) && <PageMeta
+                                title={`simrail.alekswilc.dev | ${data.data.player.username}`}
+                                image={data.data.player.avatar}
+                                description={`${data.data.stationName} - ${data.data.stationShort}`} />}
+                        {data && data.code === 200 && !("trainNumber" in data.data) && data.data &&
+                                < StationLog data={data.data} />}
 
-                { data && data.code === 200 && ("trainNumber" in data.data) && <PageMeta
-                        title={ `simrail.pro | ${ data.data.player.username }` }
-                        image={ data.data.player.avatar }
-                        description={ `${ data.data.trainName } - ${ data.data.trainNumber }` }/> }
-                { data && data.code === 200 && ("trainNumber" in data.data) && < TrainLog data={ data.data }/> }
-            </>
-    );
+                        {data && data.code === 200 && ("trainNumber" in data.data) && <PageMeta
+                                title={`simrail.alekswilc.dev | ${data.data.player.username}`}
+                                image={data.data.player.avatar}
+                                description={`${data.data.trainName} - ${data.data.trainNumber}`} />}
+                        {data && data.code === 200 && ("trainNumber" in data.data) && < TrainLog data={data.data} />}
+                </>
+        );
 };
 

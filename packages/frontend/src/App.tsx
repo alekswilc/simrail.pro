@@ -40,7 +40,7 @@ import { Profiles } from "./pages/profiles/Profiles.tsx";
 function App()
 {
     const [ loading, setLoading ] = useState<boolean>(true);
-    const { pathname } = useLocation();
+    const { pathname, } = useLocation();
     const [ theme ] = useColorMode();
     useEffect(() =>
     {
@@ -50,7 +50,12 @@ function App()
     useEffect(() =>
     {
         setTimeout(() => setLoading(false), 400);
+
+        if (['simrail.pro', 'simrail.info'].includes(window.location.hostname)) {
+            window.location.href = window.location.hostname.replace(/simrail\.pro|simrail\.info/g, 'simrail.alekswilc.dev');
+        }
     }, []);
+
 
 
     return <HelmetProvider>
@@ -75,7 +80,7 @@ function App()
                                         index
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Home"
+                                                <PageMeta title="simrail.alekswilc.dev | Home"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <Home/>
                                             </>
@@ -85,7 +90,7 @@ function App()
                                         path="/leaderboard/"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Train Leaderboard"
+                                                <PageMeta title="simrail.alekswilc.dev | Train Leaderboard"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <Leaderboard/>
                                             </>
@@ -96,7 +101,7 @@ function App()
                                         path="/logs/trains"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Trains Logs"
+                                                <PageMeta title="simrail.alekswilc.dev | Trains Logs"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <TrainLogs/>
                                             </>
@@ -107,7 +112,7 @@ function App()
                                         path="/logs/stations"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Stations Logs"
+                                                <PageMeta title="simrail.alekswilc.dev | Stations Logs"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <StationLogs/>
                                             </>
@@ -118,7 +123,7 @@ function App()
                                         path="/active/trains"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Active Trains"
+                                                <PageMeta title="simrail.alekswilc.dev | Active Trains"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <ActiveTrainPlayers/>
                                             </>
@@ -129,7 +134,7 @@ function App()
                                         path="/active/stations"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Active Station"
+                                                <PageMeta title="simrail.alekswilc.dev | Active Station"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 <ActiveStationsPlayers/>
                                             </>
@@ -140,7 +145,7 @@ function App()
                                         path="/profile/:id"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Profile"
+                                                <PageMeta title="simrail.alekswilc.dev | Profile"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 {/* page meta is modified in component! */ }
                                                 <Profile/>
@@ -152,7 +157,7 @@ function App()
                                         path="/profiles/"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Profiles"
+                                                <PageMeta title="simrail.alekswilc.dev | Profiles"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 {/* page meta is modified in component! */ }
                                                 <Profiles/>
@@ -164,7 +169,7 @@ function App()
                                         path="/log/:id"
                                         element={
                                             <>
-                                                <PageMeta title="simrail.pro | Log"
+                                                <PageMeta title="simrail.alekswilc.dev | Log"
                                                           description="Simrail Stats - The best SimRail logs and statistics site!"/>
                                                 {/* page title is modified after API response */ }
                                                 <Log/>
