@@ -28,9 +28,9 @@ steps:
     tags:
       - latest
       - ${DRONE_TAG##v}
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+  volumes:
+    - name: dockersock
+      path: /var/run/docker.sock
 
 - name: build-frontend
   image: plugins/docker
@@ -51,9 +51,9 @@ steps:
     tags:
       - latest
       - ${DRONE_TAG##v}
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
+  volumes:
+    - name: dockersock
+      path: /var/run/docker.sock
 
 trigger:
   event:
