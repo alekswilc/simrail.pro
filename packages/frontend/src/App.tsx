@@ -51,9 +51,9 @@ function App()
     {
         setTimeout(() => setLoading(false), 400);
 
-        if (['simrail.pro', 'simrail.info'].includes(window.location.hostname)) {
-            window.location.href = window.location.href.replace(/simrail\.pro|simrail\.info/g, 'simrail.alekswilc.dev');
-        }
+        // if (['simrail.pro', 'simrail.info'].includes(window.location.hostname)) {
+        //     window.location.href = window.location.href.replace(/simrail\.pro|simrail\.info/g, 'simrail.alekswilc.dev');
+        // }
     }, []);
 
 
