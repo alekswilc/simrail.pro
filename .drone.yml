@@ -18,7 +18,7 @@ steps:
       ${DRONE_COMMIT}
   settings:
     insecure: true
-    repo: registry.internal.aw/simrail-backend
+    repo: registry.internal.local/simrail-backend
     registry: registry.internal.local
     context: './packages/backend'
     dockerfile: './packages/backend/Dockerfile'
@@ -41,7 +41,7 @@ steps:
       from_secret: VITE_STATS_KEY
   settings:
     insecure: true
-    repo: registry.internal.aw/simrail-frontend
+    repo: registry.internal.local/simrail-frontend
     registry: registry.internal.local
     context: './packages/frontend'
     dockerfile: './packages/frontend/Dockerfile'
