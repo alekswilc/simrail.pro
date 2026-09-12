@@ -16,7 +16,6 @@
 
 import { Router } from "express";
 import { MTrainLog } from "../../mongo/trainLog.js";
-import { GitUtil } from "../../util/git.js";
 import { SuccessResponseBuilder } from "../responseBuilder.js";
 import { MStationLog } from "../../mongo/stationLog.js";
 import { MProfile } from "../../mongo/profile.js";
@@ -29,19 +28,16 @@ export class StatsRoute
 
         app.get("/", async (req, res) =>
         {
-            const { commit, version } = GitUtil.getData();
-
             const trains = await MTrainLog.countDocuments();
             const dispatchers = await MStationLog.countDocuments();
             const profiles = await MProfile.countDocuments();
 
             res.json(
                 new SuccessResponseBuilder<{
-                    git: { commit?: string, version?: string },
                     stats: { trains: number, dispatchers: number, profiles: number }
                 }>()
                     .setCode(200)
-                    .setData({ git: { commit, version }, stats: { trains, dispatchers, profiles } })
+                    .setData({ stats: { trains, dispatchers, profiles } })
                     .toJSON(),
             );
         });

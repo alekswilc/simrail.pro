@@ -6,19 +6,10 @@ COPY . .
 RUN yarn add -D typescript
 RUN yarn rawbuild
 
-ARG COMMIT
-ENV COMMIT $COMMIT
-ARG TAG
-ENV TAG $TAG
+FROM node:21-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
 
-RUN yarn make-git-info
-
-# Install Doppler CLI
-RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub && \
-    echo 'https://packages.doppler.com/public/cli/alpine/any-version/main' | tee -a /etc/apk/repositories && \
-    apk add doppler
-
-
-
-ENTRYPOINT ["doppler", "run", "--"]
-CMD ["node", "/app/dist/src"]
+CMD ["node", "dist/src"]

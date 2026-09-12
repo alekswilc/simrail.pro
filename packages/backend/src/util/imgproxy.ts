@@ -15,7 +15,6 @@
  */
 
 import { createHmac, randomBytes } from "node:crypto";
-import { GitUtil } from "./git.js";
 
 export const imgProxySign = (target: string) =>
 {
@@ -33,8 +32,6 @@ export const generateUrl = (url: string, options: string = "rs:auto:128:128:1/f:
     if (process.env.NODE_ENV === "development")
     {
         options += "/cb:" + randomBytes(4).toString('hex');
-    } else if (GitUtil.getData().version) {
-        options += "/cb:" + GitUtil.getData().version;
     }
 
     const signature = imgProxySign(`/${ options }/plain/${ url }`);

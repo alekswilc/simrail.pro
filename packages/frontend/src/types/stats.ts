@@ -23,14 +23,7 @@ export interface TStatsResponse
 
 export interface TStatsData
 {
-    git: TStatsGit;
     stats: TStatsStats;
-}
-
-export interface TStatsGit
-{
-    commit?: string;
-    version?: string;
 }
 
 export interface TStatsStats

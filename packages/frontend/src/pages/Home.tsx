@@ -110,11 +110,6 @@ export const Home = () =>
                                                                       to={ "https://tailadmin.com/" }>TailAdmin</Link>
                                 </p>
 
-                                <p>{ data?.data?.git?.version && <Link className="color-orchid"
-                                                                       to={ `https://git.alekswilc.dev/simrail/simrail.pro/releases/tag/${ data?.data?.git?.version }` }>{ data?.data?.git?.version }</Link> }{ data?.data?.git?.version && data?.data?.git?.commit && " | " }{ data?.data?.git?.commit &&
-                                        <Link className="color-orchid"
-                                              to={ `https://git.alekswilc.dev/simrail/simrail.pro/commit/${ data?.data?.git?.commit }` }>{ data?.data?.git?.commit }</Link> }</p>
-
                             </div>
 
                         </div>
