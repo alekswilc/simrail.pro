@@ -1,0 +1,18 @@
+services:
+  simrail-backend:
+    build:
+      context: ./packages/backend
+      dockerfile: ./packages/backend/Dockerfile
+    env_file: .env
+    restart: unless-stopped
+
+  simrail-frontend:
+    build:
+      context: ./packages/frontend
+      dockerfile: ./packages/frontend/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_STATS_KEY: ${VITE_STATS_KEY}
+    environment:
+      HOST: ${HOST:-}
+    restart: unless-stopped
